@@ -8,13 +8,25 @@
 
 #import "PHO_AppDelegate.h"
 
+#import "PHO_HomeViewController.h"
+
 @implementation PHO_AppDelegate
+
+@synthesize homeViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    homeViewController = [[PHO_HomeViewController alloc]init];
+    UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:homeViewController];
+    [rootNav.navigationBar setBarTintColor:[UIColor redColor]];
+//    [rootNav setNavigationBarHidden:YES];
+//    rootNav.navigationBar.translucent = YES;
+    self.window.rootViewController = rootNav;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
