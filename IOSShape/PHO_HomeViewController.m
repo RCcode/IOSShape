@@ -77,7 +77,7 @@
     UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [infoButton setFrame:CGRectMake(280, TOPORIGIN_Y + 12, 20, 20)];
     [infoButton addTarget:self action:@selector(infoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [infoButton setBackgroundImage:pngImagePath(@"info") forState:UIControlStateNormal];
+    [infoButton setBackgroundImage:[UIImage imageNamed:@"info.png"] forState:UIControlStateNormal];
     [self.view addSubview:infoButton];
 //
     //应用程序选项
