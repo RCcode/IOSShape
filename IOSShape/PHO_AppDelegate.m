@@ -22,7 +22,7 @@
     
     homeViewController = [[PHO_HomeViewController alloc]init];
     UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:homeViewController];
-    [rootNav.navigationBar setBarTintColor:[UIColor redColor]];
+    [rootNav.navigationBar setBarTintColor:colorWithHexString(@"#fe8c3f")];
 //    [rootNav setNavigationBarHidden:YES];
 //    rootNav.navigationBar.translucent = YES;
     self.window.rootViewController = rootNav;

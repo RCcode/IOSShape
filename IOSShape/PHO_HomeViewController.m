@@ -12,7 +12,6 @@
 
 #import "GADBannerView.h"
 #import "GADRequest.h"
-#import "SampleConstants.h"
 #import <AdSupport/AdSupport.h>
 
 #import "MBProgressHUD+Add.h"
@@ -28,7 +27,10 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
+        
+        
         // Custom initialization
     }
     return self;
@@ -38,10 +40,17 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     CGPoint origin = CGPointMake(0.0,
                                  self.view.frame.size.height -
@@ -51,28 +60,28 @@
     self.adBanner = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait origin:origin];
     
     // Note: Edit SampleConstants.h to provide a definition for kSampleAdUnitID before compiling.
-    self.adBanner.adUnitID = kSampleAdUnitID;
+    self.adBanner.adUnitID = AdmobAPPKey;
     self.adBanner.delegate = self;
     self.adBanner.backgroundColor = [UIColor blackColor];
     self.adBanner.rootViewController = self.navigationController;
     [self.navigationController.view addSubview:self.adBanner];
     [self.adBanner loadRequest:[self request]];
     
+    self.view.backgroundColor = [UIColor colorWithPatternImage:pngImagePath(@"wallbase")];
+    
 //    UIView *customNavgationView = [[UIView alloc]initWithFrame:CGRectMake(0, TOPORIGIN_Y, 320, 44)];
 //    NSLog(@"%d",TOPORIGIN_Y);
 //    customNavgationView.backgroundColor = [UIColor redColor];
 //    [self.view addSubview:customNavgationView];
     
-    UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [moreButton setFrame:CGRectMake(280, 10, 20, 20)];
-    [moreButton addTarget:self action:@selector(moreButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [moreButton setTitle:@"应用选项" forState:UIControlStateNormal];
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:moreButton];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [infoButton setFrame:CGRectMake(280, TOPORIGIN_Y + 12, 20, 20)];
+    [infoButton addTarget:self action:@selector(infoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [infoButton setBackgroundImage:pngImagePath(@"info") forState:UIControlStateNormal];
+    [self.view addSubview:infoButton];
 //
     //应用程序选项
-    moreView = [[UIView alloc]initWithFrame:CGRectMake(kScreen_Width-140, self.navigationController.navigationBar.frame.size.height+self.navigationController.navigationBar.frame.origin.y, 140, 200)];
+    moreView = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width-140, self.navigationController.navigationBar.frame.size.height+self.navigationController.navigationBar.frame.origin.y, 140, 200)];
     moreView.backgroundColor = [UIColor whiteColor];
     moreView.hidden = YES;
     [self.view addSubview:moreView];
@@ -91,25 +100,35 @@
         [moreView addSubview:button];
     }
     
-    UIButton *openlibrary = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [openlibrary setTitle:@"打开相册" forState:UIControlStateNormal];
-    [openlibrary setFrame:CGRectMake(100, 100, 80, 40)];
+    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(-1, 351, 322, 140)];
+    buttonView.backgroundColor = colorWithHexString(@"#ffffff");
+    buttonView.layer.borderColor = colorWithHexString(@"dcdcdc").CGColor;
+    buttonView.layer.borderWidth = 1;
+    buttonView.alpha = 0.8;
+    [self.view addSubview:buttonView];
+    
+    UIButton *openlibrary = [UIButton buttonWithType:UIButtonTypeCustom];
+    [openlibrary setBackgroundImage:[UIImage imageNamed:@"gallery.png"] forState:UIControlStateNormal];
+    [openlibrary setFrame:CGRectMake(49, 0, 65, 65)];
+    openlibrary.center = CGPointMake(openlibrary.frame.origin.x, buttonView.center.y);
     openlibrary.tag = 100;
     [openlibrary addTarget:self action:@selector(choosePhoto:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:openlibrary];
     
-    UIButton *openCamera = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [openCamera setTitle:@"打开相机" forState:UIControlStateNormal];
-    [openCamera setFrame:CGRectMake(100, 160, 80, 40)];
+    UIButton *openCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+    [openCamera setBackgroundImage:[UIImage imageNamed:@"Camera.png"] forState:UIControlStateNormal];
+    [openCamera setFrame:CGRectMake(160, 160, 65, 65)];
+    openCamera.center = CGPointMake(openCamera.frame.origin.x, buttonView.center.y);
     openCamera.tag = 101;
     [openCamera addTarget:self action:@selector(choosePhoto:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:openCamera];
     
-    UIButton *noCut = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [noCut setTitle:@"无需剪裁" forState:UIControlStateNormal];
-    [noCut setFrame:CGRectMake(100, 220, 80, 40)];
-    //    [openlabery addTarget:self action:@selector(choosePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:noCut];
+    UIButton *openNoCropButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [openNoCropButton setBackgroundImage:[UIImage imageNamed:@"Nocrop.png"] forState:UIControlStateNormal];
+    [openNoCropButton setFrame:CGRectMake(271, 220, 65, 65)];
+    openNoCropButton.center = CGPointMake(openNoCropButton.frame.origin.x, buttonView.center.y);
+    [openNoCropButton addTarget:self action:@selector(openNoCropButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:openNoCropButton];
     
     imagePicker = [[UIImagePickerController alloc]init];
     imagePicker.allowsEditing = NO;
@@ -153,7 +172,7 @@
 
 #pragma 弹出菜单按扭方法
 
-- (void)moreButtonPressed:(id)sender
+- (void)infoButtonPressed:(id)sender
 {
     if (moreView.hidden)
     {
@@ -402,6 +421,15 @@
 - (void)dismissPicker
 {
     [imagePicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)openNoCropButtonPressed:(id)sender
+{
+    BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"noCropurl"]];
+    if (!canOpen)
+    {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"noCrop下载地址"]];
+    }
 }
 
 

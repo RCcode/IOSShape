@@ -14,4 +14,12 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import"Defines.h"
+    #import"CMethods.h"
+
+#define UmengAPPKey       @"5379996956240b8e43131db9"
+#define FlurryAPPKey      @"TDWM2F2ZXBDCVRVFBS8Z"
+#define GAAPPKey          @"UA-49487373-4"
+#define AdmobAPPKey       @"ca-app-pub-5553601587247422/4485041796"
+
+
 #endif

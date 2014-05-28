@@ -19,7 +19,8 @@
 #import "PHO_ShareViewController.h"
 
 
-#define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-60-KADHEIGHT, kScreen_Width, 60):CGRectMake(0, kScreen_Height-60-KADHEIGHT, kScreen_Width, 60))
+#define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-79-KADHEIGHT, kScreen_Width, 79):CGRectMake(0, kScreen_Height-79-KADHEIGHT, kScreen_Width, 79))
+
 
 @interface PHO_MainViewController ()
 
@@ -31,6 +32,14 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.view.backgroundColor = colorWithHexString(@"#f5f5f5");
+//        NSLog(@"%@",[UIFont familyNames]);
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 44)];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.textColor = [UIColor whiteColor];
+        titleLabel.text = @"Shape";
+        titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
+        self.navigationItem.titleView = titleLabel;
         // Custom initialization
     }
     return self;
@@ -49,9 +58,60 @@
     self = [super init];
     if (self)
     {
+        shapeGroupName = @"flower";
+        shapeSelectedGroup = @"flower";
         
+        shapeMulArray = [[NSMutableArray alloc]init];
+        shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
+        
+        
+        
+        colorMulArray = [[NSMutableArray alloc]
+                         initWithObjects:@"#ffffff",
+                                         @"#000000",
+                                         @"#f3705c",
+                                         @"#f4ee64",
+                                         @"#e55958",
+                                         @"#2b5ca9",
+                                         @"#f073ab",
+                                         @"#fdb934",
+                                         @"#75a454",
+                                         @"#6f589c",
+                                         @"#90d7eb",
+                                         @"#ee5c71",
+                                         @"#f48221",
+                                         @"#9c95c9",
+                                         @"#ffc20f",
+                                         @"#bfd743",
+                                         @"#65c295",
+                                         @"#f8aaa6",
+                                         @"#fff1f1",
+                                         @"#f6e5c2",
+                                         @"#f7f4c2",
+                                         @"#dbc4f6",
+                                         @"#eec3f6",
+                                         @"#f7c3d7",
+                                         @"#663dae",
+                                         @"#85418b",
+                                         @"#9a6bea",
+                                         @"#cc6fd4",
+                                         @"#f589b5",
+                                         @"#e46a7c",
+                                         @"#4b4a4a",
+                                         @"#777777",
+                                         @"#acacac",
+                                         @"#6d3938",
+                                         @"#53402d",
+                                         @"#6e5844", nil];
+        
+        graphMulArray = [[NSMutableArray alloc]init];
+        graphMulArray = [getImagesArray(@"graph",@"jpg") mutableCopy];
+        
+        
+        filterMulArray = [[NSMutableArray alloc]init];
+
         backView = [[UIView alloc]initWithFrame:CGRectMake(0, TOPORIGIN_Y + 44, 320, 320)];
-        //        backView.backgroundColor = [UIColor clearColor];
+        backView.backgroundColor = [UIColor clearColor];
         backView.layer.masksToBounds = YES;
         [self.view addSubview:backView];
         
@@ -64,51 +124,24 @@
         bottomImage = [[UIImageView alloc]initWithFrame:backView.frame];
         backRealImage = [[UIImage alloc]init];
         
-        topImage.image = [UIImage imageNamed:@"Max_shape-1.png"];
+        topImage.image = getImageFromDirectory([[[shapeMulArray objectAtIndex:0] lastPathComponent] stringByDeletingPathExtension], [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
         bottomImage.image = [UIImage imageNamed:@"color-1.png"];
         
         shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+        shapeImage.alpha = 0.7f;
         backRealImage = showView.showImageView.image;
-        //        topImage.image = shapeImage.image;
-        //        bottomImage.image = [UIImage imageNamed:@"33.png"];
-        //        bottomImage.alpha = 0.5f;
-        //        shapeImage.alpha = 1;
         [self.view addSubview:shapeImage];
         
-        shapeMulArray = [[NSMutableArray alloc]init];
-        colorMulArray = [[NSMutableArray alloc]init];
-        graphMulArray = [[NSMutableArray alloc]init];
-        filterMulArray = [[NSMutableArray alloc]init];
         
-        
-        NSMutableArray *paths = [[[NSBundle mainBundle]
-                                  pathsForResourcesOfType:@"png" inDirectory:nil] mutableCopy];
-        for (NSString *path in paths)
-        {
-            if ([[path lastPathComponent]hasPrefix:@"shape-"] &&
-                ![[path lastPathComponent]hasSuffix:@"_Max@2x.png"])
-            {
-                [shapeMulArray addObject:[path lastPathComponent]];
-            }
-            else if ([[path lastPathComponent] hasPrefix:@"color-"] &&
-                     ![[path lastPathComponent]hasSuffix:@"_Max"])
-            {
-                [colorMulArray addObject:[path lastPathComponent]];
-            }
-            else if ([[path lastPathComponent] hasPrefix:@"graph-"] &&
-                     ![[path lastPathComponent]hasSuffix:@"_Max"])
-            {
-                [graphMulArray addObject:[path lastPathComponent]];
-            }
-        }
-        
+        NSMutableArray *colorPaths = [[[NSBundle mainBundle]pathsForResourcesOfType:@"jpg" inDirectory:nil] mutableCopy];
+
         showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
-        showChooseView.backgroundColor = [UIColor blueColor];
+        showChooseView.backgroundColor = colorWithHexString(@"#ededed");
         [self.view addSubview:showChooseView];
         
         if (!iPhone5)
         {
-            UIButton *hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            UIButton *hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-40, 0, 40, 40)];
             hideShowChooseViewButton.backgroundColor = [UIColor redColor];
             [hideShowChooseViewButton addTarget:self action:@selector(hideShowChooseViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -122,6 +155,12 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -133,43 +172,47 @@
 //    customNavgationView.backgroundColor = [UIColor redColor];
 //    [self.view addSubview:customNavgationView];
     
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [backButton setFrame:CGRectMake(10, 10, 20, 20)];
-    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setFrame:CGRectMake(10, 10, 12, 20)];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [shareButton setFrame:CGRectMake(280, 10, 20, 20)];
+    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [shareButton setFrame:CGRectMake(280, 10, 19, 26)];
     [shareButton addTarget:self action:@selector(shareButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [shareButton setTitle:@"分享" forState:UIControlStateNormal];
+    [shareButton setBackgroundImage:[UIImage imageNamed:@"share-icon.png"] forState:UIControlStateNormal];
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:shareButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
     //tabbar
-    UIView *tabbarView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreen_Height-50-KADHEIGHT, kScreen_Width, 50)];
-    tabbarView.backgroundColor = [UIColor grayColor];
+    tabbarView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreen_Height-49-KADHEIGHT, kScreen_Width, 49)];
+    tabbarView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:tabbarView];
     
-    UIButton *shapeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *shapeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [shapeButton setFrame:CGRectMake(0, 0, tabbarView.frame.size.width/3, tabbarView.frame.size.height)];
     [shapeButton addTarget:self action:@selector(shapeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [shapeButton setTitle:@"图形" forState:UIControlStateNormal];
+    [shapeButton setBackgroundImage:[UIImage imageNamed:@"形状.png"] forState:UIControlStateNormal];
+    [shapeButton setBackgroundImage:[UIImage imageNamed:@"形状(选中).png"] forState:UIControlStateSelected];
+    [shapeButton setSelected:YES];
     [tabbarView addSubview:shapeButton];
     
-    UIButton *backGroundButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *backGroundButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backGroundButton setFrame:CGRectMake(tabbarView.frame.size.width/3, 0, tabbarView.frame.size.width/3, tabbarView.frame.size.height)];
     [backGroundButton addTarget:self action:@selector(backGroundButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [backGroundButton setTitle:@"颜色图案" forState:UIControlStateNormal];
+    [backGroundButton setBackgroundImage:[UIImage imageNamed:@"前景编辑.png"] forState:UIControlStateNormal];
+    [backGroundButton setBackgroundImage:[UIImage imageNamed:@"前景编辑(选中).png"] forState:UIControlStateSelected];
     [tabbarView addSubview:backGroundButton];
     
-    UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [filterButton setFrame:CGRectMake(tabbarView.frame.size.width/3*2, 0, tabbarView.frame.size.width/3, tabbarView.frame.size.height)];
     [filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [filterButton setTitle:@"滤镜" forState:UIControlStateNormal];
+    [filterButton setBackgroundImage:[UIImage imageNamed:@"滤镜.png"] forState:UIControlStateNormal];
+    [filterButton setBackgroundImage:[UIImage imageNamed:@"滤镜(选中).png"] forState:UIControlStateSelected];
     [tabbarView addSubview:filterButton];
     
     // Do any additional setup after loading the view.
@@ -187,96 +230,219 @@
 
 - (void)initShapeChooseView
 {
-    shapeChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 60)];
-    shapeChooseView.backgroundColor = [UIColor clearColor];
+    shapeChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
+    shapeChooseView.backgroundColor = colorWithHexString(@"#ededed");
     [showChooseView insertSubview:shapeChooseView atIndex:0];
     
-    UIScrollView *shapeChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 10, kScreen_Width, 45)];
-    shapeChooseScrollView.contentSize = CGSizeMake(45 * [shapeMulArray count], 40);
-    shapeChooseScrollView.backgroundColor = [UIColor grayColor];
+    UIView *groupBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, shapeChooseView.frame.size.width, 30)];
+    groupBackView.tag = 10;
+    [shapeChooseView addSubview:groupBackView];
+    
+    NSArray *groupNameArray = [NSArray arrayWithObjects:@"group1", @"组二", @"group3", @"group4", @"组五",nil];
+    
+    for (int i = 0; i < [groupNameArray count]; i ++)
+    {
+        UIButton *chooseGroupButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [chooseGroupButton setFrame:CGRectMake((groupBackView.frame.size.width/groupNameArray.count)*i, 0, groupBackView.frame.size.width/groupNameArray.count, 30)];
+        [chooseGroupButton addTarget:self action:@selector(chooseGroupButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        chooseGroupButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:15];
+        [chooseGroupButton setTitleColor:colorWithHexString(@"#a2a2a2") forState:UIControlStateNormal];
+        [chooseGroupButton setTitleColor:colorWithHexString(@"#fe8c4f") forState:UIControlStateSelected];
+        if (i == 0)
+        {
+            chooseGroupButton.selected = YES;
+        }
+        chooseGroupButton.tag = i + 10;
+        [chooseGroupButton setTitle:[groupNameArray objectAtIndex:i] forState:UIControlStateNormal];
+        chooseGroupButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        chooseGroupButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        [groupBackView addSubview:chooseGroupButton];
+    }
+    
+    shapeChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
+    shapeChooseScrollView.contentSize = CGSizeMake(50 * [shapeMulArray count], 40);
+    shapeChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
     [shapeChooseView addSubview:shapeChooseScrollView];
+    
+    shapeSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    shapeSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
+    shapeSelectedView.layer.borderWidth = 2;
     
     for (int i = 0; i < [shapeMulArray count]; i ++)
     {
         @autoreleasepool {
-            UIButton *chooseShapeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            [chooseShapeButton setFrame:CGRectMake(5*(i+1)+40*i, 2, 40, 40)];
+            UIButton *chooseShapeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [chooseShapeButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
             [chooseShapeButton addTarget:self action:@selector(chooseShapeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [chooseShapeButton setBackgroundImage:[UIImage imageNamed:[shapeMulArray objectAtIndex:i]] forState:UIControlStateNormal];
-//            [chooseShapeButton setBackgroundColor:[UIColor whiteColor]];
-            chooseShapeButton.layer.borderColor = [UIColor grayColor].CGColor;
-            chooseShapeButton.layer.borderWidth = 1;
+            [chooseShapeButton setBackgroundImage:[UIImage imageWithContentsOfFile:[shapeMulArray objectAtIndex:i]] forState:UIControlStateNormal];
+            if (i == 0)
+            {
+                shapeSelectedView.frame = chooseShapeButton.frame;
+            }
             chooseShapeButton.tag = i + 10;
-            [shapeChooseScrollView addSubview:chooseShapeButton];
+            [shapeChooseScrollView insertSubview:chooseShapeButton atIndex:0];
         }
     }
+    [shapeChooseScrollView addSubview:shapeSelectedView];
 }
 
 -(void)chooseShapeButtonPressed:(id)sender
 {
     //选择哪个图形
     UIButton *tempButton = (UIButton *)sender;
-//    shapeImage.image = [shapeMulArray objectAtIndex:tempButton.tag - 10];
-//    realImage = [shapeMulArray objectAtIndex:tempButton.tag - 10];
     
-    topImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"Max_%@",[shapeMulArray objectAtIndex:tempButton.tag - 10]]];
+    shapeSelectedView.frame = tempButton.frame;
+    shapeSelectedView.hidden = NO;
+    
+    shapeSelectedGroup = shapeGroupName;
+    
+    NSString *pathStr = [shapeMulArray objectAtIndex:tempButton.tag - 10];
+    topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension], [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
+    
+    
+//    topImage.image = [UIImage imageWithContentsOfFile:pathStr];
     
     shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+}
+
+- (void)chooseGroupButtonPressed:(id)sender
+{
+    //选择哪个组
+    UIView *tempView = [shapeChooseView viewWithTag:10];
+    for (UIButton *tempBtn in tempView.subviews)
+    {
+        tempBtn.selected = NO;
+    }
+    
+    UIButton *tempButton = (UIButton *)sender;
+    tempButton.selected = YES;
+    
+    [shapeMulArray removeAllObjects];
+    
+    switch (tempButton.tag - 10)
+    {
+        case 0:
+            ;
+            shapeGroupName = @"shape";
+            break;
+        case 1:
+            ;
+            shapeGroupName = @"love";
+            break;
+        case 2:
+            ;
+            shapeGroupName = @"flower";
+            break;
+        case 3:
+            ;
+            shapeGroupName = @"nature";
+            break;
+        case 4:
+            ;
+            shapeGroupName = @"grocery";
+            break;
+        default:
+            break;
+    }
+    
+    shapeSelectedView.hidden = YES;
+    
+    if (shapeSelectedGroup == shapeGroupName)
+    {
+        shapeSelectedView.hidden = NO;
+    }
+    
+    shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
+    
+    for (UIView *tempView in shapeChooseScrollView.subviews)
+    {
+        if ([tempView isKindOfClass:[UIButton class]])
+        {
+            [tempView removeFromSuperview];
+        }
+    }
+    
+    shapeChooseScrollView.contentSize = CGSizeMake(50 * [shapeMulArray count], 40);
+    shapeChooseScrollView.contentOffset = CGPointMake(0, 0);
+    for (int i = 0; i < [shapeMulArray count]; i ++)
+    {
+        @autoreleasepool {
+            UIButton *chooseShapeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [chooseShapeButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
+            [chooseShapeButton addTarget:self action:@selector(chooseShapeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [chooseShapeButton setBackgroundImage:[UIImage imageWithContentsOfFile:[shapeMulArray objectAtIndex:i]] forState:UIControlStateNormal];
+            chooseShapeButton.tag = i + 10;
+            [shapeChooseScrollView insertSubview:chooseShapeButton atIndex:0];
+        }
+    }
 }
 
 #pragma mark 初始化背景选择view
 
 - (void)initBackGroundView
 {
-    backGroundChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 60)];
-    backGroundChooseView.backgroundColor = [UIColor clearColor];
+    backGroundChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
+    backGroundChooseView.backgroundColor = colorWithHexString(@"#ededed");
     
-    NSArray *typeNameArray = [NSArray arrayWithObjects:@"颜色", @"图案", @"模糊", @"透明度", nil];
+    backGroundSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    backGroundSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
+    backGroundSelectedView.layer.borderWidth = 2;
     
-    for (int i = 0; i < 4; i ++)
+    NSArray *typeNameArray = [NSArray arrayWithObjects:@"颜色", @"图案", @"透明度", nil];
+    
+    for (int i = 0; i < [typeNameArray count]; i ++)
     {
         @autoreleasepool
         {
-            UIButton *chooseTypeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            [chooseTypeButton setFrame:CGRectMake(4*(i+1)+75*i, 1, 75, 18)];
+            UIButton *chooseTypeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [chooseTypeButton setFrame:CGRectMake((backGroundChooseView.frame.size.width/[typeNameArray count])*i, 1, backGroundChooseView.frame.size.width/typeNameArray.count , 30)];
             [chooseTypeButton setTitle:[typeNameArray objectAtIndex:i] forState:UIControlStateNormal];
             [chooseTypeButton addTarget:self action:@selector(chooseTypeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [chooseTypeButton setTag:i+1];
+            chooseTypeButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:15];
+            if (i == 0)
+            {
+                chooseTypeButton.selected = YES;
+            }
+            [chooseTypeButton setTitleColor:colorWithHexString(@"#a2a2a2") forState:UIControlStateNormal];
+            [chooseTypeButton setTitleColor:colorWithHexString(@"#fe8c4f") forState:UIControlStateSelected];
             [backGroundChooseView addSubview:chooseTypeButton];
             
         }
     }
     
-    colorChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 20, kScreen_Width, 40)];
-    [colorChooseScrollView setContentSize:CGSizeMake(320*([colorMulArray count]/7+1), 40)];
+    colorChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
+    colorChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
+    [colorChooseScrollView setContentSize:CGSizeMake(46*[colorMulArray count], 52)];
     for (int i = 0; i < [colorMulArray count]; i ++)
     {
         @autoreleasepool {
-            UIButton *chooseColorButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            [chooseColorButton setFrame:CGRectMake(5*(i+1)+40*i, 2, 40, 36)];
+            UIButton *chooseColorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [chooseColorButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
             [chooseColorButton addTarget:self action:@selector(chooseColorButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [chooseColorButton setBackgroundImage:[UIImage imageNamed:[colorMulArray objectAtIndex:i]] forState:UIControlStateNormal];
+            [chooseColorButton setBackgroundColor:colorWithHexString([colorMulArray objectAtIndex:i])];
             chooseColorButton.tag = i + 10;
             [colorChooseScrollView addSubview:chooseColorButton];
         }
     }
     [backGroundChooseView addSubview:colorChooseScrollView];
     
-    graphChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 20, kScreen_Width, 40)];
-    [graphChooseScrollView setContentSize:CGSizeMake(45 * [graphMulArray count], 40)];
+    graphChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
+    graphChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
+    [graphChooseScrollView setContentSize:CGSizeMake(45 * [graphMulArray count], 52)];
     for (int i = 0; i < [graphMulArray count]; i ++)
     {
         @autoreleasepool {
-            UIButton *chooseGraphButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            [chooseGraphButton setFrame:CGRectMake(5*(i+1)+40*i, 2, 40, 36)];
+            UIButton *chooseGraphButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [chooseGraphButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
             [chooseGraphButton addTarget:self action:@selector(chooseGraphButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [chooseGraphButton setBackgroundImage:[UIImage imageNamed:[graphMulArray objectAtIndex:i]] forState:UIControlStateNormal];
+            [chooseGraphButton setBackgroundImage:[UIImage imageWithContentsOfFile:[graphMulArray objectAtIndex:i]] forState:UIControlStateNormal];
             chooseGraphButton.tag = i + 10;
             [graphChooseScrollView addSubview:chooseGraphButton];
         }
     }
     
-    CGRect sliderRect = CGRectMake(40, 40, 240, 10);
+    CGRect sliderRect = CGRectMake(65, 16, 244, 20);
     
     
     blurSlider = [[UISlider alloc]initWithFrame:sliderRect];
@@ -285,22 +451,42 @@
     [blurSlider setMinimumValue:0.0f];
     [blurSlider setMaximumValue:1.5f];
     
+    alphaSliderView = [[UIView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
+    alphaSliderView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
     
     alphaSlider = [[UISlider alloc]initWithFrame:sliderRect];
     [alphaSlider addTarget:self action:@selector(alphaSliderValueChange:) forControlEvents:UIControlEventValueChanged];
-    [alphaSlider setValue:1.0f];
+    [alphaSlider setMinimumTrackTintColor:colorWithHexString(@"#fe8c3f")];
+    [alphaSlider setValue:0.7f];
     [alphaSlider setMinimumValue:0.0f];
     [alphaSlider setMaximumValue:1.0f];
+    [alphaSliderView addSubview:alphaSlider];
+    
+    valuePercentLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 20)];
+    valuePercentLabel.textAlignment = NSTextAlignmentCenter;
+    valuePercentLabel.text = [NSString stringWithFormat:@"%d%%",(int)((1-alphaSlider.value/alphaSlider.maximumValue)*100)];
+    [alphaSliderView addSubview:valuePercentLabel];
 }
 
 - (void)chooseTypeButtonPressed:(id)sender
 {
     //选择哪种类型处理
     
-    UIView *tempView = [backGroundChooseView.subviews lastObject];
-    [tempView removeFromSuperview];
+    for (UIView *tempView in backGroundChooseView.subviews)
+    {
+        if (![tempView isKindOfClass:[UIButton class]])
+        {
+            [tempView removeFromSuperview];
+        }
+        else
+        {
+            UIButton *tempButton = (UIButton *)tempView;
+            tempButton.selected = NO;
+        }
+    }
     
     UIButton *tempButton = (UIButton *)sender;
+    tempButton.selected = YES;
     NSInteger tag = tempButton.tag;
     switch (tag)
     {
@@ -312,13 +498,13 @@
             ;
             [backGroundChooseView addSubview:graphChooseScrollView];
             break;
+//        case 3:
+//            ;
+//            [backGroundChooseView addSubview:blurSlider];
+//            break;
         case 3:
             ;
-            [backGroundChooseView addSubview:blurSlider];
-            break;
-        case 4:
-            ;
-            [backGroundChooseView addSubview:alphaSlider];
+            [backGroundChooseView addSubview:alphaSliderView];
             break;
 
         default:
@@ -331,10 +517,16 @@
 {
     //选择哪个颜色
     UIButton *tempButton = (UIButton *)sender;
+    if (![colorChooseScrollView.subviews containsObject:backGroundSelectedView])
+    {
+        [backGroundSelectedView removeFromSuperview];
+        [colorChooseScrollView addSubview:backGroundSelectedView];
+    }
+    backGroundSelectedView.frame = tempButton.frame;
     
     UIView *tempView = [[UIView alloc]initWithFrame:showView.showImageView.frame];
     
-    tempView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:[colorMulArray objectAtIndex:tempButton.tag - 10]]];
+    tempView.backgroundColor = colorWithHexString([colorMulArray objectAtIndex:tempButton.tag - 10]);
 
     bottomImage.image = [UIImage getImageFromView:tempView];
     
@@ -346,7 +538,15 @@
     //选择哪个图案
     UIButton *tempButton = (UIButton *)sender;
     
-    bottomImage.image = [self getGraphImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",[graphMulArray objectAtIndex:tempButton.tag - 10]]]];
+    if (![graphChooseScrollView.subviews containsObject:backGroundSelectedView])
+    {
+        [backGroundSelectedView removeFromSuperview];
+        [graphChooseScrollView addSubview:backGroundSelectedView];
+    }
+
+    backGroundSelectedView.frame = tempButton.frame;
+    
+    bottomImage.image = [self getGraphImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@",[graphMulArray objectAtIndex:tempButton.tag - 10]]]];
     
     shapeImage.image = [UIImage blurryBottomImage:bottomImage.image andTopImage:topImage.image withBlurLevel:blurSlider.value];
 }
@@ -381,39 +581,49 @@
     UISlider *tempslider = (UISlider *)sender;
     
     shapeImage.alpha = tempslider.value;
+    
+    valuePercentLabel.text = [NSString stringWithFormat:@"%d%%",(int)((1-tempslider.value/alphaSlider.maximumValue)*100)];
 }
 
 #pragma mark - 初始化滤镜选择view
 
 - (void)initFilterChooseView
 {
-    filterChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 60)];
-    filterChooseView.backgroundColor = [UIColor clearColor];
+    filterChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
+    filterChooseView.backgroundColor = colorWithHexString(@"#ededed");
     
-    UIScrollView *filterChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 10, kScreen_Width, 45)];
-    filterChooseScrollView.backgroundColor = [UIColor grayColor];
-    filterChooseScrollView.contentSize = CGSizeMake(45*[filterMulArray count], 40);
+    filterSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    filterSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
+    filterSelectedView.layer.borderWidth = 2;
+    
+    UIScrollView *filterChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
+    filterChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
+    filterChooseScrollView.contentSize = CGSizeMake(45*[filterMulArray count], 52);
     [filterChooseView addSubview:filterChooseScrollView];
     
     for (int i = 0; i < [filterMulArray count]; i ++)
     {
         @autoreleasepool {
-            UIButton *chooseFilterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            [chooseFilterButton setFrame:CGRectMake(5*(i+1)+40*i, 2, 40, 40)];
+            UIButton *chooseFilterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [chooseFilterButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
             [chooseFilterButton addTarget:self action:@selector(chooseFilterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [chooseFilterButton setBackgroundImage:[filterMulArray objectAtIndex:i] forState:UIControlStateNormal];
-//            [chooseFilterButton setTitle:[filterMulArray objectAtIndex:i] forState:UIControlStateNormal];
+            if (i == 0)
+            {
+                filterSelectedView.frame = chooseFilterButton.frame;
+            }
             chooseFilterButton.tag = i + 10;
             [filterChooseScrollView addSubview:chooseFilterButton];
         }
     }
-
+    [filterChooseScrollView addSubview:filterSelectedView];
 }
 
 - (void)chooseFilterButtonPressed:(id)sender
 {
     //选择滤镜效果
     UIButton *tempButton = (UIButton *)sender;
+    filterSelectedView.frame = tempButton.frame;
     showView.showImageView.image = [ImageUtil imageWithImage:backRealImage withColorMatrix:filterTyeps[tempButton.tag - 10]];
 }
 
@@ -461,19 +671,19 @@
 {
     showChooseView.hidden = NO;
     
+    [self selectChanged:sender];
+    
     if (![showChooseView.subviews containsObject:shapeChooseView])
     {
         for (UIView * tempView in showChooseView.subviews)
         {
-            if ([tempView isKindOfClass:[UIButton class]])
-            {
-                continue;
-            }
-            else
+            if (![tempView isKindOfClass:[UIButton class]])
             {
                 [tempView removeFromSuperview];
                 [showChooseView insertSubview:shapeChooseView atIndex:0];
             }
+            
+            
         }
     }
 }
@@ -488,6 +698,8 @@
 - (void)backGroundButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
+    
+    [self selectChanged:sender];
     
     if (![showChooseView.subviews containsObject:backGroundChooseView])
     {
@@ -523,6 +735,8 @@
 {
     showChooseView.hidden = NO;
     
+    [self selectChanged:sender];
+    
     if ([filterMulArray count] == 0)
     {
         for (int i = 0; i < sizeof(filterTyeps)/sizeof(float *); i++)
@@ -547,7 +761,17 @@
             }
         }
     }
-    
+}
+
+//按扭选中状态改变
+- (void)selectChanged:(id)sender
+{
+    UIButton *tempButton = (UIButton *)sender;
+    for (UIButton *btn in tabbarView.subviews)
+    {
+        btn.selected = NO;
+    }
+    tempButton.selected = YES;
 }
 
 - (void)didReceiveMemoryWarning

@@ -29,6 +29,11 @@ typedef enum _whichTypeUsed
     UIImageView *topImage;
     UIImageView *bottomImage;
     UIImage *backRealImage;
+    UIImageView *shapeSelectedView;
+    UIImageView *backGroundSelectedView;
+    UIImageView *filterSelectedView;
+    
+    UIView *tabbarView;
     
     NSMutableArray *shapeMulArray;
     NSMutableArray *colorMulArray;
@@ -46,10 +51,16 @@ typedef enum _whichTypeUsed
     
     UIView *showChooseView;
     
+    UIScrollView *shapeChooseScrollView;
     UIScrollView *colorChooseScrollView;
     UIScrollView *graphChooseScrollView;
     UISlider *blurSlider;
+    UIView *alphaSliderView;
+    UILabel *valuePercentLabel;
     UISlider *alphaSlider;
+    
+    NSString *shapeGroupName;
+    NSString *shapeSelectedGroup;
 }
 
 -(id)initWithImage:(UIImage *)image;

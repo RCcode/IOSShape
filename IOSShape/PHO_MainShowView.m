@@ -64,83 +64,103 @@
     
     //    UIPanGestureRecognizer *panrecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panrecognizerbegain:)];
     //    [resizeview addGestureRecognizer:panrecognizer];
+    
+    //移动手势
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+    [panRecognizer setMinimumNumberOfTouches:1];
+    [panRecognizer setMaximumNumberOfTouches:1];
+    [showImageView addGestureRecognizer:panRecognizer];
+    
+    //缩放手势
+    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(scale:)];
+    [showImageView addGestureRecognizer:pinchRecognizer];
+    
+    //旋转手势
+    UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotate:)];
+    [showImageView addGestureRecognizer:rotationRecognizer];
+    
+    pinchRecognizer.delegate = self;
+    rotationRecognizer.delegate = self;
+    panRecognizer.delegate = self;
+
+
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    if ([[[event allTouches]allObjects]count] == 2)
-    {
-        CGPoint point1_1 = [[[[event allTouches]allObjects] objectAtIndex:0] locationInView:self.superview];
-        CGPoint point2_1 = [[[[event allTouches]allObjects] objectAtIndex:1] locationInView:self.superview];
-        
-        
-        CGFloat sub_x=point1_1.x-point2_1.x;
-        CGFloat sub_y=point1_1.y-point2_1.y;
-        
-        beginDistance = sqrtf(sub_x*sub_x+sub_y*sub_y);
-        
-        beginangel = atan2f(point1_1.y-point2_1.y, point1_1.x-point2_1.x);
-    }
-    
-}
+//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    if ([[[event allTouches]allObjects]count] == 2)
+//    {
+//        CGPoint point1_1 = [[[[event allTouches]allObjects] objectAtIndex:0] locationInView:self.superview];
+//        CGPoint point2_1 = [[[[event allTouches]allObjects] objectAtIndex:1] locationInView:self.superview];
+//        
+//        
+//        CGFloat sub_x=point1_1.x-point2_1.x;
+//        CGFloat sub_y=point1_1.y-point2_1.y;
+//        
+//        beginDistance = sqrtf(sub_x*sub_x+sub_y*sub_y);
+//        
+//        beginangel = atan2f(point1_1.y-point2_1.y, point1_1.x-point2_1.x);
+//    }
+//    
+//}
 
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    NSArray *touchArray = [NSArray arrayWithArray:[[event allTouches] allObjects]];
-    
-    if ([touchArray count] == 1)
-    {
-        UITouch *touch = [touches anyObject];
-        CGPoint point2 = [touch locationInView:self.superview];
-        CGPoint point1 = [touch previousLocationInView:self.superview];
-        
-        self.center = CGPointMake(self.center.x + (point2.x-point1.x), self.center.y + (point2.y-point1.y));
-    }
-    else if ([touchArray count] == 2)
-    {
-        
-        CGPoint point1_1 = [[touchArray objectAtIndex:0] locationInView:self.superview];
-        CGPoint point2_1 = [[touchArray objectAtIndex:1] locationInView:self.superview];
-        
-		
-		CGFloat sub_x=point1_1.x-point2_1.x;
-		CGFloat sub_y=point1_1.y-point2_1.y;
-		
-		CGFloat currentDistance= sqrtf(sub_x*sub_x+sub_y*sub_y);
-        
-        CGFloat changeDistance = beginDistance - currentDistance;
-		
-		if (changeDistance > 0)
-        {
-			//缩小
-            showImageView.frame = CGRectMake(showImageView.frame.origin.x+changeDistance/2, showImageView.frame.origin.y+changeDistance/2, showImageView.frame.size.width-changeDistance, showImageView.frame.size.height-changeDistance);
-            beginDistance = currentDistance;
-		}
-        else
-        {
-            //放大
-            showImageView.frame = CGRectMake(showImageView.frame.origin.x+changeDistance/2, showImageView.frame.origin.y+changeDistance/2, showImageView.frame.size.width-changeDistance, showImageView.frame.size.height-changeDistance);
-            beginDistance = currentDistance;
-        }
-        //旋转
-        
-        
-        CGFloat changeAngel = beginangel - atan2f(point1_1.y-point2_1.y,point1_1.x-point2_1.x);
-        
-        self.transform = CGAffineTransformMakeRotation(-changeAngel);
-        [self setNeedsDisplay];
-    }
-    
-}
-
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    if ([[[event allTouches] allObjects] count] == 2)
-    {
-        beginangel = 0;
-        beginDistance = 0;
-    }
-}
+//-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    NSArray *touchArray = [NSArray arrayWithArray:[[event allTouches] allObjects]];
+//    
+//    if ([touchArray count] == 1)
+//    {
+//        UITouch *touch = [touches anyObject];
+//        CGPoint point2 = [touch locationInView:self.superview];
+//        CGPoint point1 = [touch previousLocationInView:self.superview];
+//        
+//        self.center = CGPointMake(self.center.x + (point2.x-point1.x), self.center.y + (point2.y-point1.y));
+//    }
+//    else if ([touchArray count] == 2)
+//    {
+//        
+//        CGPoint point1_1 = [[touchArray objectAtIndex:0] locationInView:self.superview];
+//        CGPoint point2_1 = [[touchArray objectAtIndex:1] locationInView:self.superview];
+//        
+//		
+//		CGFloat sub_x=point1_1.x-point2_1.x;
+//		CGFloat sub_y=point1_1.y-point2_1.y;
+//		
+//		CGFloat currentDistance= sqrtf(sub_x*sub_x+sub_y*sub_y);
+//        
+//        CGFloat changeDistance = beginDistance - currentDistance;
+//		
+//		if (changeDistance > 0)
+//        {
+//			//缩小
+//            showImageView.frame = CGRectMake(showImageView.frame.origin.x+changeDistance/2, showImageView.frame.origin.y+changeDistance/2, showImageView.frame.size.width-changeDistance, showImageView.frame.size.height-changeDistance);
+//            beginDistance = currentDistance;
+//		}
+//        else
+//        {
+//            //放大
+//            showImageView.frame = CGRectMake(showImageView.frame.origin.x+changeDistance/2, showImageView.frame.origin.y+changeDistance/2, showImageView.frame.size.width-changeDistance, showImageView.frame.size.height-changeDistance);
+//            beginDistance = currentDistance;
+//        }
+//        //旋转
+//        
+//        
+//        CGFloat changeAngel = beginangel - atan2f(point1_1.y-point2_1.y,point1_1.x-point2_1.x);
+//        
+//        self.transform = CGAffineTransformMakeRotation(-changeAngel);
+//        [self setNeedsDisplay];
+//    }
+//    
+//}
+//
+//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    if ([[[event allTouches] allObjects] count] == 2)
+//    {
+//        beginangel = 0;
+//        beginDistance = 0;
+//    }
+//}
 
 /**********************************************************
  函数名称：-(void)getPicture:(UIImage *)picture
@@ -192,6 +212,83 @@
     
 }
 
+
+#pragma mark -
+#pragma mark 缩放编辑图片
+-(void)scale:(UIPinchGestureRecognizer*)sender
+{
+    
+    //当手指离开屏幕时,将lastscale设置为1.0
+    if([sender state] == UIGestureRecognizerStateEnded)
+    {
+        lastScale = 1.0;
+        return;
+    }
+    
+    CGFloat scale = 1.0 - (lastScale - [(UIPinchGestureRecognizer*)sender scale]);
+    CGAffineTransform currentTransform = showImageView.transform;
+    CGAffineTransform newTransform = CGAffineTransformScale(currentTransform, scale, scale);
+    
+    [showImageView setTransform:newTransform];
+    lastScale = [sender scale];
+    
+}
+
+
+#pragma mark 旋转编译图片
+- (void)rotate:(UIRotationGestureRecognizer *)sender
+{
+    
+    if([sender state] == UIGestureRecognizerStateEnded)
+    {
+        _lastRotation = 0.0;
+        return;
+    }
+    
+    CGFloat rotation = 0.0 - (_lastRotation - [sender rotation]);
+    CGAffineTransform currentTransform = sender.view.transform;
+    CGAffineTransform newTransform = CGAffineTransformRotate(currentTransform,rotation);
+    
+    [sender.view setTransform:newTransform];
+    _lastRotation = [sender rotation];
+}
+
+#pragma mark -
+#pragma mark 移动编译图片
+
+-(void)move:(id)sender
+{
+    CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self];
+    if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan)
+    {
+        _firstX = [showImageView center].x;
+        _firstY = [showImageView center].y;
+    }
+    translatedPoint = CGPointMake(_firstX+translatedPoint.x, _firstY+translatedPoint.y);
+    [showImageView setCenter:translatedPoint];
+}
+
+- (void)handelPan:(UIPanGestureRecognizer *)recognizer
+{
+    CGPoint translation = [recognizer translationInView:self];
+    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x, recognizer.view.center.y + translation.y);
+    [recognizer setTranslation:CGPointMake(0, 0) inView:self];
+}
+
+- (void)showOverlayWithFrame:(CGRect)rect
+{
+    [showImageView setFrame:rect];
+}
+
+#pragma mark -
+#pragma mark 移动图片
+
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
 
 
 /*
