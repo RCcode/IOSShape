@@ -15,6 +15,8 @@
     #import <Foundation/Foundation.h>
     #import"Defines.h"
     #import"CMethods.h"
+    #import"MobClick.h"
+
 
 #define UmengAPPKey       @"5379996956240b8e43131db9"
 #define FlurryAPPKey      @"TDWM2F2ZXBDCVRVFBS8Z"

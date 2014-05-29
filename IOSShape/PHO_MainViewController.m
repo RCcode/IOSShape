@@ -60,6 +60,7 @@
     {
         shapeGroupName = @"flower";
         shapeSelectedGroup = @"flower";
+        uMengEditType = @"edit_shape";
         
         shapeMulArray = [[NSMutableArray alloc]init];
         shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
@@ -129,12 +130,9 @@
         
         shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
         shapeImage.alpha = 0.7f;
-        backRealImage = showView.showImageView.image;
+        backRealImage = image;
         [self.view addSubview:shapeImage];
         
-        
-        NSMutableArray *colorPaths = [[[NSBundle mainBundle]pathsForResourcesOfType:@"jpg" inDirectory:nil] mutableCopy];
-
         showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
         showChooseView.backgroundColor = colorWithHexString(@"#ededed");
         [self.view addSubview:showChooseView];
@@ -653,8 +651,8 @@
 - (void)shareButtonPressed:(id)sender
 {
     //分享
-    UIImage *tempImage = [UIImage getImageFromView:backView];
-    UIImage *passImage = [UIImage lastImageMakeWithBottomImage:tempImage andTopImage:shapeImage.image andAlpha:shapeImage.alpha];
+//    UIImage *tempImage = [UIImage getImageFromView:backView];
+    UIImage *passImage = [UIImage lastImageMakeWithBottomImage:backRealImage andTopImage:shapeImage.image andAlpha:shapeImage.alpha];
     PHO_ShareViewController *shareContrller = [[PHO_ShareViewController alloc]initWithImage:passImage];
     [self.navigationController pushViewController:shareContrller animated:YES];
 }
@@ -670,6 +668,8 @@
 - (void)shapeButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
+    
+    [MobClick event:@"edit_shape" label:@"edit"];
     
     [self selectChanged:sender];
     
@@ -698,6 +698,8 @@
 - (void)backGroundButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
+    
+    [MobClick event:@"edit_background" label:@"edit"];
     
     [self selectChanged:sender];
     
@@ -735,6 +737,8 @@
 {
     showChooseView.hidden = NO;
     
+    [MobClick event:@"edit_filter" label:@"edit"];
+    
     [self selectChanged:sender];
     
     if ([filterMulArray count] == 0)
@@ -763,16 +767,35 @@
     }
 }
 
-//按扭选中状态改变
+#pragma mark tabbar按扭状态改变
 - (void)selectChanged:(id)sender
 {
     UIButton *tempButton = (UIButton *)sender;
+    
     for (UIButton *btn in tabbarView.subviews)
     {
         btn.selected = NO;
     }
     tempButton.selected = YES;
 }
+
+//#pragma mark 获得统计需要的组名和图片名
+//
+////获得统计组名
+//- (NSString *)getGroupNameWithSelectedGroup:(NSString *)selectedGroup
+//{
+//    NSString *returnStr = nil;
+//    if ([selectedGroup isEqualToString:@"shape"])
+//    {
+////        tempStr = @""
+//    }
+//
+//}
+////获得统计图片名
+//- (NSString *)getGroupNameWithSelectedGroup:(NSString *)selectedGroup andImageName:(NSString*)imageName
+//{
+//    NSString *tempStr = [[[imageName lastPathComponent]componentsSeparatedByString:@"@"]objectAtIndex:0];
+//    }
 
 - (void)didReceiveMemoryWarning
 {

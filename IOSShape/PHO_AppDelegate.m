@@ -10,6 +10,7 @@
 
 #import "PHO_HomeViewController.h"
 
+
 @implementation PHO_AppDelegate
 
 @synthesize homeViewController;
@@ -23,11 +24,18 @@
     homeViewController = [[PHO_HomeViewController alloc]init];
     UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:homeViewController];
     [rootNav.navigationBar setBarTintColor:colorWithHexString(@"#fe8c3f")];
-//    [rootNav setNavigationBarHidden:YES];
-//    rootNav.navigationBar.translucent = YES;
     self.window.rootViewController = rootNav;
-    
     [self.window makeKeyAndVisible];
+    
+    /** 友盟相关设置 **/
+    
+    //打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
+    [MobClick setLogEnabled:YES];
+    [MobClick startWithAppkey:UmengAPPKey reportPolicy:SEND_ON_EXIT   channelId:@"App Store"];
+    //在线参数配置
+    [MobClick updateOnlineConfig];
+    
+    
     return YES;
 }
 

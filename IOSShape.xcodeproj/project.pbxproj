@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E806CD131936D9EC00459E9D /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E806CD101936D9EC00459E9D /* libMobClickLibrary.a */; };
+		E806CD161936DBBE00459E9D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E806CD151936DBBE00459E9D /* libz.dylib */; };
+		E806CD181936DC0600459E9D /* libMobClickLibrary_armv6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E806CD171936DC0600459E9D /* libMobClickLibrary_armv6.a */; };
 		E8103EEC192DEBBA005AFA16 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8103EEA192DEBBA005AFA16 /* libGoogleAdMobAds.a */; };
 		E8103EEE192DEC2F005AFA16 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8103EED192DEC2F005AFA16 /* AVFoundation.framework */; };
 		E8103EF0192DEC40005AFA16 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8103EEF192DEC40005AFA16 /* CoreTelephony.framework */; };
@@ -79,6 +82,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E806CD071936D6C400459E9D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		E806CD101936D9EC00459E9D /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		E806CD121936D9EC00459E9D /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		E806CD151936DBBE00459E9D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E806CD171936DC0600459E9D /* libMobClickLibrary_armv6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary_armv6.a; sourceTree = "<group>"; };
 		E8103EE1192DEBBA005AFA16 /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		E8103EE2192DEBBA005AFA16 /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
 		E8103EE3192DEBBA005AFA16 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
@@ -173,11 +181,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E806CD161936DBBE00459E9D /* libz.dylib in Frameworks */,
 				E8103EFE192DECA2005AFA16 /* MediaPlayer.framework in Frameworks */,
 				E8103EFC192DEC8A005AFA16 /* MessageUI.framework in Frameworks */,
 				E8103EFA192DEC80005AFA16 /* SystemConfiguration.framework in Frameworks */,
+				E806CD181936DC0600459E9D /* libMobClickLibrary_armv6.a in Frameworks */,
 				E8103EF8192DEC6E005AFA16 /* AudioToolbox.framework in Frameworks */,
 				E8103EF6192DEC63005AFA16 /* AdSupport.framework in Frameworks */,
+				E806CD131936D9EC00459E9D /* libMobClickLibrary.a in Frameworks */,
 				E8103EF4192DEC57005AFA16 /* StoreKit.framework in Frameworks */,
 				E8103EF2192DEC4D005AFA16 /* Security.framework in Frameworks */,
 				E8103EF0192DEC40005AFA16 /* CoreTelephony.framework in Frameworks */,
@@ -202,6 +213,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E806CD0F1936D9EC00459E9D /* uMengSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E806CD171936DC0600459E9D /* libMobClickLibrary_armv6.a */,
+				E806CD101936D9EC00459E9D /* libMobClickLibrary.a */,
+				E806CD121936D9EC00459E9D /* MobClick.h */,
+			);
+			path = uMengSDK;
+			sourceTree = "<group>";
+		};
 		E8103EC0192D9F53005AFA16 /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +238,7 @@
 		E8103ED0192DE6A4005AFA16 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				E806CD0F1936D9EC00459E9D /* uMengSDK */,
 				E8287491192F069B0047611C /* MBProgressHUD */,
 				E8103EE0192DEB93005AFA16 /* AdMobSDK */,
 			);
@@ -372,6 +394,8 @@
 		E8F40A32192CCB0300A2F0A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E806CD151936DBBE00459E9D /* libz.dylib */,
+				E806CD071936D6C400459E9D /* CoreText.framework */,
 				E8103EFD192DECA2005AFA16 /* MediaPlayer.framework */,
 				E8103EFB192DEC8A005AFA16 /* MessageUI.framework */,
 				E8103EF9192DEC80005AFA16 /* SystemConfiguration.framework */,
@@ -747,9 +771,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/IOSShape/AdMobSDK",
+					"$(PROJECT_DIR)/IOSShape/uMengSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
+				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -766,9 +793,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/IOSShape/AdMobSDK",
+					"$(PROJECT_DIR)/IOSShape/uMengSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

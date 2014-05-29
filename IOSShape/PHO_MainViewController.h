@@ -61,6 +61,8 @@ typedef enum _whichTypeUsed
     
     NSString *shapeGroupName;
     NSString *shapeSelectedGroup;
+    
+    NSString *uMengEditType;
 }
 
 -(id)initWithImage:(UIImage *)image;

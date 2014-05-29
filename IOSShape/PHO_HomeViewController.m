@@ -100,7 +100,15 @@
         [moreView addSubview:button];
     }
     
-    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(-1, 351, 322, 140)];
+    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectZero];
+    if (iPhone5)
+    {
+        buttonView.frame = CGRectMake(-1, kScreen_Height-217, 322, 140);
+    }
+    else
+    {
+        buttonView.frame = CGRectMake(-1, kScreen_Height-217, 322, 140);
+    }
     buttonView.backgroundColor = colorWithHexString(@"#ffffff");
     buttonView.layer.borderColor = colorWithHexString(@"dcdcdc").CGColor;
     buttonView.layer.borderWidth = 1;
@@ -176,6 +184,7 @@
 {
     if (moreView.hidden)
     {
+        [MobClick event:@"home_menu" label:@"Home"];
         moreView.hidden = NO;
     }
     else
@@ -193,11 +202,13 @@
     {
         case 10:
             ;//更新
+            [MobClick event:@"home_menu_update" label:@"Home"];
             [self GetUpdate];
             break;
         case 11:
             ;//评分
         {
+            [MobClick event:@"home_menu_rateus" label:@"Home"];
             NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", @"appid"];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
         }
@@ -205,6 +216,7 @@
         case 12:
         {
             //直接发邮件
+            [MobClick event:@"home_menu_feedback" label:@"Home"];
             MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
             picker.mailComposeDelegate =self;
             NSString *subject = [NSString stringWithFormat:@"shape %@ (iOS)", NSLocalizedString(@"feedback", nil)];
@@ -219,6 +231,7 @@
         case 13:
             ;//分享
         {
+            [MobClick event:@"home_menu_share" label:@"Home"];
 //            NSString *shareContent = NSLocalizedString(@"share_msg", nil);
             NSString *shareContent = [NSString stringWithFormat:@"www.baidu.com"];
             NSArray *activityItems = @[shareContent];
@@ -239,6 +252,7 @@
             break;
         case 14:
             ;//关注我们
+            [MobClick event:@"home_menu_followus" label:@"Home"];
             break;
             
         default:
@@ -291,6 +305,7 @@
     if (tag == 100)
     {
         //打开相册
+        [MobClick event:@"home_gallery" label:@"Home"];
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [self presentViewController:imagePicker animated:YES
                          completion:^{//设置overlayview
@@ -300,6 +315,7 @@
     else if (tag == 101)
     {
         //打开相机
+        [MobClick event:@"home_camera" label:@"Home"];
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:imagePicker animated:YES
                          completion:^{//设置overlayview
@@ -425,10 +441,15 @@
 
 - (void)openNoCropButtonPressed:(id)sender
 {
-    BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"noCropurl"]];
+    [MobClick event:@"home_NoCrop" label:@"Home"];
+    BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
     if (!canOpen)
     {
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"noCrop下载地址"]];
+    }
+    else
+    {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
     }
 }
 
