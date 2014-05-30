@@ -53,7 +53,7 @@
 //                LocalizedString(@"share", nil),
 //                LocalizedString(@"follow_us", nil)];
     
-    _titles = @[@"更新", @"评分", @"反馈", @"分享", @"关注我们"];
+    _titles = @[@"更新", @"评分", @"反馈", @"分享应用", @"关注我们"];
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 44)];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -137,7 +137,7 @@
         {
             [MobClick event:@"home_menu_share" label:@"Home"];
             //需要分享的内容
-            NSString *shareContent = @"share content";
+            NSString *shareContent = @"我正在用的Shape for instagram,可以为照片添加110多种漂亮有趣的形状，还有100多种背景和滤镜选择，你也来试试吧!";
             NSArray *activityItems = @[shareContent];
             
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
