@@ -82,26 +82,7 @@
     [infoButton setBackgroundImage:[UIImage imageNamed:@"info.png"] forState:UIControlStateNormal];
     [self.view addSubview:infoButton];
 //
-    //应用程序选项
-    moreView = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width-140, self.navigationController.navigationBar.frame.size.height+self.navigationController.navigationBar.frame.origin.y, 140, 200)];
-    moreView.backgroundColor = [UIColor whiteColor];
-    moreView.hidden = YES;
-    [self.view addSubview:moreView];
-    
-    NSArray *nameArray = [NSArray arrayWithObjects:@"更新", @"评分", @"反馈", @"分享", @"关注我们", nil];
-    
-    for (int i = 0; i < 5 ; i++)
-    {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        button.layer.borderWidth = 1;
-        button.layer.borderColor = [UIColor grayColor].CGColor;
-        [button setFrame:CGRectMake(0, 40*i, moreView.frame.size.width, 40)];
-        [button addTarget:self action:@selector(moreSubButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        button.tag = i+10;
-        [button setTitle:[nameArray objectAtIndex:i] forState:UIControlStateNormal];
-        [moreView addSubview:button];
-    }
-    
+
     UIView *buttonView = [[UIView alloc]initWithFrame:CGRectZero];
     if (iPhone5)
     {
