@@ -30,7 +30,7 @@
     /** 友盟相关设置 **/
     
     //打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
-    [MobClick setLogEnabled:YES];
+//    [MobClick setLogEnabled:YES];
     [MobClick startWithAppkey:UmengAPPKey reportPolicy:SEND_ON_EXIT   channelId:@"App Store"];
     //在线参数配置
     [MobClick updateOnlineConfig];
