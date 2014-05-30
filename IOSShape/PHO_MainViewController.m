@@ -58,8 +58,8 @@
     self = [super init];
     if (self)
     {
-        shapeGroupName = @"flower";
-        shapeSelectedGroup = @"flower";
+        shapeGroupName = @"shape";
+        shapeSelectedGroup = @"shape";
         uMengEditType = @"edit_shape";
         
         shapeMulArray = [[NSMutableArray alloc]init];
@@ -241,7 +241,7 @@
     groupBackView.tag = 10;
     [shapeChooseView addSubview:groupBackView];
     
-    NSArray *groupNameArray = [NSArray arrayWithObjects:@"group1", @"组二", @"group3", @"group4", @"组五",nil];
+    NSArray *groupNameArray = [NSArray arrayWithObjects:@"shape", @"love", @"flower", @"nature", @"grocery",nil];
     
     for (int i = 0; i < [groupNameArray count]; i ++)
     {
@@ -604,7 +604,6 @@
 - (void)initFilterChooseView
 {
     filterChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
-    filterChooseView.backgroundColor = colorWithHexString(@"#ededed");
     
     filterSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
     filterSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
@@ -615,12 +614,25 @@
     filterChooseScrollView.contentSize = CGSizeMake(45*[filterMulArray count], 52);
     [filterChooseView addSubview:filterChooseScrollView];
     
+//    NSArray *itemTitles = @[@"Origin", @"Lomo", @"Sunset",
+//                            @"Warm", @"Ice", @"Grayscale",
+//                            @"Blues", @"Shadows", @"Yesterday",
+//                            @"Glow", @"B/W", @"Pencil",
+//                            @"Chroma", @"Neon", @"Pinhole"];
+    
     for (int i = 0; i < [filterMulArray count]; i ++)
     {
         @autoreleasepool {
             UIButton *chooseFilterButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [chooseFilterButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
             [chooseFilterButton addTarget:self action:@selector(chooseFilterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//            [chooseFilterButton setTitle:[itemTitles objectAtIndex:i] forState:UIControlStateNormal];
+//            chooseFilterButton.titleLabel.backgroundColor = [UIColor blackColor];
+//            chooseFilterButton.titleLabel.alpha = 0.7;
+//            chooseFilterButton.titleLabel.textColor = [UIColor whiteColor];
+//            chooseFilterButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:12];
+            [chooseFilterButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 0)];
+            
             [chooseFilterButton setBackgroundImage:[filterMulArray objectAtIndex:i] forState:UIControlStateNormal];
             if (i == 0)
             {
@@ -635,17 +647,17 @@
 
 - (void)chooseFilterButtonPressed:(id)sender
 {
-    
-    NSArray *itemTitles = @[@"Origin", @"Lomo", @"Sunset",
-                            @"Warm", @"Ice", @"Grayscale",
-                            @"Blues", @"Shadows", @"Yesterday",
-                            @"Glow", @"B/W", @"Pencil",
-                            @"Chroma", @"Neon", @"Pinhole"];
+//    
+//    NSArray *itemTitles = @[@"Origin", @"Lomo", @"Sunset",
+//                            @"Warm", @"Ice", @"Grayscale",
+//                            @"Blues", @"Shadows", @"Yesterday",
+//                            @"Glow", @"B/W", @"Pencil",
+//                            @"Chroma", @"Neon", @"Pinhole"];
 
     //选择滤镜效果
     UIButton *tempButton = (UIButton *)sender;
     
-    [MobClick event:[NSString stringWithFormat:@"edit_filter_%@",[itemTitles objectAtIndex:tempButton.tag - 10]] label:@"edit_filter"];
+    [MobClick event:[NSString stringWithFormat:@"edit_filter_%d",tempButton.tag - 10] label:@"edit_filter"];
     
     filterSelectedView.frame = tempButton.frame;
     showView.showImageView.image = [ImageUtil imageWithImage:backRealImage withColorMatrix:filterTyeps[tempButton.tag - 10]];

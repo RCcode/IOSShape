@@ -82,13 +82,8 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:popToHomeViewButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    UILabel *shareToLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height, 60, 44)];
-    shareToLabel.text = @"Share To";
-    shareToLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-    [self.view addSubview:shareToLabel];
-    
     NSArray *shareToArray = [NSArray arrayWithObjects:@"相册.png", @"share-to-insta.png", @"fb.png", @"更多.png",nil];
-    NSArray *shareToNameArray = [NSArray arrayWithObjects:@"标题一", @"instagram", @"faceBook", @"更多", nil];
+    NSArray *shareToNameArray = [NSArray arrayWithObjects:@"save", @"instagram", @"faceBook", @"more", nil];
     
     for (int i = 0; i < 4; i ++)
     {
@@ -96,10 +91,10 @@
         {
             UIButton *shareToButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [shareToButton setBackgroundImage:[UIImage imageNamed:[shareToArray objectAtIndex:i]] forState:UIControlStateNormal];
-            shareToButton.frame = CGRectMake(10+25*i+56*i, self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height + 44, 56, 56);
+            shareToButton.frame = CGRectMake(10+25*i+56*i, self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height + 20, 56, 56);
             shareToButton.tag = i + 10;
             [shareToButton setTitle:[shareToNameArray objectAtIndex:i] forState:UIControlStateNormal];
-            [shareToButton setTitleColor:colorWithHexString(@"#000000") forState:UIControlStateNormal];
+            [shareToButton setTitleColor:colorWithHexString(@"#7e7e7e") forState:UIControlStateNormal];
             [shareToButton setTitleEdgeInsets:UIEdgeInsetsMake(80, 0, 0, 0)];
             shareToButton.titleLabel.textAlignment = NSTextAlignmentCenter;
             shareToButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
@@ -107,6 +102,11 @@
             [self.view addSubview:shareToButton];
         }
     }
+    
+//    UILabel *shareToLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height+116, 60, 44)];
+//    shareToLabel.text = @"";
+//    shareToLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+//    [self.view addSubview:shareToLabel];
     
     // Do any additional setup after loading the view.
 }

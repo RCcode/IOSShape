@@ -174,6 +174,7 @@
 {
     
     CGFloat scale = picture.size.width/picture.size.height;
+    NSLog(@"%f,%f",picture.size.width,picture.size.height);
     
     if (picture.size.width >= picture.size.height)
     {
@@ -191,14 +192,14 @@
     {
         if (picture.size.width < 1080)
         {
-            picture = [picture rescaleImageToSize:CGSizeMake(picture.size.width, picture.size.width*scale)];
+            picture = [picture rescaleImageToSize:CGSizeMake(picture.size.width, picture.size.width/scale)];
         }
         else if (picture.size.width > 1080)
         {
-            picture = [picture rescaleImageToSize:CGSizeMake(1080, 1080*scale)];
+            picture = [picture rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
         }
         
-        showImageView.frame = CGRectMake(showImageView.frame.origin.x, showImageView.frame.origin.y, 320, 320*scale);
+        showImageView.frame = CGRectMake(showImageView.frame.origin.x, showImageView.frame.origin.y, 320, 320/scale);
     }
     
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(showImageView.frame.size.width, showImageView.frame.size.height), NO, 0);
