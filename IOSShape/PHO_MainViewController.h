@@ -30,6 +30,8 @@ typedef enum _whichTypeUsed
     UIImageView *topImage;
     UIImageView *bottomImage;
     UIImage *backRealImage;
+    UIImage *filterMaxImage;
+    UIImage *filterMinImage;
     UIImageView *shapeSelectedView;
     UIImageView *backGroundSelectedView;
     UIImageView *filterSelectedView;

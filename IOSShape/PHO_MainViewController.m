@@ -124,6 +124,8 @@
         topImage = [[UIImageView alloc]initWithFrame:backView.frame];
         bottomImage = [[UIImageView alloc]initWithFrame:backView.frame];
         backRealImage = [[UIImage alloc]init];
+        filterMaxImage = [[UIImage alloc]init];
+        filterMinImage = [[UIImage alloc]init];
         
         topImage.image = getImageFromDirectory([[[shapeMulArray objectAtIndex:0] lastPathComponent] stringByDeletingPathExtension], [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
         bottomImage.image = [UIImage imageNamed:@"color-1.png"];
@@ -131,10 +133,34 @@
         shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
         shapeImage.alpha = 0.7f;
         backRealImage = image;
-        int width = CGImageGetWidth(backRealImage.CGImage);
-        int height = CGImageGetHeight(backRealImage.CGImage);
         
-        NSLog(@"%d,%d",width,height);
+        CGFloat scale = backRealImage.size.width/backRealImage.size.height;
+        
+        if (backRealImage.size.width >= backRealImage.size.height)
+        {
+            if (backRealImage.size.height < 1080 )
+            {
+                filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.height*scale, backRealImage.size.height)];
+            }
+            else if (backRealImage.size.height > 1080)
+            {
+                filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
+            }
+            filterMinImage = [backRealImage subImageWithRect:CGRectMake((backRealImage.size.width-backRealImage.size.height)/2, 0, backRealImage.size.height, backRealImage.size.height)];
+        }
+        else if (backRealImage.size.width < backRealImage.size.height)
+        {
+            if (backRealImage.size.width < 1080)
+            {
+                filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.width, backRealImage.size.width/scale)];
+            }
+            else if (backRealImage.size.width > 1080)
+            {
+                filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
+            }
+            filterMinImage = [backRealImage subImageWithRect:CGRectMake(0, (backRealImage.size.height-backRealImage.size.width)/2, backRealImage.size.width, backRealImage.size.width)];
+        }
+        filterMinImage = [filterMinImage rescaleImageToSize:CGSizeMake(200, 200)];
         [self.view addSubview:shapeImage];
         
         showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
@@ -660,7 +686,8 @@
     [MobClick event:[NSString stringWithFormat:@"edit_filter_%d",tempButton.tag - 10] label:@"edit_filter"];
     
     filterSelectedView.frame = tempButton.frame;
-    showView.showImageView.image = [ImageUtil imageWithImage:backRealImage withColorMatrix:filterTyeps[tempButton.tag - 10]];
+    
+    showView.showImageView.image = [ImageUtil imageWithImage:filterMaxImage withColorMatrix:filterTyeps[tempButton.tag - 10]];
 }
 
 #pragma mark - 导航按扭方法
@@ -831,7 +858,7 @@
     {
         for (int i = 0; i < sizeof(filterTyeps)/sizeof(float *); i++)
         {
-            [filterMulArray addObject:[ImageUtil imageWithImage:[backRealImage rescaleImageToSize:CGSizeMake(200, 200)] withColorMatrix:filterTyeps[i]]];
+            [filterMulArray addObject:[ImageUtil imageWithImage:filterMinImage withColorMatrix:filterTyeps[i]]];
         }
         [self initFilterChooseView];
     }

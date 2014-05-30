@@ -11,8 +11,8 @@
 		E806375619382C2000B2ED10 /* Max_grocery in Resources */ = {isa = PBXBuildFile; fileRef = E806375119382C2000B2ED10 /* Max_grocery */; };
 		E806375719382C2000B2ED10 /* Max_love in Resources */ = {isa = PBXBuildFile; fileRef = E806375219382C2000B2ED10 /* Max_love */; };
 		E806375819382C2000B2ED10 /* Max_nature in Resources */ = {isa = PBXBuildFile; fileRef = E806375319382C2000B2ED10 /* Max_nature */; };
-		E806375919382C2000B2ED10 /* Max_shape in Resources */ = {isa = PBXBuildFile; fileRef = E806375419382C2000B2ED10 /* Max_shape */; };
 		E806375B19385E6000B2ED10 /* XXX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E806375A19385E6000B2ED10 /* XXX@2x.png */; };
+		E806375D193885B700B2ED10 /* Max_shape in Resources */ = {isa = PBXBuildFile; fileRef = E806375C193885B700B2ED10 /* Max_shape */; };
 		E806CD131936D9EC00459E9D /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E806CD101936D9EC00459E9D /* libMobClickLibrary.a */; };
 		E806CD161936DBBE00459E9D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E806CD151936DBBE00459E9D /* libz.dylib */; };
 		E806CD181936DC0600459E9D /* libMobClickLibrary_armv6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E806CD171936DC0600459E9D /* libMobClickLibrary_armv6.a */; };
@@ -102,8 +102,8 @@
 		E806375119382C2000B2ED10 /* Max_grocery */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Max_grocery; sourceTree = "<group>"; };
 		E806375219382C2000B2ED10 /* Max_love */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Max_love; sourceTree = "<group>"; };
 		E806375319382C2000B2ED10 /* Max_nature */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Max_nature; sourceTree = "<group>"; };
-		E806375419382C2000B2ED10 /* Max_shape */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Max_shape; sourceTree = "<group>"; };
 		E806375A19385E6000B2ED10 /* XXX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "XXX@2x.png"; sourceTree = "<group>"; };
+		E806375C193885B700B2ED10 /* Max_shape */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Max_shape; sourceTree = "<group>"; };
 		E806CD071936D6C400459E9D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		E806CD101936D9EC00459E9D /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		E806CD121936D9EC00459E9D /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
@@ -417,11 +417,11 @@
 		E89287211932E30800DECEA5 /* Max_shapeImage */ = {
 			isa = PBXGroup;
 			children = (
+				E806375C193885B700B2ED10 /* Max_shape */,
 				E806375019382C2000B2ED10 /* Max_flower */,
 				E806375119382C2000B2ED10 /* Max_grocery */,
 				E806375219382C2000B2ED10 /* Max_love */,
 				E806375319382C2000B2ED10 /* Max_nature */,
-				E806375419382C2000B2ED10 /* Max_shape */,
 			);
 			name = Max_shapeImage;
 			sourceTree = "<group>";
@@ -706,10 +706,10 @@
 				E8C8520019344625008BDE26 /* back@2x.png in Resources */,
 				E8C851F919344625008BDE26 /* 滤镜@2x.png in Resources */,
 				E806375B19385E6000B2ED10 /* XXX@2x.png in Resources */,
+				E806375D193885B700B2ED10 /* Max_shape in Resources */,
 				E8F66C6E1935E8D3006EC81E /* flower in Resources */,
 				E806CD3219371AFE00459E9D /* 反馈@2x.png in Resources */,
 				E8C851FA19344625008BDE26 /* 滤镜(选中)@2x.png in Resources */,
-				E806375919382C2000B2ED10 /* Max_shape in Resources */,
 				E8C851FF19344625008BDE26 /* 形状背景带上下细线@2x.png in Resources */,
 				E806CD3B19371CB100459E9D /* PHO_AboutUsTableViewCell.xib in Resources */,
 				E8F66BFA1935B92F006EC81E /* Nocrop@2x.png in Resources */,
