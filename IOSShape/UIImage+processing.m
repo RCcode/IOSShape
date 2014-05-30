@@ -14,6 +14,15 @@
 @implementation UIImage (processing)
 
 
+//截图方法
+- (UIImage *)subImageWithRect:(CGRect)rect
+{
+    CGImageRef newImageRef = CGImageCreateWithImageInRect(self.CGImage, rect);
+    UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
+    CGImageRelease(newImageRef);
+    return newImage;
+}
+
 //压缩图片
 - (UIImage *)rescaleImageToSize:(CGSize)size
 {
@@ -66,7 +75,12 @@
 {
     UIImage *bottomImage = _bottomImage;
     UIImage *topImage = _topImage;
-    CGSize newSize =CGSizeMake(320, 320);
+    
+    int width = CGImageGetWidth(_topImage.CGImage);
+    int height = CGImageGetHeight(_topImage.CGImage);
+    
+    CGSize newSize =CGSizeMake(width, height);
+    
     UIGraphicsBeginImageContext( newSize );
     // Use existing opacity as is
     [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
@@ -93,12 +107,23 @@
 
 + (UIImage *)lastImageMakeWithBottomImage:(UIImage *)_bottomImage andTopImage:(UIImage *)_topImage andAlpha:(CGFloat)alpha
 {
+    int bottomWidth = CGImageGetWidth(_bottomImage.CGImage);
+    int bottomHeight = CGImageGetHeight(_bottomImage.CGImage);
+    
+    NSLog(@"%d,%d",bottomWidth,bottomHeight);
+    
+    if (bottomWidth >= 1080)
+    {
+        bottomWidth = 1080;
+        bottomHeight = 1080;
+    }
+    
     UIImage *bottomImage = _bottomImage;
     UIImage *topImage = _topImage;
-    CGSize newSize =CGSizeMake(320, 320);
+    CGSize newSize =CGSizeMake(1018, 1080);
     UIGraphicsBeginImageContext( newSize );
     // Use existing opacity as is
-    [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    [bottomImage drawInRect:CGRectMake(0,0,bottomWidth,bottomHeight)];
     // Apply supplied opacity
     [topImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeNormal alpha:alpha];
     

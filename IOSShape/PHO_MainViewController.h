@@ -19,8 +19,9 @@ typedef enum _whichTypeUsed
 
 
 @class PHO_MainShowView;
+@class PHO_ShareViewController;
 
-@interface PHO_MainViewController : UIViewController
+@interface PHO_MainViewController : UIViewController<UIAlertViewDelegate>
 {
     UIView *backView;
     PHO_MainShowView *showView;
@@ -63,6 +64,8 @@ typedef enum _whichTypeUsed
     NSString *shapeSelectedGroup;
     
     NSString *uMengEditType;
+    
+    PHO_ShareViewController *shareContrller;
 }
 
 -(id)initWithImage:(UIImage *)image;

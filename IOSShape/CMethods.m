@@ -39,7 +39,7 @@ NSArray* getImagesArray(NSString *folderName, NSString *type)
 
 UIImage* getImageFromDirectory(NSString *imageName, NSString *folderName)
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:imageName ofType:@"png" inDirectory:folderName];
+    NSString *path = [[NSBundle mainBundle] pathForResource:[[imageName componentsSeparatedByString:@"@"] objectAtIndex:0] ofType:@"png" inDirectory:folderName];
     UIImage *returnImage = [UIImage imageWithContentsOfFile:path];
     return returnImage;
 }

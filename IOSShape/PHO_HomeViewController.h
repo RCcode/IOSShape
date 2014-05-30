@@ -12,12 +12,14 @@
 
 @class GADBannerView;
 @class GADRequest;
+@class PHO_AboutUsViewController;
 
 @interface PHO_HomeViewController : UIViewController<UIImagePickerControllerDelegate, GADBannerViewDelegate, MFMailComposeViewControllerDelegate>
 {
     UIImagePickerController *imagePicker;
     UIImage *chooseImage;
     UIView *moreView;
+    PHO_AboutUsViewController *aboutUs;
 }
 
 @property(strong, nonatomic) GADBannerView *adBanner;

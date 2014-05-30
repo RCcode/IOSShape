@@ -13,6 +13,8 @@
 
 //- (UIImage *)changeTintColor:(UIColor *)tintColor andAlpha:(CGFloat)alpha;
 
+- (UIImage *)subImageWithRect:(CGRect)rect;
+
 + (UIImage *)shapeMakeWithBottomImage:(UIImage *)_bottomImage andTopImage:(UIImage *)_topImage;
 
 + (UIImage *)blurryImage:(UIImage *)image withBlurLevel:(CGFloat)blur;

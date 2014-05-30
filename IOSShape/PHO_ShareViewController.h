@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class SLComposeViewController;
 
-@interface PHO_ShareViewController : UIViewController
+@interface PHO_ShareViewController : UIViewController<UIDocumentInteractionControllerDelegate, UIAlertViewDelegate>
 {
+    UIDocumentInteractionController *_documetnInteractionController;
     UIImage *theBestImage;
+    SLComposeViewController *slComposerSheet;
+    BOOL isSaved;
 }
 
+@property (nonatomic) BOOL isSaved;
 - (id)initWithImage:(UIImage *)image;
 
 @end

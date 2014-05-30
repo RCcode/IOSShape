@@ -10,6 +10,8 @@
 
 #import "PHO_MainViewController.h"
 
+#import "PHO_AboutUsViewController.h"
+
 #import "GADBannerView.h"
 #import "GADRequest.h"
 #import <AdSupport/AdSupport.h>
@@ -182,112 +184,14 @@
 
 - (void)infoButtonPressed:(id)sender
 {
-    if (moreView.hidden)
+    if (aboutUs == nil)
     {
-        [MobClick event:@"home_menu" label:@"Home"];
-        moreView.hidden = NO;
+        aboutUs = [[PHO_AboutUsViewController alloc]init];
     }
-    else
-    {
-        moreView.hidden = YES;
-    }
+    UINavigationController *aboutNav = [[UINavigationController alloc]initWithRootViewController:aboutUs];
+    [aboutNav.navigationBar setBarTintColor:colorWithHexString(@"#fe8c3f")];
+    [self presentViewController:aboutNav animated:YES completion:nil];
 }
-
-- (void)moreSubButtonPressed:(id)sender
-{
-    UIButton *tempButton = (UIButton *)sender;
-    NSInteger tag = tempButton.tag;
-    
-    switch (tag)
-    {
-        case 10:
-            ;//更新
-            [MobClick event:@"home_menu_update" label:@"Home"];
-            [self GetUpdate];
-            break;
-        case 11:
-            ;//评分
-        {
-            [MobClick event:@"home_menu_rateus" label:@"Home"];
-            NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", @"appid"];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
-        }
-            break;
-        case 12:
-        {
-            //直接发邮件
-            [MobClick event:@"home_menu_feedback" label:@"Home"];
-            MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-            picker.mailComposeDelegate =self;
-            NSString *subject = [NSString stringWithFormat:@"shape %@ (iOS)", NSLocalizedString(@"feedback", nil)];
-            [picker setSubject:subject];
-//            [picker setToRecipients:@[kFeedbackEmail]];
-            [picker setToRecipients:@[@"wangshaoqi@rcplatformhk.com"]];
-            [self presentViewController:picker animated:YES completion:nil];
-        }
-            
-
-            break;
-        case 13:
-            ;//分享
-        {
-            [MobClick event:@"home_menu_share" label:@"Home"];
-//            NSString *shareContent = NSLocalizedString(@"share_msg", nil);
-            NSString *shareContent = [NSString stringWithFormat:@"www.baidu.com"];
-            NSArray *activityItems = @[shareContent];
-            
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-            __weak UIActivityViewController *blockActivityVC = activityVC;
-            
-            activityVC.completionHandler = ^(NSString *activityType,BOOL completed){
-            if(completed)
-            {
-                [MBProgressHUD showMessage:@"分享成功" toView:[UIApplication sharedApplication].keyWindow];
-            }
-               [blockActivityVC dismissViewControllerAnimated:YES completion:nil];
-            };
-            [self presentViewController:activityVC animated:YES completion:nil];
-        }
-            
-            break;
-        case 14:
-            ;//关注我们
-            [MobClick event:@"home_menu_followus" label:@"Home"];
-            break;
-            
-        default:
-            break;
-    }
-}
-
-- (void)GetUpdate
-{
-    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *nowVersion = [infoDict objectForKey:@"CFBundleVersion"];
-    
-    NSURL *url = [NSURL URLWithString:@"http://itunes.apple.com/lookup?id=668498872"];
-    NSString * file =  [NSString stringWithContentsOfURL:url];
-    //    NSLog(file);
-    //"version":"1.0"
-    NSRange substr = [file rangeOfString:@"\"version\":\""];
-    NSRange substr2 =[file rangeOfString:@"\"" options: Nil range: NSMakeRange(substr.location+substr.length, 10)];
-    NSRange range = {substr.location+substr.length,substr2.location-substr.location-substr.length};
-    NSString *newVersion =[file substringWithRange:range];
-    if([nowVersion isEqualToString:newVersion]==NO)
-    {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"版本有更新" delegate:self cancelButtonTitle:@"更新" otherButtonTitles:@"取消", nil];
-        alert.tag = 123;
-        [alert show];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"当前为最新版本" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        alert.tag = 122;
-        [alert show];
-    }
-    
-}
-
 
 
 /**********************************************************

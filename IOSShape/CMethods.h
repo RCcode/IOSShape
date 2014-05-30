@@ -57,5 +57,10 @@ void hideMBProgressHUD();
 
 //转换时间戳
 NSString *exchangeTime(NSString *time);
+//
+//NSString *appVersion()
+//{
+//    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+//}
 
 @end

@@ -131,6 +131,10 @@
         shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
         shapeImage.alpha = 0.7f;
         backRealImage = image;
+        int width = CGImageGetWidth(backRealImage.CGImage);
+        int height = CGImageGetHeight(backRealImage.CGImage);
+        
+        NSLog(@"%d,%d",width,height);
         [self.view addSubview:shapeImage];
         
         showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
@@ -140,9 +144,10 @@
         if (!iPhone5)
         {
             UIButton *hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-40, 0, 40, 40)];
+            [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-22, 0, 22, 22)];
             hideShowChooseViewButton.backgroundColor = [UIColor redColor];
             [hideShowChooseViewButton addTarget:self action:@selector(hideShowChooseViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [hideShowChooseViewButton setBackgroundImage:[UIImage imageNamed:@"XXX.png"] forState:UIControlStateNormal];
             [showChooseView addSubview:hideShowChooseViewButton];
             
         }
@@ -295,7 +300,7 @@
     shapeSelectedGroup = shapeGroupName;
     
     NSString *pathStr = [shapeMulArray objectAtIndex:tempButton.tag - 10];
-    topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension], [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
+    topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension] , [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
     
     
 //    topImage.image = [UIImage imageWithContentsOfFile:pathStr];
@@ -490,10 +495,14 @@
     {
         case 1:
             ;
+            //友盟统计
+            [MobClick event:@"edit_background_color" label:@"edit_background"];
             [backGroundChooseView addSubview:colorChooseScrollView];
             break;
         case 2:
             ;
+            //友盟统计
+            [MobClick event:@"edit_background_pattern" label:@"edit_background"];
             [backGroundChooseView addSubview:graphChooseScrollView];
             break;
 //        case 3:
@@ -502,6 +511,8 @@
 //            break;
         case 3:
             ;
+            //友盟统计
+            [MobClick event:@"edit_background_opacity" label:@"edit_background"];
             [backGroundChooseView addSubview:alphaSliderView];
             break;
 
@@ -515,6 +526,9 @@
 {
     //选择哪个颜色
     UIButton *tempButton = (UIButton *)sender;
+    //友盟统计
+    [MobClick event:[NSString stringWithFormat:@"edit_background_color_%d",tempButton.tag-10] label:@"edit_background_color"];
+    
     if (![colorChooseScrollView.subviews containsObject:backGroundSelectedView])
     {
         [backGroundSelectedView removeFromSuperview];
@@ -535,6 +549,8 @@
 {
     //选择哪个图案
     UIButton *tempButton = (UIButton *)sender;
+    //友盟统计
+    [MobClick event:[NSString stringWithFormat:@"edit_background_pattern_%d",tempButton.tag-10] label:@"edit_background_pattern"];
     
     if (![graphChooseScrollView.subviews containsObject:backGroundSelectedView])
     {
@@ -619,8 +635,18 @@
 
 - (void)chooseFilterButtonPressed:(id)sender
 {
+    
+    NSArray *itemTitles = @[@"Origin", @"Lomo", @"Sunset",
+                            @"Warm", @"Ice", @"Grayscale",
+                            @"Blues", @"Shadows", @"Yesterday",
+                            @"Glow", @"B/W", @"Pencil",
+                            @"Chroma", @"Neon", @"Pinhole"];
+
     //选择滤镜效果
     UIButton *tempButton = (UIButton *)sender;
+    
+    [MobClick event:[NSString stringWithFormat:@"edit_filter_%@",[itemTitles objectAtIndex:tempButton.tag - 10]] label:@"edit_filter"];
+    
     filterSelectedView.frame = tempButton.frame;
     showView.showImageView.image = [ImageUtil imageWithImage:backRealImage withColorMatrix:filterTyeps[tempButton.tag - 10]];
 }
@@ -637,7 +663,29 @@
 
 - (void)backButtonPressed:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (shareContrller.isSaved)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+        shareContrller.isSaved = NO;
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"照片未保存，是否返回" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"继续", nil];
+        [alert show];
+    }
+    
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if (buttonIndex == 1)
+    {
+        return;
+    }
 }
 
 /**********************************************************
@@ -652,8 +700,34 @@
 {
     //分享
 //    UIImage *tempImage = [UIImage getImageFromView:backView];
-    UIImage *passImage = [UIImage lastImageMakeWithBottomImage:backRealImage andTopImage:shapeImage.image andAlpha:shapeImage.alpha];
-    PHO_ShareViewController *shareContrller = [[PHO_ShareViewController alloc]initWithImage:passImage];
+    int width = CGImageGetWidth(backRealImage.CGImage);
+    int height = CGImageGetHeight(backRealImage.CGImage);
+    
+    NSLog(@"%d,%d",width,height);
+    
+    
+    CGFloat scaleWidth = 320/showView.showImageView.frame.size.width;
+    CGFloat scaleheight = 320/showView.showImageView.frame.size.height;
+    
+    UIImage *tempBackReal = [backRealImage subImageWithRect:
+                             CGRectMake(
+                                        (-showView.showImageView.frame.origin.x) / scaleWidth,
+                                        (-showView.showImageView.frame.origin.y) / scaleheight,
+                                        width * scaleWidth,
+                                        height * scaleheight
+                                        )];
+    
+    int width1 = CGImageGetWidth(tempBackReal.CGImage);
+    int height1 = CGImageGetHeight(tempBackReal.CGImage);
+    
+    NSLog(@"%d,%d",width1,height1);
+    
+    UIImage *passImage = [UIImage lastImageMakeWithBottomImage:tempBackReal andTopImage:shapeImage.image andAlpha:shapeImage.alpha];
+    if (shareContrller == nil)
+    {
+        shareContrller = [[PHO_ShareViewController alloc]initWithImage:passImage];
+    }
+    
     [self.navigationController pushViewController:shareContrller animated:YES];
 }
 
@@ -668,7 +742,7 @@
 - (void)shapeButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
-    
+    //友盟统计
     [MobClick event:@"edit_shape" label:@"edit"];
     
     [self selectChanged:sender];
@@ -698,7 +772,7 @@
 - (void)backGroundButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
-    
+    //友盟统计
     [MobClick event:@"edit_background" label:@"edit"];
     
     [self selectChanged:sender];
@@ -736,7 +810,7 @@
 - (void)filterButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
-    
+    //友盟统计
     [MobClick event:@"edit_filter" label:@"edit"];
     
     [self selectChanged:sender];
