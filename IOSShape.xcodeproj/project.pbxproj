@@ -51,6 +51,7 @@
 		E87C074C1935FB9A006B821F /* love in Resources */ = {isa = PBXBuildFile; fileRef = E87C074B1935FB9A006B821F /* love */; };
 		E87C07501935FBA7006B821F /* shape in Resources */ = {isa = PBXBuildFile; fileRef = E87C074F1935FBA7006B821F /* shape */; };
 		E87C07541935FD39006B821F /* graph in Resources */ = {isa = PBXBuildFile; fileRef = E87C07531935FD39006B821F /* graph */; };
+		E890EC60193EEF8B00A129E7 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E890EC5F193EEF8B00A129E7 /* CoreData.framework */; };
 		E8C851F919344625008BDE26 /* 滤镜@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C851F019344625008BDE26 /* 滤镜@2x.png */; };
 		E8C851FA19344625008BDE26 /* 滤镜(选中)@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C851F119344625008BDE26 /* 滤镜(选中)@2x.png */; };
 		E8C851FB19344625008BDE26 /* 前景编辑@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C851F219344625008BDE26 /* 前景编辑@2x.png */; };
@@ -61,6 +62,9 @@
 		E8C8520019344625008BDE26 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C851F719344625008BDE26 /* back@2x.png */; };
 		E8C8520119344625008BDE26 /* share-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C851F819344625008BDE26 /* share-icon@2x.png */; };
 		E8C852051934481D008BDE26 /* CMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C852041934481D008BDE26 /* CMethods.m */; };
+		E8CFC169193EFBB4006DD57A /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFC168193EFBB4006DD57A /* libGoogleAnalyticsServices.a */; };
+		E8CFC16B193EFECB006DD57A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFC16A193EFECB006DD57A /* libsqlite3.dylib */; };
+		E8CFC16F193F238C006DD57A /* libFlurry_5.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFC16E193F238C006DD57A /* libFlurry_5.0.0.a */; };
 		E8F40A34192CCB0300A2F0A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F40A33192CCB0300A2F0A9 /* Foundation.framework */; };
 		E8F40A36192CCB0300A2F0A9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F40A35192CCB0300A2F0A9 /* CoreGraphics.framework */; };
 		E8F40A38192CCB0300A2F0A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F40A37192CCB0300A2F0A9 /* UIKit.framework */; };
@@ -164,6 +168,7 @@
 		E87C074B1935FB9A006B821F /* love */ = {isa = PBXFileReference; lastKnownFileType = folder; path = love; sourceTree = "<group>"; };
 		E87C074F1935FBA7006B821F /* shape */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shape; sourceTree = "<group>"; };
 		E87C07531935FD39006B821F /* graph */ = {isa = PBXFileReference; lastKnownFileType = folder; path = graph; sourceTree = "<group>"; };
+		E890EC5F193EEF8B00A129E7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E8C851F019344625008BDE26 /* 滤镜@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "滤镜@2x.png"; sourceTree = "<group>"; };
 		E8C851F119344625008BDE26 /* 滤镜(选中)@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "滤镜(选中)@2x.png"; sourceTree = "<group>"; };
 		E8C851F219344625008BDE26 /* 前景编辑@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "前景编辑@2x.png"; sourceTree = "<group>"; };
@@ -176,6 +181,16 @@
 		E8C852031934481D008BDE26 /* CMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMethods.h; sourceTree = "<group>"; };
 		E8C852041934481D008BDE26 /* CMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMethods.m; sourceTree = "<group>"; };
 		E8C8520619344888008BDE26 /* Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
+		E8CFC162193EFBA3006DD57A /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		E8CFC163193EFBA3006DD57A /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		E8CFC164193EFBA3006DD57A /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		E8CFC165193EFBA3006DD57A /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		E8CFC166193EFBA3006DD57A /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		E8CFC167193EFBA3006DD57A /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		E8CFC168193EFBB4006DD57A /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		E8CFC16A193EFECB006DD57A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		E8CFC16D193F238C006DD57A /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		E8CFC16E193F238C006DD57A /* libFlurry_5.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.0.0.a; sourceTree = "<group>"; };
 		E8F40A30192CCB0300A2F0A9 /* IOSShape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSShape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8F40A33192CCB0300A2F0A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E8F40A35192CCB0300A2F0A9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -215,7 +230,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8CFC16B193EFECB006DD57A /* libsqlite3.dylib in Frameworks */,
+				E890EC60193EEF8B00A129E7 /* CoreData.framework in Frameworks */,
 				E806CD161936DBBE00459E9D /* libz.dylib in Frameworks */,
+				E8CFC16F193F238C006DD57A /* libFlurry_5.0.0.a in Frameworks */,
 				E8103EFE192DECA2005AFA16 /* MediaPlayer.framework in Frameworks */,
 				E8103EFC192DEC8A005AFA16 /* MessageUI.framework in Frameworks */,
 				E8103EFA192DEC80005AFA16 /* SystemConfiguration.framework in Frameworks */,
@@ -225,6 +243,7 @@
 				E806CD131936D9EC00459E9D /* libMobClickLibrary.a in Frameworks */,
 				E8103EF4192DEC57005AFA16 /* StoreKit.framework in Frameworks */,
 				E8103EF2192DEC4D005AFA16 /* Security.framework in Frameworks */,
+				E8CFC169193EFBB4006DD57A /* libGoogleAnalyticsServices.a in Frameworks */,
 				E8103EF0192DEC40005AFA16 /* CoreTelephony.framework in Frameworks */,
 				E8103EEE192DEC2F005AFA16 /* AVFoundation.framework in Frameworks */,
 				E8F40A36192CCB0300A2F0A9 /* CoreGraphics.framework in Frameworks */,
@@ -317,6 +336,8 @@
 		E8103ED0192DE6A4005AFA16 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				E8CFC16C193F233F006DD57A /* flurryAnalytics */,
+				E8CFC157193EFAD8006DD57A /* GoogleAnalytics */,
 				E806CD0F1936D9EC00459E9D /* uMengSDK */,
 				E8287491192F069B0047611C /* MBProgressHUD */,
 				E8103EE0192DEB93005AFA16 /* AdMobSDK */,
@@ -452,6 +473,29 @@
 			name = publicMetod;
 			sourceTree = "<group>";
 		};
+		E8CFC157193EFAD8006DD57A /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFC168193EFBB4006DD57A /* libGoogleAnalyticsServices.a */,
+				E8CFC162193EFBA3006DD57A /* GAI.h */,
+				E8CFC163193EFBA3006DD57A /* GAIDictionaryBuilder.h */,
+				E8CFC164193EFBA3006DD57A /* GAIFields.h */,
+				E8CFC165193EFBA3006DD57A /* GAILogger.h */,
+				E8CFC166193EFBA3006DD57A /* GAITrackedViewController.h */,
+				E8CFC167193EFBA3006DD57A /* GAITracker.h */,
+			);
+			name = GoogleAnalytics;
+			sourceTree = "<group>";
+		};
+		E8CFC16C193F233F006DD57A /* flurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				E8CFC16D193F238C006DD57A /* Flurry.h */,
+				E8CFC16E193F238C006DD57A /* libFlurry_5.0.0.a */,
+			);
+			name = flurryAnalytics;
+			sourceTree = "<group>";
+		};
 		E8F40A27192CCB0300A2F0A9 = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +518,8 @@
 		E8F40A32192CCB0300A2F0A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8CFC16A193EFECB006DD57A /* libsqlite3.dylib */,
+				E890EC5F193EEF8B00A129E7 /* CoreData.framework */,
 				E806CD151936DBBE00459E9D /* libz.dylib */,
 				E806CD071936D6C400459E9D /* CoreText.framework */,
 				E8103EFD192DECA2005AFA16 /* MediaPlayer.framework */,
@@ -872,6 +918,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/IOSShape/AdMobSDK",
 					"$(PROJECT_DIR)/IOSShape/uMengSDK",
+					"$(PROJECT_DIR)/IOSShape/GoogleAnalytics",
+					"$(PROJECT_DIR)/IOSShape",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -894,6 +942,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/IOSShape/AdMobSDK",
 					"$(PROJECT_DIR)/IOSShape/uMengSDK",
+					"$(PROJECT_DIR)/IOSShape/GoogleAnalytics",
+					"$(PROJECT_DIR)/IOSShape",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

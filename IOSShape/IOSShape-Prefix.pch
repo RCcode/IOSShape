@@ -16,12 +16,16 @@
     #import"Defines.h"
     #import"CMethods.h"
     #import"MobClick.h"
+    #import "GAI.h"
+    #import"GAIFields.h"
+    #import"Flurry.h"
 
 
 #define editCountPath  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"editCount.plist"]
 
 #define UmengAPPKey       @"5379996956240b8e43131db9"
-#define FlurryAPPKey      @"TDWM2F2ZXBDCVRVFBS8Z"
+//#define FlurryAPPKey      @"TDWM2F2ZXBDCVRVFBS8Z"
+#define FlurryAPPKey      @"SCF6NC6HZ62WM8ZZCQV9"
 #define GAAPPKey          @"UA-49487373-4"
 #define AdmobAPPKey       @"ca-app-pub-5553601587247422/4485041796"
 

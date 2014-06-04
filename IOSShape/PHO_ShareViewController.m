@@ -13,6 +13,10 @@
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 
+#import "GAITracker.h"
+#import "GAIDictionaryBuilder.h"
+
+
 #define kTheBestImagePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"theBestImage.igo"]
 #define kToMorePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"test.plist"]
 
@@ -136,14 +140,14 @@
         case 0:
             //保存到相册
             {
-                [MobClick event:@"share_save" label:@"Share"];
+                [self sendMessage:@"share_save" and:@"Share"];
                 UIImageWriteToSavedPhotosAlbum(theBestImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
             }
             break;
         case 1:
             //分享到instagram
             {
-                [MobClick event:@"share_instagram" label:@"Share"];
+                [self sendMessage:@"share_instagram" and:@"Share"];
                 if([[NSFileManager defaultManager] fileExistsAtPath:kTheBestImagePath]){
                     [[NSFileManager defaultManager] removeItemAtPath:kTheBestImagePath error:nil];
                 }
@@ -207,7 +211,7 @@
         case 3:
             //更多
             {
-                [MobClick event:@"share_more" label:@"Share"];
+                [self sendMessage:@"share_more" and:@"Share"];
                 //保存本地 如果已存在，则删除
                 if([[NSFileManager defaultManager] fileExistsAtPath:kToMorePath]){
                     [[NSFileManager defaultManager] removeItemAtPath:kToMorePath error:nil];
@@ -300,7 +304,9 @@
         else if (buttonIndex == 1)
         {
             [rateusDictionary setObject:@"rateusted" forKey:@"status"];
-            [MobClick event:@"home_menu_rateus" label:@"Home"];
+            
+            [self sendMessage:@"home_menu_rateus" and:@"Home"];
+            
             NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", kiTunesID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
         }
@@ -312,6 +318,25 @@
     [rateusDictionary writeToFile:kToMorePath atomically:YES];
 
 }
+
+#pragma mark 发送统计
+
+- (void)sendMessage:(NSString *)event and:(NSString *)label
+{
+    //友盟统计
+    [MobClick event:event label:nil];
+    
+    //GoogleAnalytics
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"
+                                                          action:@"touch"
+                                                           label:event
+                                                           value:nil] build]];
+    //flurryAnalytics
+    [Flurry logEvent:event];
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {

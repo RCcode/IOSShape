@@ -18,6 +18,9 @@
 
 #import "MBProgressHUD+Add.h"
 
+#import "GAITracker.h"
+#import "GAIDictionaryBuilder.h"
+
 @interface PHO_HomeViewController ()
 
 @end
@@ -190,7 +193,7 @@
     if (tag == 100)
     {
         //打开相册
-        [MobClick event:@"home_gallery" label:@"Home"];
+        [self sendMessage:@"home_gallery" and:@"Home"];
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         [self presentViewController:imagePicker animated:YES
                          completion:^{//设置overlayview
@@ -200,7 +203,7 @@
     else if (tag == 101)
     {
         //打开相机
-        [MobClick event:@"home_camera" label:@"Home"];
+        [self sendMessage:@"home_camera" and:@"Home"];
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:imagePicker animated:YES
                          completion:^{//设置overlayview
@@ -326,7 +329,7 @@
 
 - (void)openNoCropButtonPressed:(id)sender
 {
-    [MobClick event:@"home_NoCrop" label:@"Home"];
+    [self sendMessage:@"home_NoCrop" and:@"Home"];
     BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
     if (!canOpen)
     {
@@ -338,6 +341,23 @@
     }
 }
 
+
+#pragma mark 发送统计
+
+- (void)sendMessage:(NSString *)event and:(NSString *)label
+{
+    //友盟统计
+    [MobClick event:event label:nil];
+    
+    //GoogleAnalytics
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"
+                                                          action:@"touch"
+                                                           label:event
+                                                           value:nil] build]];
+    //flurryAnalytics
+    [Flurry logEvent:event];
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -36,8 +36,106 @@
     [MobClick updateOnlineConfig];
     
     
+    
+    /** google analytics **/
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+//    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
+    // Create tracker instance.
+    _tracker = [[GAI sharedInstance] trackerWithTrackingId:GAAPPKey];
+    
+    
+    /** flurry相关设置 **/
+    
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
+    [Flurry startSession:@"YOUR_API_KEY"];
+    //调试日志
+    [Flurry setLogLevel:FlurryLogLevelDebug];
+    //程序退出时上传数据
+    [Flurry setSessionReportsOnCloseEnabled:NO];
+    [Flurry setSessionReportsOnPauseEnabled:YES];
+    
+    
     return YES;
 }
+
+#pragma mark flurry 推荐设置添加一个未捕获的异常监听器
+void uncaughtExceptionHandler(NSException *exception)
+{
+    [Flurry logError:@"Uncaught" message:@"Crash!" exception:exception];
+}
+
+#pragma mark 注册通知
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    
+    NSRange range = NSMakeRange(1,[[deviceToken description] length]-2);
+    NSString *deviceTokenStr = [[deviceToken description] substringWithRange:range];
+    NSLog(@"deviceTokenStr==%@",deviceTokenStr);
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"Fail to Register For Remote Notificaions With Error :error = %@",error.description);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"userInfo = %@",userInfo);
+    
+    //    NSDictionary *dictionary = [userInfo objectForKey:@"aps"];
+    //    NSString *alert = [dictionary objectForKey:@"alert"];
+    //    NSString *type = [userInfo objectForKey:@"type"];
+    //    NSString *urlStr = [userInfo objectForKey:@"url"];
+    //    switch (type.intValue) {
+    //        case 0:
+    //        {
+    //            // Ads
+    //            [self OpenUrl:urlStr];
+    //        }
+    //            break;
+    //        case 1:
+    //        {
+    //            //Update
+    //            self.UpdateUrlStr = urlStr;
+    //            [[[UIAlertView alloc] initWithTitle:@"通知" message: alert delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"前去升级", nil] show];
+    //        }
+    //            break;
+    //        case 2:
+    //            //Font
+    //            break;
+    //        case 3:
+    //            //Tags
+    //            break;
+    //        case 4:
+    //            //Filter
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    [self cancelNotification];
+}
+
+- (void)registNotification{
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+}
+
+- (void)cancelNotification{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+
+- (void)OpenUrl:(NSString *)urlString{
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:urlString]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+    }
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

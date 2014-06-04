@@ -11,6 +11,10 @@
 #import "MBProgressHUD.h"
 #import <MessageUI/MFMailComposeViewController.h>
 
+#import "GAITracker.h"
+#import "GAIDictionaryBuilder.h"
+
+
 @interface PHO_AboutUsViewController ()<UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 {
     NSArray *_imageNames;
@@ -109,21 +113,23 @@
     switch (indexPath.row) {
         case 0://更新
         {
-            [MobClick event:@"home_menu_update" label:@"Home"];
+            [self sendMessage:@"home_menu_update" and:@"Home"];
             [self GetUpdate];
         }
             
             break;
         case 1://评分
         {
-            [MobClick event:@"home_menu_rateus" label:@"Home"];
+            [self sendMessage:@"home_menu_tateus" and:@"Home"];
             NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", kiTunesID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
         }
             break;
         case 2://反馈
         {
-            [MobClick event:@"home_menu_feedback" label:@"Home"];
+            
+            [self sendMessage:@"home_menu_feedback" and:@"Home"];
+            
             //直接发邮件
             MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
             picker.mailComposeDelegate =self;
@@ -135,7 +141,8 @@
             break;
         case 3://分享
         {
-            [MobClick event:@"home_menu_share" label:@"Home"];
+            
+            [self sendMessage:@"home_menu_share" and:@"Home"];
             //需要分享的内容
             NSString *shareContent = @"我正在用的Shape for instagram,可以为照片添加110多种漂亮有趣的形状，还有100多种背景和滤镜选择，你也来试试吧!";
             NSArray *activityItems = @[shareContent];
@@ -214,6 +221,23 @@
             [hud performSelector:@selector(hide:) withObject:nil afterDelay:1.5];
         }
     }];
+}
+
+#pragma mark 发送统计
+
+- (void)sendMessage:(NSString *)event and:(NSString *)label
+{
+    //友盟统计
+    [MobClick event:event label:nil];
+    
+    //GoogleAnalytics
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"
+                                                          action:@"touch"
+                                                           label:event
+                                                           value:nil] build]];
+    //flurryAnalytics
+    [Flurry logEvent:event];
 }
 
 

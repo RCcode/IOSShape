@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @class PHO_HomeViewController;
 
 @interface PHO_AppDelegate : UIResponder <UIApplicationDelegate>
@@ -15,5 +16,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) PHO_HomeViewController *homeViewController;
+
+@property(nonatomic, strong) id<GAITracker> tracker;
 
 @end

@@ -19,6 +19,9 @@
 #import "PHO_ShareViewController.h"
 
 
+#import "GAITracker.h"
+#import "GAIDictionaryBuilder.h"
+
 #define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-79-KADHEIGHT, kScreen_Width, 79):CGRectMake(0, kScreen_Height-79-KADHEIGHT, kScreen_Width, 79))
 
 
@@ -134,47 +137,51 @@
         shapeImage.alpha = 0.7f;
         backRealImage = image;
         
-        CGFloat scale = backRealImage.size.width/backRealImage.size.height;
-        
-        if (backRealImage.size.width >= backRealImage.size.height)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
         {
-            if (backRealImage.size.height < 1080 )
+            CGFloat scale = backRealImage.size.width/backRealImage.size.height;
+            
+            if (backRealImage.size.width >= backRealImage.size.height)
             {
-                filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.height*scale, backRealImage.size.height)];
+                if (backRealImage.size.height < 1080 )
+                {
+                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.height*scale, backRealImage.size.height)];
+                }
+                else if (backRealImage.size.height > 1080)
+                {
+                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
+                }
+                filterMinImage = [backRealImage subImageWithRect:CGRectMake((backRealImage.size.width-backRealImage.size.height)/2, 0, backRealImage.size.height, backRealImage.size.height)];
             }
-            else if (backRealImage.size.height > 1080)
+            else if (backRealImage.size.width < backRealImage.size.height)
             {
-                filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
+                if (backRealImage.size.width < 1080)
+                {
+                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.width, backRealImage.size.width/scale)];
+                }
+                else if (backRealImage.size.width > 1080)
+                {
+                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
+                }
+                filterMinImage = [backRealImage subImageWithRect:CGRectMake(0, (backRealImage.size.height-backRealImage.size.width)/2, backRealImage.size.width, backRealImage.size.width)];
             }
-            filterMinImage = [backRealImage subImageWithRect:CGRectMake((backRealImage.size.width-backRealImage.size.height)/2, 0, backRealImage.size.height, backRealImage.size.height)];
-        }
-        else if (backRealImage.size.width < backRealImage.size.height)
-        {
-            if (backRealImage.size.width < 1080)
-            {
-                filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.width, backRealImage.size.width/scale)];
-            }
-            else if (backRealImage.size.width > 1080)
-            {
-                filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
-            }
-            filterMinImage = [backRealImage subImageWithRect:CGRectMake(0, (backRealImage.size.height-backRealImage.size.width)/2, backRealImage.size.width, backRealImage.size.width)];
-        }
-        filterMinImage = [filterMinImage rescaleImageToSize:CGSizeMake(200, 200)];
+            filterMinImage = [filterMinImage rescaleImageToSize:CGSizeMake(200, 200)];
+            
+        });
+       
         [self.view addSubview:shapeImage];
         
         showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
         showChooseView.backgroundColor = colorWithHexString(@"#ededed");
         [self.view addSubview:showChooseView];
-        
         if (!iPhone5)
         {
-            UIButton *hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-22, 0, 22, 22)];
-            hideShowChooseViewButton.backgroundColor = [UIColor redColor];
+            hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-22, showChooseView.frame.origin.y-18, 22, 22)];
+            hideShowChooseViewButton.backgroundColor = [UIColor clearColor];
             [hideShowChooseViewButton addTarget:self action:@selector(hideShowChooseViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [hideShowChooseViewButton setBackgroundImage:[UIImage imageNamed:@"XXX.png"] forState:UIControlStateNormal];
-            [showChooseView addSubview:hideShowChooseViewButton];
+            [self.view addSubview:hideShowChooseViewButton];
             
         }
 
@@ -249,9 +256,11 @@
 //隐藏选择view
 - (void)hideShowChooseViewButtonPressed:(id)sender
 {
+    
     if (!showChooseView.hidden)
     {
         showChooseView.hidden = YES;
+        hideShowChooseViewButton.hidden = YES;
     }
 }
 
@@ -325,6 +334,9 @@
     
     shapeSelectedGroup = shapeGroupName;
     
+    NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%d_%d",[self getGroupNum],tempButton.tag - 10];
+    [self sendMessage:tempStr and:@"edit_shape"];
+    
     NSString *pathStr = [shapeMulArray objectAtIndex:tempButton.tag - 10];
     topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension] , [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
     
@@ -347,6 +359,7 @@
     tempButton.selected = YES;
     
     [shapeMulArray removeAllObjects];
+    
     
     switch (tempButton.tag - 10)
     {
@@ -381,6 +394,9 @@
         shapeSelectedView.hidden = NO;
     }
     
+    NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%d",[self getGroupNum]];
+    [self sendMessage:tempStr and:@"edit_shape"];
+    
     shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
     
     for (UIView *tempView in shapeChooseScrollView.subviews)
@@ -404,6 +420,34 @@
             [shapeChooseScrollView insertSubview:chooseShapeButton atIndex:0];
         }
     }
+    
+    
+}
+
+- (NSInteger)getGroupNum
+{
+    NSInteger returnGroupNum = 0;
+    if ([shapeGroupName isEqualToString:@"shape"])
+    {
+        returnGroupNum = 1;
+    }
+    else if ([shapeGroupName isEqualToString:@"love"])
+    {
+        returnGroupNum = 2;
+    }
+    else if ([shapeGroupName isEqualToString:@"flower"])
+    {
+        returnGroupNum = 3;
+    }
+    else if ([shapeGroupName isEqualToString:@"nature"])
+    {
+        returnGroupNum = 4;
+    }
+    else if ([shapeGroupName isEqualToString:@"grocery"])
+    {
+        returnGroupNum = 5;
+    }
+    return returnGroupNum;
 }
 
 #pragma mark 初始化背景选择view
@@ -522,13 +566,13 @@
         case 1:
             ;
             //友盟统计
-            [MobClick event:@"edit_background_color" label:@"edit_background"];
+            [self sendMessage:@"edit_background_color" and:@"edit_background"];
             [backGroundChooseView addSubview:colorChooseScrollView];
             break;
         case 2:
             ;
             //友盟统计
-            [MobClick event:@"edit_background_pattern" label:@"edit_background"];
+            [self sendMessage:@"edit_background_pattern" and:@"edit_background"];
             [backGroundChooseView addSubview:graphChooseScrollView];
             break;
 //        case 3:
@@ -538,7 +582,7 @@
         case 3:
             ;
             //友盟统计
-            [MobClick event:@"edit_background_opacity" label:@"edit_background"];
+            [self sendMessage:@"edit_background_opacity" and:@"edit_background"];
             [backGroundChooseView addSubview:alphaSliderView];
             break;
 
@@ -553,7 +597,8 @@
     //选择哪个颜色
     UIButton *tempButton = (UIButton *)sender;
     //友盟统计
-    [MobClick event:[NSString stringWithFormat:@"edit_background_color_%d",tempButton.tag-10] label:@"edit_background_color"];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_background_color_%d",tempButton.tag-10];
+    [self sendMessage:tempStr and:@"edit_background_color"];
     
     if (![colorChooseScrollView.subviews containsObject:backGroundSelectedView])
     {
@@ -576,7 +621,9 @@
     //选择哪个图案
     UIButton *tempButton = (UIButton *)sender;
     //友盟统计
-    [MobClick event:[NSString stringWithFormat:@"edit_background_pattern_%d",tempButton.tag-10] label:@"edit_background_pattern"];
+    
+    NSString *tempStr = [NSString stringWithFormat:@"edit_background_pattern_%d",tempButton.tag-10];
+    [self sendMessage:tempStr and:@"edit_background_pattern"];
     
     if (![graphChooseScrollView.subviews containsObject:backGroundSelectedView])
     {
@@ -593,7 +640,7 @@
 
 - (UIImage *)getGraphImage:(UIImage *)image
 {
-    UIView *tempView = [[UIView alloc]initWithFrame:showView.showImageView.frame];
+    UIView *tempView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
     tempView.backgroundColor = [UIColor clearColor];
     tempView.backgroundColor = [UIColor colorWithPatternImage:image];
     
@@ -683,8 +730,9 @@
     //选择滤镜效果
     UIButton *tempButton = (UIButton *)sender;
     
-    [MobClick event:[NSString stringWithFormat:@"edit_filter_%d",tempButton.tag - 10] label:@"edit_filter"];
     
+    NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%d",tempButton.tag-10];
+    [self sendMessage:tempStr and:@"edit_filter"];
     filterSelectedView.frame = tempButton.frame;
     
     showView.showImageView.image = [ImageUtil imageWithImage:filterMaxImage withColorMatrix:filterTyeps[tempButton.tag - 10]];
@@ -781,8 +829,9 @@
 - (void)shapeButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
-    //友盟统计
-    [MobClick event:@"edit_shape" label:@"edit"];
+    hideShowChooseViewButton.hidden = NO;
+    
+    [self sendMessage:@"edit_shape" and:@"edit"];
     
     [self selectChanged:sender];
     
@@ -811,8 +860,9 @@
 - (void)backGroundButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
-    //友盟统计
-    [MobClick event:@"edit_background" label:@"edit"];
+    hideShowChooseViewButton.hidden = NO;
+    
+    [self sendMessage:@"edit_backgroun" and:@"edit"];
     
     [self selectChanged:sender];
     
@@ -849,8 +899,9 @@
 - (void)filterButtonPressed:(id)sender
 {
     showChooseView.hidden = NO;
-    //友盟统计
-    [MobClick event:@"edit_filter" label:@"edit"];
+    hideShowChooseViewButton.hidden = NO;
+    
+    [self sendMessage:@"edit_filter" and:@"edit"];
     
     [self selectChanged:sender];
     
@@ -892,23 +943,23 @@
     tempButton.selected = YES;
 }
 
-//#pragma mark 获得统计需要的组名和图片名
-//
-////获得统计组名
-//- (NSString *)getGroupNameWithSelectedGroup:(NSString *)selectedGroup
-//{
-//    NSString *returnStr = nil;
-//    if ([selectedGroup isEqualToString:@"shape"])
-//    {
-////        tempStr = @""
-//    }
-//
-//}
-////获得统计图片名
-//- (NSString *)getGroupNameWithSelectedGroup:(NSString *)selectedGroup andImageName:(NSString*)imageName
-//{
-//    NSString *tempStr = [[[imageName lastPathComponent]componentsSeparatedByString:@"@"]objectAtIndex:0];
-//    }
+#pragma mark 发送统计
+
+- (void)sendMessage:(NSString *)event and:(NSString *)label
+{
+    //友盟统计
+    [MobClick event:event label:nil];
+    
+    //GoogleAnalytics
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"
+                                                          action:@"touch"
+                                                           label:event
+                                                           value:nil] build]];
+    //flurryAnalytics
+    [Flurry logEvent:event];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

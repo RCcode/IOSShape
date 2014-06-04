@@ -68,6 +68,8 @@ typedef enum _whichTypeUsed
     NSString *uMengEditType;
     
     PHO_ShareViewController *shareContrller;
+    
+    UIButton *hideShowChooseViewButton;
 }
 
 -(id)initWithImage:(UIImage *)image;
