@@ -58,6 +58,8 @@
     [Flurry setSessionReportsOnCloseEnabled:NO];
     [Flurry setSessionReportsOnPauseEnabled:YES];
     
+    [self registNotification];
+    
     
     return YES;
 }
