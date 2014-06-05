@@ -80,7 +80,7 @@
 //    [self.view addSubview:customNavgationView];
     
     UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [infoButton setFrame:CGRectMake(280, TOPORIGIN_Y + 12, 20, 20)];
+    [infoButton setFrame:CGRectMake(274, TOPORIGIN_Y + 12, 40, 40)];
     [infoButton addTarget:self action:@selector(infoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [infoButton setBackgroundImage:[UIImage imageNamed:@"InfoButtonImage.png"] forState:UIControlStateNormal];
     [self.view addSubview:infoButton];

@@ -38,8 +38,8 @@
 //
     PHO_AppDelegate *appDelegate = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
 //
-//    appDelegate.manager.requestSerializer = requestSerializer;
-//    
+    appDelegate.manager.requestSerializer = requestSerializer;
+//
     AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     appDelegate.manager.responseSerializer = responseSerializer;
     

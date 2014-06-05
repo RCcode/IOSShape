@@ -265,7 +265,7 @@ void uncaughtExceptionHandler(NSException *exception)
             {
                 
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示"
-                                                               message:@"亲，有新版本"
+                                                               message:@"有新版本,是否更新"
                                                               delegate:self
                                                      cancelButtonTitle:@"取消"
                                                      otherButtonTitles:@"确定", nil];
