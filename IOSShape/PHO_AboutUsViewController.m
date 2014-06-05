@@ -14,6 +14,8 @@
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 
+#import "PHO_DataRequest.h"
+
 
 @interface PHO_AboutUsViewController ()<UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 {
@@ -114,7 +116,7 @@
         case 0://更新
         {
             [self sendMessage:@"home_menu_update" and:@"Home"];
-            [self GetUpdate];
+            [self checkVersion];
         }
             
             break;
@@ -170,33 +172,13 @@
     }
 }
 
-//版本更新
--(void)GetUpdate
+#pragma mark -
+#pragma mark 版本检测
+- (void)checkVersion
 {
-    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *nowVersion = [infoDict objectForKey:@"CFBundleVersion"];
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",kiTunesID]];
-    
-    NSString * file =  [NSString stringWithContentsOfURL:url];
-    //    NSLog(file);
-    //"version":"1.0"
-    NSRange substr = [file rangeOfString:@"\"version\":\""];
-    NSRange substr2 =[file rangeOfString:@"\"" options:NULL range: NSMakeRange(substr.location+substr.length, 10)];
-    NSRange range = {substr.location+substr.length,substr2.location-substr.location-substr.length};
-    NSString *newVersion =[file substringWithRange:range];
-    if([nowVersion isEqualToString:newVersion]==NO)
-    {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"版本有更新" delegate:self cancelButtonTitle:@"更新" otherButtonTitles:@"取消", nil];
-        alert.tag = 123;
-        [alert show];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"当前为最新版本" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        alert.tag = 122;
-        [alert show];
-    }
+    NSString *urlStr = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appleID];
+    PHO_DataRequest *request = [[PHO_DataRequest alloc] initWithDelegate:self];
+    [request updateVersion:urlStr withTag:10];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

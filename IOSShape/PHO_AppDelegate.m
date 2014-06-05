@@ -10,6 +10,10 @@
 
 #import "PHO_HomeViewController.h"
 
+#import "UIDevice+DeviceInfo.h"
+
+#import "PHO_DataRequest.h"
+
 
 @implementation PHO_AppDelegate
 
@@ -34,8 +38,10 @@
     [MobClick startWithAppkey:UmengAPPKey reportPolicy:SEND_ON_EXIT   channelId:@"App Store"];
     //在线参数配置
     [MobClick updateOnlineConfig];
-    
-    
+    //注册通知
+    [self registNotification];
+    //配置afnetworking
+    [self netWorkingSeting];
     
     /** google analytics **/
     // Optional: automatically send uncaught exceptions to Google Analytics.
@@ -51,17 +57,25 @@
     
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
-    [Flurry startSession:@"YOUR_API_KEY"];
+    [Flurry startSession:FlurryAPPKey];
     //调试日志
     [Flurry setLogLevel:FlurryLogLevelDebug];
     //程序退出时上传数据
     [Flurry setSessionReportsOnCloseEnabled:NO];
     [Flurry setSessionReportsOnPauseEnabled:YES];
     
-    [self registNotification];
+    
     
     
     return YES;
+}
+
+#pragma mark -
+#pragma mark 配置AFN
+- (void)netWorkingSeting
+{
+    self.manager = [AFHTTPRequestOperationManager manager];
+    self.manager.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
 }
 
 #pragma mark flurry 推荐设置添加一个未捕获的异常监听器
@@ -79,6 +93,14 @@ void uncaughtExceptionHandler(NSException *exception)
     NSString *deviceTokenStr = [[deviceToken description] substringWithRange:range];
     NSLog(@"deviceTokenStr==%@",deviceTokenStr);
     
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:DEVICE_TOKEN];
+    if (token == nil || [token isKindOfClass:[NSNull class]] || ![token isEqualToString:deviceTokenStr]) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject:deviceTokenStr forKey:DEVICE_TOKEN];
+        //注册token
+        [self postData:[NSString stringWithFormat:@"%@",deviceTokenStr]];
+    }
+
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -137,6 +159,85 @@ void uncaughtExceptionHandler(NSException *exception)
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
     }
 }
+
+#pragma mark -
+#pragma mark 提交设备信息
+- (void)postData:(NSString *)token{
+    NSDictionary *infoDic = [self deviceInfomation:token];
+    
+    PHO_DataRequest *request = [[PHO_DataRequest alloc] initWithDelegate:self];
+    [request registerToken:infoDic withTag:11];
+    
+}
+
+#pragma mark -
+#pragma mark 获取设备信息
+- (NSDictionary *)deviceInfomation:(NSString *)token
+{
+    //Bundle Id
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    //NSString *macAddress = [UIDevice getMacAddressWithUIDevice];
+    NSString *systemVersion = [UIDevice currentVersion];
+    NSString *model = [UIDevice currentModel];
+    NSString *modelVersion = [UIDevice currentModelVersion];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"Z"];
+    NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
+    [dateFormatter setTimeZone:timeZone];
+    NSDate *date = [NSDate date];
+    //+0800
+    NSString *timeZoneZ = [dateFormatter stringFromDate:date];
+    NSRange range = NSMakeRange(0, 3);
+    //+08
+    NSString *timeZoneInt = [timeZoneZ substringWithRange:range];
+    
+    //en
+    NSArray *languageArray = [NSLocale preferredLanguages];
+    NSString *language = [languageArray objectAtIndex:0];
+    
+    //US
+    NSLocale *locale = [NSLocale currentLocale];
+    NSString *country = [[[locale localeIdentifier] componentsSeparatedByString:@"_"] lastObject];
+    
+    /**
+     token           Push用token             String		N
+     timeZone	 时区（-12--12）        int            N
+     language     语言码                        String		N
+     bundleid      bundleid                    String		N
+     mac             使用唯一标识符 idfv   String		Y
+     pagename	 应用包名                    String		N
+     model          手机型号                    String		Y
+     model_ver	 手机版本                    String		Y
+     sysver          系统版本                    String		Y
+     country        国家                           String		Y
+     **/
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:token forKeyPath:@"token"];
+    [params setValue:timeZoneInt forKeyPath:@"timeZone"];
+    [params setValue:language forKey:@"language"];
+    [params setValue:bundleIdentifier forKeyPath:@"bundleid"];
+    [params setValue:idfv forKeyPath:@"mac"];
+    [params setValue:bundleIdentifier forKeyPath:@"pagename"];
+    [params setValue:model forKeyPath:@"model"];
+    [params setValue:modelVersion forKeyPath:@"model_ver"];
+    [params setValue:systemVersion forKeyPath:@"sysver"];
+    [params setValue:country forKeyPath:@"country"];
+    
+    return params;
+}
+
+#pragma mark -
+#pragma mark 版本检测
+- (void)checkVersion
+{
+    NSString *urlStr = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@",appleID];
+    PHO_DataRequest *request = [[PHO_DataRequest alloc] initWithDelegate:self];
+    [request updateVersion:urlStr withTag:10];
+}
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application

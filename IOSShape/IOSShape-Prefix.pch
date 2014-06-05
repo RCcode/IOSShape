@@ -23,16 +23,22 @@
 
 #define editCountPath  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"editCount.plist"]
 
+#define appleID           @"878086629"
 #define UmengAPPKey       @"5379996956240b8e43131db9"
 //#define FlurryAPPKey      @"TDWM2F2ZXBDCVRVFBS8Z"
-#define FlurryAPPKey      @"SCF6NC6HZ62WM8ZZCQV9"
+#define FlurryAPPKey      @"SCF6NC6HZ62WM8ZZCQV9" //自测key
 #define GAAPPKey          @"UA-49487373-4"
 #define AdmobAPPKey       @"ca-app-pub-5553601587247422/4485041796"
+
+#define kPushURL @"http://iospush.rcplatformhk.net/IOSPushWeb/userinfo/regiUserInfo.do"
+
+//#define HTTP_BASEURL @"http://192.168.0.88:8081/IOSNoCropWeb/external/"
+//#define kPushURL @"http://192.168.0.88:8081/IOSPushWeb/userinfo/regiUserInfo.do"
 
 static NSString *kiTunesID = @"";
 static NSString *kFollwUsURL = @"";
 static NSString *kFeedbackEmail = @"rctalk.service@gmail.com";
-
+static NSString *DEVICE_TOKEN = @"deviceToken";
 
 
 #endif
