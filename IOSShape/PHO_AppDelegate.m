@@ -238,6 +238,52 @@ void uncaughtExceptionHandler(NSException *exception)
     [request updateVersion:urlStr withTag:10];
 }
 
+#pragma mark -
+#pragma mark WebRequestDelegate
+- (void)didReceivedData:(NSDictionary *)dic withTag:(NSInteger)tag
+{
+    NSLog(@"dic........%@",dic);
+    switch (tag) {
+        case 10:
+        {
+            //解析数据
+            NSArray *results = [dic objectForKey:@"results"];
+            if ([results count] == 0) {
+                return ;
+            }
+            
+            NSDictionary *dictionary = [results objectAtIndex:0];
+            NSString *version = [dictionary objectForKey:@"version"];
+            NSString *trackViewUrl = [dictionary objectForKey:@"trackViewUrl"];//地址trackViewUrl
+            self.trackURL = trackViewUrl;
+            //NSString *trackName = [dictionary objectForKey:@"trackName"];//trackName
+            
+            NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+            NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+            
+            if ([currentVersion compare:version options:NSNumericSearch] == NSOrderedAscending)
+            {
+                
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示"
+                                                               message:@"亲，有新版本"
+                                                              delegate:self
+                                                     cancelButtonTitle:@"取消"
+                                                     otherButtonTitles:@"确定", nil];
+                [alert show];
+                
+            }
+        }
+            break;
+        case 11:
+        {
+            
+        }
+            break;
+        default:
+            break;
+    }
+    hideMBProgressHUD();
+}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application
