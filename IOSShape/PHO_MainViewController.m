@@ -671,19 +671,23 @@
 
 - (UIImage *)getGraphImage:(UIImage *)image
 {
-    UIView *tempView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
-    tempView.backgroundColor = [UIColor clearColor];
-    tempView.backgroundColor = [UIColor colorWithPatternImage:image];
+    @autoreleasepool
+    {
+        UIView *tempView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
+        tempView.backgroundColor = [UIColor clearColor];
+        tempView.backgroundColor = [UIColor colorWithPatternImage:image];
+        
+        UIGraphicsBeginImageContext(tempView.bounds.size);
+        
+        [tempView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        
+        UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        UIGraphicsEndImageContext();
+        
+        return returnImage;
+    }
     
-    UIGraphicsBeginImageContext(tempView.bounds.size);
-    
-    [tempView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return returnImage;
 
 }
 
