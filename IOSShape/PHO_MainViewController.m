@@ -634,12 +634,13 @@
         [colorChooseScrollView addSubview:backGroundSelectedView];
     }
     backGroundSelectedView.frame = tempButton.frame;
-    
-    UIView *tempView = [[UIView alloc]initWithFrame:showView.showImageView.frame];
-    
-    tempView.backgroundColor = colorWithHexString([colorMulArray objectAtIndex:tempButton.tag - 10]);
+    if (backColorView == nil)
+    {
+        backColorView = [[UIView alloc]initWithFrame:showView.showImageView.frame];
+    }
+    backColorView.backgroundColor = colorWithHexString([colorMulArray objectAtIndex:tempButton.tag-10]);
 
-    bottomImage.image = [UIImage getImageFromView:tempView];
+    bottomImage.image = [UIImage getImageFromView:backColorView];
     
 //    shapeImage.image = [UIImage blurryBottomImage:bottomImage.image andTopImage:topImage.image withBlurLevel:blurSlider.value];
     shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
@@ -817,8 +818,6 @@
 {
     //分享
     
-    CGSize bottomSize = CGSizeMake(CGImageGetWidth(filterMaxImage.CGImage), CGImageGetHeight(filterMaxImage.CGImage));
-    
     UIImage *passImage = [UIImage getEditFinishedImageWithView:backView];
     
     if (shareContrller == nil)
@@ -855,8 +854,6 @@
                 [tempView removeFromSuperview];
                 [showChooseView insertSubview:shapeChooseView atIndex:0];
             }
-            
-            
         }
     }
 }

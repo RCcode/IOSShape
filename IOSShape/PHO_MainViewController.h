@@ -58,6 +58,7 @@ typedef enum _whichTypeUsed
     
     UIScrollView *shapeChooseScrollView;
     UIScrollView *colorChooseScrollView;
+    UIView *backColorView;
     UIScrollView *graphChooseScrollView;
     UISlider *blurSlider;
     UIView *alphaSliderView;
