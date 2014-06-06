@@ -295,6 +295,7 @@
     }
     
     self.isSaved = YES;
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
