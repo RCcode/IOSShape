@@ -59,10 +59,9 @@
     
     [Flurry startSession:FlurryAPPKey];
     //调试日志
-    [Flurry setLogLevel:FlurryLogLevelDebug];
+//    [Flurry setLogLevel:FlurryLogLevelDebug];
     //程序退出时上传数据
-    [Flurry setSessionReportsOnCloseEnabled:NO];
-    [Flurry setSessionReportsOnPauseEnabled:YES];
+    [Flurry setSessionReportsOnCloseEnabled:YES];
     
     
     

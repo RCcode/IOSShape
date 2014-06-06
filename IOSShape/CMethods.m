@@ -31,6 +31,11 @@ CGFloat viewHeight(UIViewController *viewController){
     
 }
 
+NSString *appVersion(){
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
+
+
 NSArray* getImagesArray(NSString *folderName, NSString *type)
 {
     NSArray *returnArray = [[NSBundle mainBundle]pathsForResourcesOfType:type inDirectory:folderName];

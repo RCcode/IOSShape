@@ -105,27 +105,14 @@
  返回值：  (UIImage *)newImage:返回编辑完成的图片图片
  **********************************************************/
 
-+ (UIImage *)lastImageMakeWithBottomImage:(UIImage *)_bottomImage andTopImage:(UIImage *)_topImage andAlpha:(CGFloat)alpha
++ (UIImage *)getEditFinishedImageWithView:(UIView *)backView
 {
-    int bottomWidth = CGImageGetWidth(_bottomImage.CGImage);
-    int bottomHeight = CGImageGetHeight(_bottomImage.CGImage);
-    
-    NSLog(@"%d,%d",bottomWidth,bottomHeight);
-    
-    if (bottomWidth >= 1080)
-    {
-        bottomWidth = 1080;
-        bottomHeight = 1080;
-    }
-    
-    UIImage *bottomImage = _bottomImage;
-    UIImage *topImage = _topImage;
-    CGSize newSize =CGSizeMake(1018, 1080);
+
+    CGSize newSize =CGSizeMake(1080, 1080);
     UIGraphicsBeginImageContext( newSize );
     // Use existing opacity as is
-    [bottomImage drawInRect:CGRectMake(0,0,bottomWidth,bottomHeight)];
-    // Apply supplied opacity
-    [topImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeNormal alpha:alpha];
+    [backView drawViewHierarchyInRect:CGRectMake(0, 0, 1080, 1080) afterScreenUpdates:YES];
+
     
     UIImage *newImage =UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

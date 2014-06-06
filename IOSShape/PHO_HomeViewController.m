@@ -84,20 +84,26 @@
     [infoButton addTarget:self action:@selector(infoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [infoButton setBackgroundImage:[UIImage imageNamed:@"InfoButtonImage.png"] forState:UIControlStateNormal];
     [self.view addSubview:infoButton];
+    
+    UIImageView *nameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 157, 52)];
+    nameImageView.image = [UIImage imageNamed:@"Shape.png"];
+    nameImageView.center = CGPointMake(self.view.center.x, 170);
+    [self.view addSubview:nameImageView];
 //
 
     UIView *buttonView = [[UIView alloc]initWithFrame:CGRectZero];
     if (iPhone5)
     {
-        buttonView.frame = CGRectMake(-1, kScreen_Height-217, 322, 140);
+        buttonView.frame = CGRectMake(0, kScreen_Height-217, 320, 140);
     }
     else
     {
-        buttonView.frame = CGRectMake(-1, kScreen_Height-217, 322, 140);
+        buttonView.frame = CGRectMake(0, kScreen_Height-190, 320, 140);
+        nameImageView.center = CGPointMake(self.view.center.x, 150);
     }
     buttonView.backgroundColor = colorWithHexString(@"#ffffff");
-    buttonView.layer.borderColor = colorWithHexString(@"dcdcdc").CGColor;
-    buttonView.layer.borderWidth = 1;
+//    buttonView.layer.borderColor = colorWithHexString(@"dcdcdc").CGColor;
+//    buttonView.layer.borderWidth = 1;
     buttonView.alpha = 0.8;
     [self.view addSubview:buttonView];
     
@@ -129,7 +135,7 @@
     //    imagePicker.showsCameraControls = NO;
     imagePicker.delegate = self;
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
+
     
     //    [self setOverLayView];
     //    imagePicker.cameraOverlayView = takePictureView;

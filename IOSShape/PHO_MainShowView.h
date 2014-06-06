@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class NCVideoCamera;
+
 @interface PHO_MainShowView : UIView<UIGestureRecognizerDelegate>
 {
     UIImageView *showImageView;
+    NCVideoCamera *filterView;
     CGFloat beginangel;
     CGFloat beginDistance;
     CGPoint pointnow;
@@ -26,6 +29,7 @@
 }
 
 @property (strong, nonatomic) UIImageView *showImageView;
+@property (strong, nonatomic) NCVideoCamera *filterView;
 
 - (void)getPicture:(UIImage *)picture;
 @end

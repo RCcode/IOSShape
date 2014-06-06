@@ -9,9 +9,24 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>hehehe.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>E8E42AA5194084EA00AC4825</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E8E42AC7194084EB00AC4825</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E8F40A2F192CCB0300A2F0A9</key>
 		<dict>
 			<key>primary</key>

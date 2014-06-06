@@ -21,7 +21,7 @@ typedef enum _whichTypeUsed
 @class PHO_MainShowView;
 @class PHO_ShareViewController;
 
-@interface PHO_MainViewController : UIViewController<UIAlertViewDelegate>
+@interface PHO_MainViewController : UIViewController<UIAlertViewDelegate, UIGestureRecognizerDelegate>
 {
     UIView *backView;
     PHO_MainShowView *showView;
@@ -51,6 +51,8 @@ typedef enum _whichTypeUsed
     UIView *backGroundChooseView;
     //选择滤镜底层view
     UIView *filterChooseView;
+    NSInteger filterSelectedIndex;
+    UIView *passBottomView;
     
     UIView *showChooseView;
     

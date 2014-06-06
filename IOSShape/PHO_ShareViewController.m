@@ -18,7 +18,7 @@
 
 
 #define kTheBestImagePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"theBestImage.igo"]
-#define kToMorePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"test.plist"]
+#define kToMorePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"test2.png"]
 
 @interface PHO_ShareViewController ()
 @end
@@ -142,6 +142,10 @@
             {
                 [self sendMessage:@"share_save" and:@"Share"];
                 UIImageWriteToSavedPhotosAlbum(theBestImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+                NSData *imageData = UIImagePNGRepresentation(theBestImage);
+                NSLog(@"%@",kToMorePath);
+                [imageData writeToFile:kToMorePath atomically:YES];
+                
             }
             break;
         case 1:
@@ -265,6 +269,7 @@
         if ([[rateusDictionary objectForKey:@"status"] isEqualToString:@"rateusNoMore"] ||
             [[rateusDictionary objectForKey:@"status"] isEqualToString:@"rateusted"])
         {
+            self.isSaved = YES;
             return;
         }
         else if ([[rateusDictionary objectForKey:@"status"] isEqualToString:@"rateusLater"])

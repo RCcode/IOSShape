@@ -12,15 +12,14 @@
 
 #import "UIImage+processing.h"
 
-#import "ColorMatrix.h"
-
-#import "ImageUtil.h"
-
 #import "PHO_ShareViewController.h"
 
 
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
+
+#import "Filter_GPU/NCImage/NCVideoCamera.h"
+
 
 #define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-79-KADHEIGHT, kScreen_Width, 79):CGRectMake(0, kScreen_Height-79-KADHEIGHT, kScreen_Width, 79))
 
@@ -64,6 +63,7 @@
         shapeGroupName = @"shape";
         shapeSelectedGroup = @"shape";
         uMengEditType = @"edit_shape";
+        filterSelectedIndex = 0;
         
         shapeMulArray = [[NSMutableArray alloc]init];
         shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
@@ -123,7 +123,7 @@
         [showView getPicture:image];
         [backView addSubview:showView];
         
-        shapeImage = [[UIImageView alloc]initWithFrame:backView.frame];
+        shapeImage = [[UIImageView alloc]initWithFrame:showView.frame];
         topImage = [[UIImageView alloc]initWithFrame:backView.frame];
         bottomImage = [[UIImageView alloc]initWithFrame:backView.frame];
         backRealImage = [[UIImage alloc]init];
@@ -169,19 +169,26 @@
             
         });
        
-        [self.view addSubview:shapeImage];
+        [backView addSubview:shapeImage];
         
         showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
-        showChooseView.backgroundColor = colorWithHexString(@"#ededed");
+//        showChooseView.backgroundColor = colorWithHexString(@"#ededed");
+        showChooseView.backgroundColor = [UIColor clearColor];
         [self.view addSubview:showChooseView];
         if (!iPhone5)
         {
-            hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-22, showChooseView.frame.origin.y-18, 22, 22)];
-            hideShowChooseViewButton.backgroundColor = [UIColor clearColor];
-            [hideShowChooseViewButton addTarget:self action:@selector(hideShowChooseViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [hideShowChooseViewButton setBackgroundImage:[UIImage imageNamed:@"XXX.png"] forState:UIControlStateNormal];
-            [self.view addSubview:hideShowChooseViewButton];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissShowChooseView)];
+            tap.delegate = self;
+            tap.numberOfTapsRequired = 1;
+            tap.numberOfTouchesRequired = 1;
+            [backView addGestureRecognizer:tap];
+            
+//            hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//            [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-32, showChooseView.frame.origin.y-18, 22, 22)];
+//            hideShowChooseViewButton.backgroundColor = [UIColor clearColor];
+//            [hideShowChooseViewButton addTarget:self action:@selector(hideShowChooseViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//            [hideShowChooseViewButton setBackgroundImage:[UIImage imageNamed:@"XXX.png"] forState:UIControlStateNormal];
+//            [self.view addSubview:hideShowChooseViewButton];
             
         }
 
@@ -191,7 +198,21 @@
     return self;
 }
 
--(void)viewWillAppear:(BOOL)animated
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]])
+    {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)dismissShowChooseView
+{
+    showChooseView.hidden = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
@@ -298,8 +319,10 @@
     }
     
     shapeChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
-    shapeChooseScrollView.contentSize = CGSizeMake(50 * [shapeMulArray count], 40);
+    shapeChooseScrollView.contentSize = CGSizeMake(46 * [shapeMulArray count], 52);
     shapeChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
+    shapeChooseScrollView.showsHorizontalScrollIndicator = NO;
+    shapeChooseScrollView.showsVerticalScrollIndicator = NO;
     [shapeChooseView addSubview:shapeChooseScrollView];
     
     shapeSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
@@ -348,6 +371,7 @@
 
 - (void)chooseGroupButtonPressed:(id)sender
 {
+    
     //选择哪个组
     UIView *tempView = [shapeChooseView viewWithTag:10];
     for (UIButton *tempBtn in tempView.subviews)
@@ -407,7 +431,7 @@
         }
     }
     
-    shapeChooseScrollView.contentSize = CGSizeMake(50 * [shapeMulArray count], 40);
+    shapeChooseScrollView.contentSize = CGSizeMake(46 * [shapeMulArray count], 52);
     shapeChooseScrollView.contentOffset = CGPointMake(0, 0);
     for (int i = 0; i < [shapeMulArray count]; i ++)
     {
@@ -486,6 +510,8 @@
     
     colorChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
     colorChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
+    colorChooseScrollView.showsHorizontalScrollIndicator = NO;
+    colorChooseScrollView.showsVerticalScrollIndicator = NO;
     [colorChooseScrollView setContentSize:CGSizeMake(46*[colorMulArray count], 52)];
     for (int i = 0; i < [colorMulArray count]; i ++)
     {
@@ -502,7 +528,9 @@
     
     graphChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
     graphChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
-    [graphChooseScrollView setContentSize:CGSizeMake(45 * [graphMulArray count], 52)];
+    graphChooseScrollView.showsVerticalScrollIndicator = NO;
+    graphChooseScrollView.showsHorizontalScrollIndicator = NO;
+    [graphChooseScrollView setContentSize:CGSizeMake(46 * [graphMulArray count], 52)];
     for (int i = 0; i < [graphMulArray count]; i ++)
     {
         @autoreleasepool {
@@ -676,13 +704,13 @@
 
 - (void)initFilterChooseView
 {
-    filterChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
+    filterChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
     
     filterSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
     filterSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
     filterSelectedView.layer.borderWidth = 2;
     
-    UIScrollView *filterChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
+    UIScrollView *filterChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 52)];
     filterChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
     filterChooseScrollView.contentSize = CGSizeMake(45*[filterMulArray count], 52);
     [filterChooseView addSubview:filterChooseScrollView];
@@ -704,9 +732,9 @@
 //            chooseFilterButton.titleLabel.alpha = 0.7;
 //            chooseFilterButton.titleLabel.textColor = [UIColor whiteColor];
 //            chooseFilterButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:12];
-            [chooseFilterButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 0)];
+//            [chooseFilterButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 0, 0, 0)];
             
-            [chooseFilterButton setBackgroundImage:[filterMulArray objectAtIndex:i] forState:UIControlStateNormal];
+            [chooseFilterButton setBackgroundImage:[UIImage imageWithContentsOfFile:[filterMulArray objectAtIndex:i]] forState:UIControlStateNormal];
             if (i == 0)
             {
                 filterSelectedView.frame = chooseFilterButton.frame;
@@ -729,13 +757,13 @@
 
     //选择滤镜效果
     UIButton *tempButton = (UIButton *)sender;
-    
-    
+    filterSelectedIndex = tempButton.tag-10;
+    filterSelectedView.frame = tempButton.frame;
     NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%d",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit_filter"];
     filterSelectedView.frame = tempButton.frame;
     
-    showView.showImageView.image = [ImageUtil imageWithImage:filterMaxImage withColorMatrix:filterTyeps[tempButton.tag - 10]];
+    [showView.filterView switchFilter:tempButton.tag-10];
 }
 
 #pragma mark - 导航按扭方法
@@ -753,7 +781,7 @@
     if (shareContrller.isSaved)
     {
         [self.navigationController popViewControllerAnimated:YES];
-        shareContrller.isSaved = NO;
+
     }
     else
     {
@@ -786,30 +814,11 @@
 - (void)shareButtonPressed:(id)sender
 {
     //分享
-//    UIImage *tempImage = [UIImage getImageFromView:backView];
-    int width = CGImageGetWidth(backRealImage.CGImage);
-    int height = CGImageGetHeight(backRealImage.CGImage);
     
-    NSLog(@"%d,%d",width,height);
+    CGSize bottomSize = CGSizeMake(CGImageGetWidth(filterMaxImage.CGImage), CGImageGetHeight(filterMaxImage.CGImage));
     
+    UIImage *passImage = [UIImage getEditFinishedImageWithView:backView];
     
-    CGFloat scaleWidth = 320/showView.showImageView.frame.size.width;
-    CGFloat scaleheight = 320/showView.showImageView.frame.size.height;
-    
-    UIImage *tempBackReal = [backRealImage subImageWithRect:
-                             CGRectMake(
-                                        (-showView.showImageView.frame.origin.x) / scaleWidth,
-                                        (-showView.showImageView.frame.origin.y) / scaleheight,
-                                        width * scaleWidth,
-                                        height * scaleheight
-                                        )];
-    
-    int width1 = CGImageGetWidth(tempBackReal.CGImage);
-    int height1 = CGImageGetHeight(tempBackReal.CGImage);
-    
-    NSLog(@"%d,%d",width1,height1);
-    
-    UIImage *passImage = [UIImage lastImageMakeWithBottomImage:tempBackReal andTopImage:shapeImage.image andAlpha:shapeImage.alpha];
     if (shareContrller == nil)
     {
         shareContrller = [[PHO_ShareViewController alloc]initWithImage:passImage];
@@ -907,10 +916,7 @@
     
     if ([filterMulArray count] == 0)
     {
-        for (int i = 0; i < sizeof(filterTyeps)/sizeof(float *); i++)
-        {
-            [filterMulArray addObject:[ImageUtil imageWithImage:filterMinImage withColorMatrix:filterTyeps[i]]];
-        }
+        filterMulArray = [getImagesArray(@"滤纸图标", @"png") mutableCopy];
         [self initFilterChooseView];
     }
     

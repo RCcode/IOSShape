@@ -77,7 +77,7 @@
     self.navigationItem.leftBarButtonItem = leftItem;
     
     //title
-//    _versionLabel.text = [NSString stringWithFormat:@"version: %@", appVersion()];
+    _versionLabel.text = [NSString stringWithFormat:@"version: %@", appVersion()];
     
     
     //tabelView

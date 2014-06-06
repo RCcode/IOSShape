@@ -21,7 +21,7 @@
 
 + (UIImage *)getImageFromView:(UIView *)view;
 
-+ (UIImage *)lastImageMakeWithBottomImage:(UIImage *)_bottomImage andTopImage:(UIImage *)_topImage andAlpha:(CGFloat)alpha;
++ (UIImage *)getEditFinishedImageWithView:(UIView *)backView;
 
 + (UIImage *)blurryBottomImage:(UIImage *)bottomImage andTopImage:(UIImage *)topImage withBlurLevel:(CGFloat)blur;
 

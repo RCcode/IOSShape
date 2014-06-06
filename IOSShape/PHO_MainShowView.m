@@ -10,9 +10,13 @@
 
 #import "UIImage+processing.h"
 
+#import "NCVideoCamera.h"
+#import "NCFilters.h"
+
 @implementation PHO_MainShowView
 
 @synthesize showImageView;
+@synthesize filterView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -202,19 +206,21 @@
         showImageView.frame = CGRectMake(showImageView.frame.origin.x, showImageView.frame.origin.y, 320, 320/scale);
     }
     
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(showImageView.frame.size.width, showImageView.frame.size.height), NO, 0);
-    //    [picture drawAtPoint:CGPointMake(0,0)];
-    //
-    //    [picture drawAtPoint:CGPointMake(self.frame.size.width,0)];
-    
-    [picture drawInRect:CGRectMake(0, 0, showImageView.frame.size.width, showImageView.frame.size.height)];
-    
-    UIImage *im = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
+//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(showImageView.frame.size.width, showImageView.frame.size.height), NO, 0);
+//    //    [picture drawAtPoint:CGPointMake(0,0)];
+//    //
+//    //    [picture drawAtPoint:CGPointMake(self.frame.size.width,0)];
+//    
+//    [picture drawInRect:CGRectMake(0, 0, showImageView.frame.size.width, showImageView.frame.size.height)];
+//    
+//    UIImage *im = UIGraphicsGetImageFromCurrentImageContext();
+//    
+//    UIGraphicsEndImageContext();
     
 
-    showImageView.image = im;
+    filterView = [NCVideoCamera videoCameraWithFrame:showImageView.frame Image:picture];
+    [filterView switchFilter:NC_NORMAL_FILTER];
+    [showImageView addSubview:filterView.gpuImageView];
     
 }
 
