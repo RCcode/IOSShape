@@ -352,6 +352,10 @@
     //选择哪个图形
     UIButton *tempButton = (UIButton *)sender;
     
+    if (shapeSelectedView.center.x == tempButton.center.x && shapeSelectedView.center.y == tempButton.center.y)
+    {
+        return;
+    }
     shapeSelectedView.frame = tempButton.frame;
     shapeSelectedView.hidden = NO;
     
@@ -366,7 +370,10 @@
     
 //    topImage.image = [UIImage imageWithContentsOfFile:pathStr];
     
-    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+//    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
+//    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@"waited at least three seconds.");
+        shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+//});
 }
 
 - (void)chooseGroupButtonPressed:(id)sender
@@ -633,17 +640,31 @@
         [backGroundSelectedView removeFromSuperview];
         [colorChooseScrollView addSubview:backGroundSelectedView];
     }
+    if (backGroundSelectedView.center.x == tempButton.center.x && backGroundSelectedView.center.y == tempButton.center.y)
+    {
+        return;
+    }
     backGroundSelectedView.frame = tempButton.frame;
     if (backColorView == nil)
     {
-        backColorView = [[UIView alloc]initWithFrame:showView.showImageView.frame];
+        backColorView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
     }
     backColorView.backgroundColor = colorWithHexString([colorMulArray objectAtIndex:tempButton.tag-10]);
 
-    bottomImage.image = [UIImage getImageFromView:backColorView];
+    
     
 //    shapeImage.image = [UIImage blurryBottomImage:bottomImage.image andTopImage:topImage.image withBlurLevel:blurSlider.value];
-    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+    {
+        bottomImage.image = [UIImage getImageFromView:backColorView];
+    });
+    
+    shapeImage.image = [shapeImage.image changeTintColor:colorWithHexString([colorMulArray objectAtIndex:tempButton.tag-10]) andAlpha:1];
+    
+//    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0);
+//    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@"waited at least three seconds.");
+//    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];});
+    
 }
 
 - (void)chooseGraphButtonPressed:(id)sender
@@ -661,35 +682,44 @@
         [graphChooseScrollView addSubview:backGroundSelectedView];
     }
 
+    if (backGroundSelectedView.center.x == tempButton.center.x && backGroundSelectedView.center.y == tempButton.center.y)
+    {
+        return;
+    }
     backGroundSelectedView.frame = tempButton.frame;
     
-    bottomImage.image = [self getGraphImage:[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@",[graphMulArray objectAtIndex:tempButton.tag - 10]]]];
+    UIImage *tempImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@",[graphMulArray objectAtIndex:tempButton.tag - 10]]];
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+                   {
+                       bottomImage.image = [self getGraphImage:tempImage];
+                   });
 //    shapeImage.image = [UIImage blurryBottomImage:bottomImage.image andTopImage:topImage.image withBlurLevel:blurSlider.value];
-    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+//    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+//    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
+//    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@"waited at least three seconds.");
+//        shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];});
+    shapeImage.image = [shapeImage.image changeGraph:tempImage];
+    
+    
 }
 
 - (UIImage *)getGraphImage:(UIImage *)image
 {
-    @autoreleasepool
-    {
-        UIView *tempView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
-        tempView.backgroundColor = [UIColor clearColor];
-        tempView.backgroundColor = [UIColor colorWithPatternImage:image];
-        
-        UIGraphicsBeginImageContext(tempView.bounds.size);
-        
-        [tempView.layer renderInContext:UIGraphicsGetCurrentContext()];
-        
-        UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
-        
-        UIGraphicsEndImageContext();
-        
-        return returnImage;
-    }
+    UIView *tempView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 540, 540)];
+    tempView.backgroundColor = [UIColor colorWithPatternImage:image];
     
-
+    UIGraphicsBeginImageContext(tempView.frame.size);
+    
+    [tempView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return returnImage;
 }
+
 
 -(void)blurSliderValueChange:(id)sender
 {
@@ -719,7 +749,9 @@
     
     UIScrollView *filterChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 52)];
     filterChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
-    filterChooseScrollView.contentSize = CGSizeMake(45*[filterMulArray count], 52);
+    filterChooseScrollView.contentSize = CGSizeMake(46*[filterMulArray count], 52);
+    filterChooseScrollView.showsHorizontalScrollIndicator = NO;
+    filterChooseScrollView.showsVerticalScrollIndicator = NO;
     [filterChooseView addSubview:filterChooseScrollView];
     
 //    NSArray *itemTitles = @[@"Origin", @"Lomo", @"Sunset",
@@ -765,6 +797,10 @@
     //选择滤镜效果
     UIButton *tempButton = (UIButton *)sender;
     filterSelectedIndex = tempButton.tag-10;
+    if (filterSelectedView.center.x == tempButton.center.x && filterSelectedView.center.y == tempButton.center.y)
+    {
+        return;
+    }
     filterSelectedView.frame = tempButton.frame;
     NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%d",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit_filter"];
@@ -821,6 +857,7 @@
 - (void)shareButtonPressed:(id)sender
 {
     //分享
+    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
     
     UIImage *passImage = [UIImage getEditFinishedImageWithView:backView];
     

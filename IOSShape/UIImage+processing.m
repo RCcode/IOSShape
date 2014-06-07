@@ -48,21 +48,41 @@
  返回值：  (UIImage *):改主前景色后返回的图片
  **********************************************************/
 
-//- (UIImage *)changeTintColor:(UIColor *)tintColor andAlpha:(CGFloat)alpha
-//{
-//    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
-//    [tintColor setFill];
-//    CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
-//    UIRectFill(bounds);
-//    
-//    //Draw the tinted image in context
-//    [self drawInRect:bounds blendMode:kCGBlendModeDestinationIn alpha:1.0f];
-//    
-//    UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    
-//    return tintedImage;
-//}
+- (UIImage *)changeTintColor:(UIColor *)tintColor andAlpha:(CGFloat)alpha
+{
+    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
+    [tintColor setFill];
+    CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
+    UIRectFill(bounds);
+
+//    [view drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+    //Draw the tinted image in context
+    [self drawInRect:bounds blendMode:kCGBlendModeDestinationIn alpha:1.0f];
+    
+    UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return tintedImage;
+}
+
+- (UIImage *)changeGraph:(UIImage *)image
+{
+    UIColor *color = [UIColor colorWithPatternImage:image];
+    
+    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
+    [color setFill];
+    CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
+    UIRectFill(bounds);
+    
+    //    [view drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+    //Draw the tinted image in context
+    [self drawInRect:bounds blendMode:kCGBlendModeDestinationIn alpha:1.0f];
+    
+    UIImage *graphImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return graphImage;
+}
 /**********************************************************
  函数名称：+ (UIImage *)shapeMakeWithBottomImage:(UIImage *)_bottomImage 
                                     andTopImage:(UIImage *)_topImage
@@ -79,7 +99,7 @@
     int width = CGImageGetWidth(_topImage.CGImage);
     int height = CGImageGetHeight(_topImage.CGImage);
     
-    CGSize newSize =CGSizeMake(width, height);
+    CGSize newSize =CGSizeMake(320, 320);
     
     UIGraphicsBeginImageContext( newSize );
     // Use existing opacity as is
@@ -88,7 +108,11 @@
     [topImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeDestinationOut alpha:1];
     
     UIImage *newImage =UIGraphicsGetImageFromCurrentImageContext();
+    
     UIGraphicsEndImageContext();
+    
+//    CGImageRelease(_topImage.CGImage);
+//    CGImageRelease(_bottomImage.CGImage);
     
     return newImage;
 }

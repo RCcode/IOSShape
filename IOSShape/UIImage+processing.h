@@ -11,7 +11,9 @@
 @interface UIImage (processing)
 
 
-//- (UIImage *)changeTintColor:(UIColor *)tintColor andAlpha:(CGFloat)alpha;
+- (UIImage *)changeTintColor:(UIColor *)tintColor andAlpha:(CGFloat)alpha;
+
+- (UIImage *)changeGraph:(UIImage *)image;
 
 - (UIImage *)subImageWithRect:(CGRect)rect;
 
