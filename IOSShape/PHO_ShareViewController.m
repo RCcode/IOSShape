@@ -45,25 +45,27 @@
     return self;
 }
 
-- (id)initWithImage:(UIImage *)image
+- (void)getImage:(UIImage *)image
 {
-    self = [super init];
-    if (self)
-    {
-        theBestImage = image;
-        CGFloat width = CGImageGetWidth(theBestImage.CGImage);
-        CGFloat height = CGImageGetHeight(theBestImage.CGImage);
-        
-        NSLog(@"%f,%f",width,height);
-        // Custom initialization
-    }
-    return self;
+
+    theBestImage = image;
+    CGFloat width = CGImageGetWidth(theBestImage.CGImage);
+    CGFloat height = CGImageGetHeight(theBestImage.CGImage);
+    
+    NSLog(@"%f,%f",width,height);
+
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    isSaved = NO;
 }
 
 - (void)viewDidLoad
@@ -75,6 +77,8 @@
 //    NSLog(@"%d",TOPORIGIN_Y);
 //    customNavgationView.backgroundColor = [UIColor redColor];
 //    [self.view addSubview:customNavgationView];
+    
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isPopTipToRateus) name:KShareSuccess object:nil];
     
@@ -136,7 +140,17 @@
 //返回到主页
 - (void)popToHomeViewButtonPressed:(id)sender
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if (isSaved)
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"照片未保存，是否返回" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"继续", nil];
+        alert.tag == 100;
+        [alert show];
+    }
+    
 }
 
 #pragma mark 分享按扭方法
@@ -248,7 +262,8 @@
     {
         [MBProgressHUD showSuccess:@"保存成功"
                             toView:[UIApplication sharedApplication].keyWindow];
-        [self isPopTipToRateus];
+        [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:1];
+//        [self isPopTipToRateus];
         
     }
     else
@@ -300,29 +315,46 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSMutableDictionary *rateusDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:editCountPath];
-    if (rateusDictionary)
+    if (alertView.tag == 100)
     {
         if (buttonIndex == 0)
         {
-            [rateusDictionary setObject:@"rateusLater" forKey:@"status"];
+            [self.navigationController popViewControllerAnimated:YES];
         }
         else if (buttonIndex == 1)
         {
-            [rateusDictionary setObject:@"rateusted" forKey:@"status"];
-            
-            [self sendMessage:@"home_menu_rateus" and:@"Home"];
-            
-            NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", kiTunesID];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
+            return;
         }
-        else if (buttonIndex == 2)
-        {
-            [rateusDictionary setObject:@"rateusNoMore" forKey:@"status"];
-        }
+        
     }
-    [rateusDictionary writeToFile:editCountPath atomically:YES];
-
+    else
+    {
+        NSMutableDictionary *rateusDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:editCountPath];
+        if (rateusDictionary)
+        {
+            if (buttonIndex == 0)
+            {
+                [rateusDictionary setObject:@"rateusLater" forKey:@"status"];
+            }
+            else if (buttonIndex == 1)
+            {
+                [rateusDictionary setObject:@"rateusted" forKey:@"status"];
+                
+                [self sendMessage:@"home_menu_rateus" and:@"Home"];
+                
+                NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", kiTunesID];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
+            }
+            else if (buttonIndex == 2)
+            {
+                [rateusDictionary setObject:@"rateusNoMore" forKey:@"status"];
+            }
+        }
+        [rateusDictionary writeToFile:editCountPath atomically:YES];
+    }
+    
+    
+    
 }
 
 #pragma mark 发送统计

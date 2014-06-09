@@ -141,7 +141,7 @@
         
         shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
         shapeImage.alpha = 0.7f;
-        backRealImage = image;
+        backRealImage = shapeImage.image;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
         {
@@ -371,6 +371,7 @@
     [self sendMessage:tempStr and:@"edit_shape"];
     
     NSString *pathStr = [shapeMulArray objectAtIndex:tempButton.tag - 10];
+    
     topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension] , [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
     
     
@@ -378,7 +379,15 @@
     
 //    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
 //    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@"waited at least three seconds.");
-        shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       UIImage *image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+                       dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                           shapeImage.image = image;
+                       });
+                   });
+    
 //});
 }
 
@@ -698,6 +707,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
                    {
                        bottomImage.image = [self getGraphImage:tempImage];
+                       
                        dispatch_async(dispatch_get_main_queue(), ^
                        {
                            UIImage *tempShapeImage = [shapeImage.image changeGraph:bottomImage.image];
@@ -874,9 +884,9 @@
     //分享
     UIView *passView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
     
-    NCVideoCamera *filterView = [NCVideoCamera videoCameraWithFrame:passView.frame Image:filterMaxImage];
-    [filterView switchFilter:filterSelectedIndex];
-    [passView addSubview:filterView.gpuImageView];
+    UIImageView *passBackImageView = [[UIImageView alloc]initWithFrame:passView.frame];
+    passBackImageView.image = [UIImage getEditFinishedImageWithView:showView];
+    [passView addSubview:passBackImageView];
     
     UIImageView *passImageView = [[UIImageView alloc]initWithFrame:passView.frame];
     [passView addSubview:passImageView];
@@ -888,16 +898,34 @@
     {
         NSLog(@"waited at least three seconds.");
         UIImage *passImage = [UIImage getEditFinishedImageWithView:passView];
+
         if (shareContrller == nil)
         {
-            shareContrller = [[PHO_ShareViewController alloc]initWithImage:passImage];
+            shareContrller = [[PHO_ShareViewController alloc]init];
         }
+        [shareContrller getImage:passImage];
         
         [self.navigationController pushViewController:shareContrller animated:YES];
     });
     
     
 }
+
+-(UIImage *)getImageFromView:(UIView *)view
+{
+    CGSize newSize = CGSizeMake(1080, 1080);
+    
+    UIGraphicsBeginImageContext(newSize);
+    
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 
 #pragma mark - tabbar按扭方法
 /**********************************************************

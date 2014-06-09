@@ -19,6 +19,6 @@
 }
 
 @property (nonatomic) BOOL isSaved;
-- (id)initWithImage:(UIImage *)image;
+- (void)getImage:(UIImage *)image;
 
 @end
