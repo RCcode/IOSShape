@@ -22,6 +22,8 @@
 
 
 #define editCountPath  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"editCount.plist"]
+#define KShareSuccess @"sharesuccess"
+
 
 #define appleID           @""
 #define UmengAPPKey       @"5379996956240b8e43131db9"

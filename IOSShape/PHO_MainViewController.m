@@ -65,54 +65,60 @@
         uMengEditType = @"edit_shape";
         filterSelectedIndex = 0;
         
-        shapeMulArray = [[NSMutableArray alloc]init];
-        shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+        {
+            shapeMulArray = [[NSMutableArray alloc]init];
+            shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
+            
+            colorMulArray = [[NSMutableArray alloc]
+                             initWithObjects:@"#ffffff",
+                             @"#000000",
+                             @"#fff1f1",
+                             @"#f6e5c2",
+                             @"#f7f4c2",
+                             @"#f3705c",
+                             @"#f4ee64",
+                             @"#e55958",
+                             @"#2b5ca9",
+                             @"#f073ab",
+                             @"#fdb934",
+                             @"#75a454",
+                             @"#6f589c",
+                             @"#90d7eb",
+                             @"#ee5c71",
+                             @"#f48221",
+                             @"#9c95c9",
+                             @"#ffc20f",
+                             @"#bfd743",
+                             @"#65c295",
+                             @"#f8aaa6",
+                             @"#dbc4f6",
+                             @"#eec3f6",
+                             @"#f7c3d7",
+                             @"#663dae",
+                             @"#85418b",
+                             @"#9a6bea",
+                             @"#cc6fd4",
+                             @"#f589b5",
+                             @"#e46a7c",
+                             @"#4b4a4a",
+                             @"#777777",
+                             @"#acacac",
+                             @"#6d3938",
+                             @"#53402d",
+                             @"#6e5844", nil];
+            
+            graphMulArray = [[NSMutableArray alloc]init];
+            graphMulArray = [getImagesArray(@"graph",@"jpg") mutableCopy];
+            
+            
+            filterMulArray = [[NSMutableArray alloc]init];
+            
+        });
         
         
         
-        colorMulArray = [[NSMutableArray alloc]
-                         initWithObjects:@"#ffffff",
-                                         @"#000000",
-                                         @"#fff1f1",
-                                         @"#f6e5c2",
-                                         @"#f7f4c2",
-                                         @"#f3705c",
-                                         @"#f4ee64",
-                                         @"#e55958",
-                                         @"#2b5ca9",
-                                         @"#f073ab",
-                                         @"#fdb934",
-                                         @"#75a454",
-                                         @"#6f589c",
-                                         @"#90d7eb",
-                                         @"#ee5c71",
-                                         @"#f48221",
-                                         @"#9c95c9",
-                                         @"#ffc20f",
-                                         @"#bfd743",
-                                         @"#65c295",
-                                         @"#f8aaa6",
-                                         @"#dbc4f6",
-                                         @"#eec3f6",
-                                         @"#f7c3d7",
-                                         @"#663dae",
-                                         @"#85418b",
-                                         @"#9a6bea",
-                                         @"#cc6fd4",
-                                         @"#f589b5",
-                                         @"#e46a7c",
-                                         @"#4b4a4a",
-                                         @"#777777",
-                                         @"#acacac",
-                                         @"#6d3938",
-                                         @"#53402d",
-                                         @"#6e5844", nil];
         
-        graphMulArray = [[NSMutableArray alloc]init];
-        graphMulArray = [getImagesArray(@"graph",@"jpg") mutableCopy];
-        
-        
-        filterMulArray = [[NSMutableArray alloc]init];
 
         backView = [[UIView alloc]initWithFrame:CGRectMake(0, TOPORIGIN_Y + 44, 320, 320)];
         backView.backgroundColor = [UIColor clearColor];
@@ -361,7 +367,7 @@
     
     shapeSelectedGroup = shapeGroupName;
     
-    NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%d_%d",[self getGroupNum],tempButton.tag - 10];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%ld_%d",(long)[self getGroupNum],tempButton.tag - 10];
     [self sendMessage:tempStr and:@"edit_shape"];
     
     NSString *pathStr = [shapeMulArray objectAtIndex:tempButton.tag - 10];
@@ -425,7 +431,7 @@
         shapeSelectedView.hidden = NO;
     }
     
-    NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%d",[self getGroupNum]];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%ld",(long)[self getGroupNum]];
     [self sendMessage:tempStr and:@"edit_shape"];
     
     shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
@@ -565,14 +571,14 @@
     alphaSlider = [[UISlider alloc]initWithFrame:sliderRect];
     [alphaSlider addTarget:self action:@selector(alphaSliderValueChange:) forControlEvents:UIControlEventValueChanged];
     [alphaSlider setMinimumTrackTintColor:colorWithHexString(@"#fe8c3f")];
-    [alphaSlider setValue:0.7f];
+    [alphaSlider setValue:0.8f];
     [alphaSlider setMinimumValue:0.0f];
     [alphaSlider setMaximumValue:1.0f];
     [alphaSliderView addSubview:alphaSlider];
     
     valuePercentLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 20)];
     valuePercentLabel.textAlignment = NSTextAlignmentCenter;
-    valuePercentLabel.text = [NSString stringWithFormat:@"%d%%",(int)((1-alphaSlider.value/alphaSlider.maximumValue)*100)];
+    valuePercentLabel.text = [NSString stringWithFormat:@"%d%%",(int)((alphaSlider.value/alphaSlider.maximumValue)*100)];
     [alphaSliderView addSubview:valuePercentLabel];
 }
 
@@ -632,7 +638,7 @@
     //选择哪个颜色
     UIButton *tempButton = (UIButton *)sender;
     //友盟统计
-    NSString *tempStr = [NSString stringWithFormat:@"edit_background_color_%d",tempButton.tag-10];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_background_color_%ld",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit_background_color"];
     
     if (![colorChooseScrollView.subviews containsObject:backGroundSelectedView])
@@ -640,7 +646,7 @@
         [backGroundSelectedView removeFromSuperview];
         [colorChooseScrollView addSubview:backGroundSelectedView];
     }
-    if (backGroundSelectedView.center.x == tempButton.center.x && backGroundSelectedView.center.y == tempButton.center.y)
+    else if (backGroundSelectedView.center.x == tempButton.center.x && backGroundSelectedView.center.y == tempButton.center.y)
     {
         return;
     }
@@ -673,7 +679,7 @@
     UIButton *tempButton = (UIButton *)sender;
     //友盟统计
     
-    NSString *tempStr = [NSString stringWithFormat:@"edit_background_pattern_%d",tempButton.tag-10];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_background_pattern_%ld",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit_background_pattern"];
     
     if (![graphChooseScrollView.subviews containsObject:backGroundSelectedView])
@@ -681,8 +687,7 @@
         [backGroundSelectedView removeFromSuperview];
         [graphChooseScrollView addSubview:backGroundSelectedView];
     }
-
-    if (backGroundSelectedView.center.x == tempButton.center.x && backGroundSelectedView.center.y == tempButton.center.y)
+    else if (backGroundSelectedView.center.x == tempButton.center.x && backGroundSelectedView.center.y == tempButton.center.y)
     {
         return;
     }
@@ -693,20 +698,30 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
                    {
                        bottomImage.image = [self getGraphImage:tempImage];
+                       dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                           UIImage *tempShapeImage = [shapeImage.image changeGraph:bottomImage.image];
+                           shapeImage.image = tempShapeImage;
+                       });
                    });
+
+
+//    UIImage *tempChooseImage1 = [self getGraphImage:tempChooseImage];
+//    UIImage *tempChooseImage = [bottomImage.image rescaleImageToSize:shapeImage.frame.size];
 //    shapeImage.image = [UIImage blurryBottomImage:bottomImage.image andTopImage:topImage.image withBlurLevel:blurSlider.value];
 //    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
 //    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
 //    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@"waited at least three seconds.");
-//        shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];});
-    shapeImage.image = [shapeImage.image changeGraph:tempImage];
+//        shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
     
+
     
 }
 
 - (UIImage *)getGraphImage:(UIImage *)image
 {
-    UIView *tempView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 540, 540)];
+    UIView *tempView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
+    tempView.alpha = 1;
     tempView.backgroundColor = [UIColor colorWithPatternImage:image];
     
     UIGraphicsBeginImageContext(tempView.frame.size);
@@ -734,7 +749,7 @@
     
     shapeImage.alpha = tempslider.value;
     
-    valuePercentLabel.text = [NSString stringWithFormat:@"%d%%",(int)((1-tempslider.value/alphaSlider.maximumValue)*100)];
+    valuePercentLabel.text = [NSString stringWithFormat:@"%d%%",(int)((tempslider.value/alphaSlider.maximumValue)*100)];
 }
 
 #pragma mark - 初始化滤镜选择view
@@ -802,11 +817,11 @@
         return;
     }
     filterSelectedView.frame = tempButton.frame;
-    NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%d",tempButton.tag-10];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%ld",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit_filter"];
     filterSelectedView.frame = tempButton.frame;
     
-    [showView.filterView switchFilter:tempButton.tag-10];
+    [showView.filterView switchFilter:(NCFilterType)tempButton.tag-10];
 }
 
 #pragma mark - 导航按扭方法
@@ -857,16 +872,31 @@
 - (void)shareButtonPressed:(id)sender
 {
     //分享
-    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    UIView *passView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
     
-    UIImage *passImage = [UIImage getEditFinishedImageWithView:backView];
+    NCVideoCamera *filterView = [NCVideoCamera videoCameraWithFrame:passView.frame Image:filterMaxImage];
+    [filterView switchFilter:filterSelectedIndex];
+    [passView addSubview:filterView.gpuImageView];
     
-    if (shareContrller == nil)
+    UIImageView *passImageView = [[UIImageView alloc]initWithFrame:passView.frame];
+    [passView addSubview:passImageView];
+    
+    passImageView.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1ull*NSEC_PER_SEC);
+    dispatch_after(time, dispatch_get_main_queue(), ^
     {
-        shareContrller = [[PHO_ShareViewController alloc]initWithImage:passImage];
-    }
+        NSLog(@"waited at least three seconds.");
+        UIImage *passImage = [UIImage getEditFinishedImageWithView:passView];
+        if (shareContrller == nil)
+        {
+            shareContrller = [[PHO_ShareViewController alloc]initWithImage:passImage];
+        }
+        
+        [self.navigationController pushViewController:shareContrller animated:YES];
+    });
     
-    [self.navigationController pushViewController:shareContrller animated:YES];
+    
 }
 
 #pragma mark - tabbar按扭方法

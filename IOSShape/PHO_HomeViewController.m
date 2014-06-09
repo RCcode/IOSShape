@@ -235,7 +235,7 @@
     }
     
     UIImage *cameraPic = [info objectForKey:UIImagePickerControllerOriginalImage];
-    NSLog(@"cameraPic.imageOrientation == %d",cameraPic.imageOrientation);
+//    NSLog(@"cameraPic.imageOrientation == %ld",cameraPic.imageOrientation);
     
     if (cameraPic.imageOrientation != UIImageOrientationUp)
     {

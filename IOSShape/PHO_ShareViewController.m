@@ -17,8 +17,9 @@
 #import "GAIDictionaryBuilder.h"
 
 
-#define kTheBestImagePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"theBestImage.igo"]
-#define kToMorePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"test2.png"]
+#define kTheBestImagePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"shareImage.igo"]
+#define kToMorePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"shareImage.jpg"]
+
 
 @interface PHO_ShareViewController ()
 @end
@@ -50,13 +51,19 @@
     if (self)
     {
         theBestImage = image;
-        int width = CGImageGetWidth(theBestImage.CGImage);
-        int height = CGImageGetHeight(theBestImage.CGImage);
+        CGFloat width = CGImageGetWidth(theBestImage.CGImage);
+        CGFloat height = CGImageGetHeight(theBestImage.CGImage);
         
-        NSLog(@"%d,%d",width,height);
+        NSLog(@"%f,%f",width,height);
         // Custom initialization
     }
     return self;
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)viewDidLoad
@@ -68,6 +75,9 @@
 //    NSLog(@"%d",TOPORIGIN_Y);
 //    customNavgationView.backgroundColor = [UIColor redColor];
 //    [self.view addSubview:customNavgationView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isPopTipToRateus) name:KShareSuccess object:nil];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -142,10 +152,6 @@
             {
                 [self sendMessage:@"share_save" and:@"Share"];
                 UIImageWriteToSavedPhotosAlbum(theBestImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-                NSData *imageData = UIImagePNGRepresentation(theBestImage);
-                NSLog(@"%@",kToMorePath);
-                [imageData writeToFile:kToMorePath atomically:YES];
-                
             }
             break;
         case 1:
@@ -228,7 +234,7 @@
                 _documetnInteractionController = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
                 _documetnInteractionController.delegate = self;
                 _documetnInteractionController.UTI = @"com.instagram.photo";
-                _documetnInteractionController.annotation = @{@"InstagramCaption":@"来自NoCrop"};
+//                _documetnInteractionController.annotation = @{@"InstagramCaption":@"来自NoCrop"};
                 [_documetnInteractionController presentOpenInMenuFromRect:CGRectMake(0, 0, 0, 0) inView:self.view animated:YES];
             }
             break;
@@ -252,17 +258,12 @@
     }
 }
 
--(void)documentInteractionControllerDidDismissOpenInMenu:(UIDocumentInteractionController *)controller
-{
-    [self isPopTipToRateus];
-}
-
 #pragma mark 获得是否弹出提示评价
 
 - (void)isPopTipToRateus
 {
-    NSMutableDictionary *rateusDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:kToMorePath];
-    NSLog(@"%@",kToMorePath);
+    NSMutableDictionary *rateusDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:editCountPath];
+    NSLog(@"%@",editCountPath);
     if (rateusDictionary)
     {
         NSLog(@"%@",rateusDictionary);
@@ -284,23 +285,22 @@
         NSString *countString = [rateusDictionary objectForKey:@"count"];
         countString = [NSString stringWithFormat:@"%d",countString.intValue + 1];
         [rateusDictionary setObject:countString forKey:@"count"];
-        [rateusDictionary writeToFile:kToMorePath atomically:YES];
+        [rateusDictionary writeToFile:editCountPath atomically:YES];
     }
     else
     {
         rateusDictionary = [[NSMutableDictionary alloc]init];
         [rateusDictionary setObject:@"1" forKey:@"count"];
         [rateusDictionary setObject:@"rateusLater" forKey:@"status"];
-        [rateusDictionary writeToFile:kToMorePath atomically:YES];
+        [rateusDictionary writeToFile:editCountPath atomically:YES];
     }
     
     self.isSaved = YES;
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSMutableDictionary *rateusDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:kToMorePath];
+    NSMutableDictionary *rateusDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:editCountPath];
     if (rateusDictionary)
     {
         if (buttonIndex == 0)
@@ -321,7 +321,7 @@
             [rateusDictionary setObject:@"rateusNoMore" forKey:@"status"];
         }
     }
-    [rateusDictionary writeToFile:kToMorePath atomically:YES];
+    [rateusDictionary writeToFile:editCountPath atomically:YES];
 
 }
 

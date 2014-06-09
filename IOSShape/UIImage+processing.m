@@ -50,9 +50,9 @@
 
 - (UIImage *)changeTintColor:(UIColor *)tintColor andAlpha:(CGFloat)alpha
 {
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320), NO, 0.0f);
     [tintColor setFill];
-    CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
+    CGRect bounds = CGRectMake(0, 0, 320, 320);
     UIRectFill(bounds);
 
 //    [view drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
@@ -67,12 +67,11 @@
 
 - (UIImage *)changeGraph:(UIImage *)image
 {
-    UIColor *color = [UIColor colorWithPatternImage:image];
     
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
-    [color setFill];
-    CGRect bounds = CGRectMake(0, 0, self.size.width, self.size.height);
-    UIRectFill(bounds);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320), NO, 0.0f);
+    CGRect bounds = CGRectMake(0, 0, 320, 320);
+//    UIRectFill(bounds);
+    [image drawInRect:bounds];
     
     //    [view drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
     //Draw the tinted image in context
@@ -99,7 +98,7 @@
     int width = CGImageGetWidth(_topImage.CGImage);
     int height = CGImageGetHeight(_topImage.CGImage);
     
-    CGSize newSize =CGSizeMake(320, 320);
+    CGSize newSize =CGSizeMake(1080, 1080);
     
     UIGraphicsBeginImageContext( newSize );
     // Use existing opacity as is
@@ -137,8 +136,8 @@
     // Use existing opacity as is
     [backView drawViewHierarchyInRect:CGRectMake(0, 0, 1080, 1080) afterScreenUpdates:YES];
 
-    
     UIImage *newImage =UIGraphicsGetImageFromCurrentImageContext();
+    
     UIGraphicsEndImageContext();
     
     return newImage;
