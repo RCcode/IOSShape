@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+"newVersion"                  = "新しいバージョンがあります";
+"updateNow"                   = "今すぐアップグレード";
+"remindLater"                 = "また後で";
+
+"aboutView_update"            = "アップデート";
+"aboutView_score"             = "評価";
+"aboutView_feedback"          = "フィードバック";
+"aboutView_shareApp"          = "アプリをシェアする";
+"aboutView_followUs"          = "フォローする";
+"aboutView_shareTitle"        = "shape for instagram";
+"aboutView_content"           = "今使っているShape for instagramには110種類以上のきれいでおもしろいShapeフレームと100種類以上のフィルター効果があり、写真加工ができます。さあ、あなたも今すぐやってみよう!";
+
+"editView_shape"              = "形";
+"editView_love"               = "ハート";
+"editView_flower"             = "花弁";
+"editView_nature"             = "自然";
+"editView_grocery"            = "祝日";
+
+"editView_Colur"              = "また後で";
+"editView_Pattern"            = "デザイン";
+"editView_Opacity"            = "透明度";
+
+"backTipMessage"              = "写真を保存していません。編集をやめますか？";
+"backTipCancel"               = "キャンセル";
+"backTipConfirm"              = "はい";
+
+"shareView_share"             = "シェア";
+"shareView_save"              = "Save";
+"shareView_more"              = "そのほか";
+"shareView_NoInstagram"       = "instagramがインストールされていません";
+"shareView_NoFacebook"        = "facebookがインストールされていません";
+"shareView_saveSuccess"       = "アルバムに保存されました";
+"shareView_saveFaile"         = "写真の保存に失敗しました";
+"shareView_shareSuccess"      = "シェアに成功しました。写真が保存されました";
+"shareView_shareFaile"        = "シェアに失敗しました";
+"shareView_rateMessage"       = "shape for instagramのご利用ありがとうございます。これからも支持されるよう努力致します";
+"shareView_remaindLater"      = "また後で";
+"shareView_NoMoreTip"         = "通知しない";
+"shareView_rateNow"           = "今すぐ評価";

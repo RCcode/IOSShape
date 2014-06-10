@@ -43,6 +43,9 @@
     //配置afnetworking
     [self netWorkingSeting];
     
+    //检查更新
+    [self checkVersion];
+    
     /** google analytics **/
     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
@@ -263,13 +266,12 @@ void uncaughtExceptionHandler(NSException *exception)
             if ([currentVersion compare:version options:NSNumericSearch] == NSOrderedAscending)
             {
                 
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示"
-                                                               message:@"有新版本,是否更新"
-                                                              delegate:self
-                                                     cancelButtonTitle:@"取消"
-                                                     otherButtonTitles:@"确定", nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
+                                                        message:LocalizedString(@"newVersion", @"")
+                                                        delegate:self
+                                                    cancelButtonTitle:LocalizedString(@"remindLater", @"")
+                                                    otherButtonTitles:LocalizedString(@"updateNow", @""), nil];
                 [alert show];
-                
             }
         }
             break;
@@ -283,7 +285,10 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     hideMBProgressHUD();
 }
-
+- (void)requestFailed:(NSInteger)tag
+{
+    
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

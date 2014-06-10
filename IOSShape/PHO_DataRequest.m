@@ -32,7 +32,6 @@
 - (void)requestServiceWithPost:(NSString *)url_Str jsonRequestSerializer:(AFJSONRequestSerializer *)requestSerializer isRegisterToken:(BOOL)token
 {
     
-    showMBProgressHUD(nil, YES);
     
 //    NSString *url = [NSString stringWithFormat:@"%@%@",HTTP_BASEURL,url_Str];
 //
@@ -51,7 +50,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error.......%@",error);
         [self.delegate requestFailed:requestTag];
-        hideMBProgressHUD();
     }];
 }
 

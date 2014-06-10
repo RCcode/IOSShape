@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+
+"newVersion"                  = "New version available";
+"updateNow"                   = "Upgrade Now";
+"remindLater"                 = "Remind Later";
+
+"aboutView_update"            = "Update";
+"aboutView_score"             = "Score";
+"aboutView_feedback"          = "Feedback";
+"aboutView_shareApp"          = "Share App";
+"aboutView_followUs"          = "Follow Us";
+"aboutView_shareTitle"        = "shape for instagram";
+"aboutView_content"           = "I'm using Shape for Instagram, I can choose from over 110 cool and interesting shapes, as well as over 100 backgrounds and filters to add to pictures, you've go to try it!";
+
+"editView_shape"              = "shape";
+"editView_love"               = "love";
+"editView_flower"             = "flower";
+"editView_nature"             = "nature";
+"editView_grocery"            = "grocery";
+
+"editView_Colur"              = "Colour";
+"editView_Pattern"            = "Pattern";
+"editView_Opacity"            = "Opacity";
+
+"backTipMessage"              = "Picture not saved";
+"backTipCancel"               = "Cancel";
+"backTipConfirm"              = "Confirm";
+
+"shareView_share"             = "Share";
+"shareView_save"              = "Save";
+"shareView_more"              = "More";
+"shareView_NoInstagram"       = "You haven't installed instagram";
+"shareView_NoFacebook"        = "You haven't installed facebook";
+"shareView_saveSuccess"       = "Picture was saved in albums";
+"shareView_saveFaile"         = "Picture save failed";
+"shareView_shareSuccess"      = "Successfully shared, picture saved";
+"shareView_shareFaile"        = "Share failed";
+"shareView_rateMessage"       = "If you're enjoying Shape for Instagram, please take a moment to rate and review the app!";
+"shareView_remaindLater"      = "Remind later";
+"shareView_NoMoreTip"         = "No Thanks";
+"shareView_rateNow"           = "Rate Now";

@@ -67,10 +67,9 @@
 
 - (UIImage *)changeGraph:(UIImage *)image
 {
-    
+
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320), NO, 0.0f);
     CGRect bounds = CGRectMake(0, 0, 320, 320);
-//    UIRectFill(bounds);
     [image drawInRect:bounds];
     
     //    [view drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
@@ -128,13 +127,13 @@
  返回值：  (UIImage *)newImage:返回编辑完成的图片图片
  **********************************************************/
 
-+ (UIImage *)getEditFinishedImageWithView:(UIView *)backView
++ (UIImage *)getEditFinishedImageWithView:(UIView *)backView andContextSize:(CGSize)size
 {
 
-    CGSize newSize =CGSizeMake(1080, 1080);
+    CGSize newSize = size;
     UIGraphicsBeginImageContext( newSize );
     // Use existing opacity as is
-    [backView drawViewHierarchyInRect:CGRectMake(0, 0, 1080, 1080) afterScreenUpdates:YES];
+    [backView drawViewHierarchyInRect:CGRectMake(0, 0, newSize.width, newSize.height) afterScreenUpdates:YES];
 
     UIImage *newImage =UIGraphicsGetImageFromCurrentImageContext();
     

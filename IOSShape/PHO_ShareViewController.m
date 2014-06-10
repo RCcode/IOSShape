@@ -36,7 +36,7 @@
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 44)];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.textColor = [UIColor whiteColor];
-        titleLabel.text = @"Share";
+        titleLabel.text = LocalizedString(@"shareView_share", @"");
         titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
         self.navigationItem.titleView = titleLabel;
         
@@ -47,13 +47,7 @@
 
 - (void)getImage:(UIImage *)image
 {
-
     theBestImage = image;
-    CGFloat width = CGImageGetWidth(theBestImage.CGImage);
-    CGFloat height = CGImageGetHeight(theBestImage.CGImage);
-    
-    NSLog(@"%f,%f",width,height);
-
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -80,7 +74,7 @@
     
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isPopTipToRateus) name:KShareSuccess object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareIsPopTipToRateus) name:KShareSuccess object:nil];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -101,7 +95,10 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
     NSArray *shareToArray = [NSArray arrayWithObjects:@"相册.png", @"share-to-insta.png", @"fb.png", @"更多.png",nil];
-    NSArray *shareToNameArray = [NSArray arrayWithObjects:@"save", @"instagram", @"faceBook", @"more", nil];
+//    NSArray *shareToNameArray = [NSArray arrayWithObjects:@"save", @"instagram", @"faceBook", @"more", nil];
+    NSArray *shareToNameArray = @[LocalizedString(@"shareView_save", @""),
+                                  @"instagram",@"faceBook",
+                                  LocalizedString(@"shareView_more", @"")];
     
     for (int i = 0; i < 4; i ++)
     {
@@ -146,8 +143,8 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"照片未保存，是否返回" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"继续", nil];
-        alert.tag == 100;
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"backTipMessage", @"") delegate:self cancelButtonTitle:LocalizedString(@"backTipCancel", @"") otherButtonTitles:LocalizedString(@"backTipConfirm", @""), nil];
+        alert.tag = 100;
         [alert show];
     }
     
@@ -176,7 +173,7 @@
                     [[NSFileManager defaultManager] removeItemAtPath:kTheBestImagePath error:nil];
                 }
                 
-                NSData *imageData = UIImagePNGRepresentation(theBestImage);
+                NSData *imageData = UIImageJPEGRepresentation(theBestImage, 0.8);
                 [imageData writeToFile:kTheBestImagePath atomically:YES];
                 
                 //分享
@@ -189,7 +186,7 @@
                 BOOL canOpne = [_documetnInteractionController presentOpenInMenuFromRect:CGRectMake(0, 0, 0, 0) inView:self.view animated:YES];
                 if (canOpne == NO)
                 {
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"没有可打开的程序" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"shareView_NoInstagram", @"") delegate:self cancelButtonTitle:LocalizedString(@"backTipConfirm", @"") otherButtonTitles:nil, nil];
                     [alert show];
                 }
             }
@@ -201,9 +198,23 @@
                 {
                     slComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
 //                    [slComposerSheet setInitialText:self.sharingText];
-                    [slComposerSheet addImage:theBestImage];
+                    if([[NSFileManager defaultManager] fileExistsAtPath:kTheBestImagePath]){
+                        [[NSFileManager defaultManager] removeItemAtPath:kTheBestImagePath error:nil];
+                    }
+                    
+                    NSData *imageData = UIImageJPEGRepresentation(theBestImage, 0.8);
+                    [imageData writeToFile:kTheBestImagePath atomically:YES];
+                    UIImage *image = [UIImage imageWithContentsOfFile:kTheBestImagePath];
+                    
+                    [slComposerSheet addImage:image];
                     [slComposerSheet addURL:[NSURL URLWithString:@"http://www.facebook.com/"]];
                     [self presentViewController:slComposerSheet animated:YES completion:nil];
+                }
+                else
+                {
+                    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareFaile", @"")
+                                        toView:[UIApplication sharedApplication].keyWindow];
+                    return;
                 }
                 __block PHO_ShareViewController *controller = self;
                 __block UIImage *blockImage = theBestImage;
@@ -241,7 +252,7 @@
                     [[NSFileManager defaultManager] removeItemAtPath:kToMorePath error:nil];
                 }
                 
-                NSData *imageData = UIImagePNGRepresentation(theBestImage);
+                NSData *imageData = UIImageJPEGRepresentation(theBestImage, 0.8);
                 [imageData writeToFile:kToMorePath atomically:YES];
                 
                 NSURL *fileURL = [NSURL fileURLWithPath:kToMorePath];
@@ -260,7 +271,7 @@
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
     if(error == nil)
     {
-        [MBProgressHUD showSuccess:@"保存成功"
+        [MBProgressHUD showSuccess:LocalizedString(@"shareView_saveSuccess", @"")
                             toView:[UIApplication sharedApplication].keyWindow];
         [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:1];
 //        [self isPopTipToRateus];
@@ -268,7 +279,7 @@
     }
     else
     {
-        [MBProgressHUD showError:@"保存失败"
+        [MBProgressHUD showError:LocalizedString(@"shareView_saveFaile", @"")
                           toView:[UIApplication sharedApplication].keyWindow];
     }
 }
@@ -292,7 +303,7 @@
         {
             if ([[rateusDictionary objectForKey:@"count"] intValue] >= 3 && [[rateusDictionary objectForKey:@"count"] intValue]%2 != 0)
             {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"快去评价啊亲" delegate:self cancelButtonTitle:@"稍后再说" otherButtonTitles:@"现在就去", @"不再提醒", nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"shareView_rateMessage", @"") delegate:self cancelButtonTitle:LocalizedString(@"shareView_remaindLater", @"") otherButtonTitles:LocalizedString(@"shareView_NoMoreTip", @""), LocalizedString(@"shareView_rateNow", @""), nil];
                 [alert show];
             }
             
@@ -313,17 +324,26 @@
     self.isSaved = YES;
 }
 
+- (void)shareIsPopTipToRateus
+{
+    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareSuccess", @"")
+                        toView:[UIApplication sharedApplication].keyWindow];
+    UIImageWriteToSavedPhotosAlbum(theBestImage, self, nil, nil);
+    [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:1];
+    
+}
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 100)
     {
         if (buttonIndex == 0)
         {
-            [self.navigationController popViewControllerAnimated:YES];
+            return;
         }
         else if (buttonIndex == 1)
         {
-            return;
+            [self.navigationController popViewControllerAnimated:YES];
         }
         
     }
@@ -338,16 +358,17 @@
             }
             else if (buttonIndex == 1)
             {
+                [rateusDictionary setObject:@"rateusNoMore" forKey:@"status"];
+                
+            }
+            else if (buttonIndex == 2)
+            {
                 [rateusDictionary setObject:@"rateusted" forKey:@"status"];
                 
                 [self sendMessage:@"home_menu_rateus" and:@"Home"];
                 
                 NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", kiTunesID];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
-            }
-            else if (buttonIndex == 2)
-            {
-                [rateusDictionary setObject:@"rateusNoMore" forKey:@"status"];
             }
         }
         [rateusDictionary writeToFile:editCountPath atomically:YES];

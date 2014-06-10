@@ -10,4 +10,7 @@
 
 @interface PHO_AboutUsViewController : UIViewController
 
+
+@property (nonatomic, strong) NSString *trackURL;
+
 @end

@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+"newVersion"                  = "Neuere Version erhältlich";
+"updateNow"                   = "jetzt upgraden";
+"remindLater"                 = "Später erinnern";
+
+"aboutView_update"            = "Update";
+"aboutView_score"             = "Score";
+"aboutView_feedback"          = "Feedback";
+"aboutView_shareApp"          = "Share App";
+"aboutView_followUs"          = "Follow Us";
+"aboutView_shareTitle"        = "Shape für Instagram";
+"aboutView_content"           = "I'm using Shape for Instagram, I can choose from over 110 cool and interesting shapes, as well as over 100 backgrounds and filters to add to pictures, you've go to try it!";
+
+"editView_shape"              = "Form";
+"editView_love"               = "Liebe";
+"editView_flower"             = "Blume";
+"editView_nature"             = "Natur";
+"editView_grocery"            = "Lebensmittel";
+
+"editView_Colur"              = "Farbe";
+"editView_Pattern"            = "Pattern";
+"editView_Opacity"            = "Opacity";
+
+"backTipMessage"              = "Das Bild wurde nicht gespeichert";
+"backTipCancel"               = "Abbrechen";
+"backTipConfirm"              = "Bestätigen";
+
+"shareView_share"             = "Teilen";
+"shareView_save"              = "Speichern";
+"shareView_more"              = "Mehr";
+"shareView_NoInstagram"       = "Instagram ist nicht instaliert!";
+"shareView_NoFacebook"        = "Facebook ist nicht installiert!";
+"shareView_saveSuccess"       = "Bild wurde in Alben gespeichert";
+"shareView_saveFaile"         = "Speichern des Bildes fehlgeschlagen";
+"shareView_shareSuccess"      = "Teilen erfolgreich, Bild gespeichert";
+"shareView_shareFaile"        = "Teilen fehlgeschlagen";
+"shareView_rateMessage"       = "Wenn dir Shape für Instagram gefällt, gib uns doch bitte kurz eine Bewertung!";
+"shareView_remaindLater"      = "Später erinnern";
+"shareView_NoMoreTip"         = "Nein danke";
+"shareView_rateNow"           = "Jetzt bewerten";

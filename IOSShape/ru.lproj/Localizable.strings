@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+"newVersion"                  = "Доступна новая версия";
+"updateNow"                   = "Обновить сейчас";
+"remindLater"                 = "Напомнить позже";
+
+"aboutView_update"            = "Обновить";
+"aboutView_score"             = "Оценить";
+"aboutView_feedback"          = "Отзыв";
+"aboutView_shareApp"          = "Поделиться приложением";
+"aboutView_followUs"          = "Следуйте за нами";
+"aboutView_shareTitle"        = "Формы для Instagram";
+"aboutView_content"           = "Я пользуюсь приложением \"Формы для Instagram\", в котором можно выбирать из более 110 крутых и интересных форм, более 100 фоновых изображений и фильтров для фотографий. Попробуй!";
+
+"editView_shape"              = "Форма";
+"editView_love"               = "Любовь";
+"editView_flower"             = "Цветы";
+"editView_nature"             = "Природа";
+"editView_grocery"            = "Еда";
+
+"editView_Colur"              = "Цвет";
+"editView_Pattern"            = "Дизайн";
+"editView_Opacity"            = "Прозрачность";
+
+"backTipMessage"              = "Изображение не сохранено";
+"backTipCancel"               = "Отмена";
+"backTipConfirm"              = "OK";
+
+"shareView_share"             = "Поделиться";
+"shareView_save"              = "Сохранить";
+"shareView_more"              = "Еще";
+"shareView_NoInstagram"       = "Вы не установили Instagram";
+"shareView_NoFacebook"        = "Вы не установили Facebook";
+"shareView_saveSuccess"       = "Изображение сохранено в галерее";
+"shareView_saveFaile"         = "Не удалось сохранить изображение";
+"shareView_shareSuccess"      = "Опубликовано. Изображение сохранено";
+"shareView_shareFaile"        = "Не удалось опубликовать";
+"shareView_rateMessage"       = "Если вам нравится приложение \"Формы для Instagram\", пожалуйста, оцените его и оставьте отзыв!";
+"shareView_remaindLater"      = "Напомнить позже";
+"shareView_NoMoreTip"         = "Нет, спасибо";
+"shareView_rateNow"           = "Оценить сейчас";

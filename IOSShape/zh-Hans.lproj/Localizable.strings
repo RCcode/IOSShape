@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+"newVersion"                  = "有新版本";
+"updateNow"                   = "马上升级";
+"remindLater"                 = "稍后再说";
+
+"aboutView_update"            = "更新";
+"aboutView_score"             = "评价";
+"aboutView_feedback"          = "反馈";
+"aboutView_shareApp"          = "分享应用";
+"aboutView_followUs"          = "关注我们";
+"aboutView_shareTitle"        = "分享到 instagram";
+"aboutView_content"           = "我正在用的Shape for instagram,可以为照片添加110多种漂亮有趣的形状，还有100多种背景和滤镜选择，你也来试试吧!";
+
+"editView_shape"              = "形状";
+"editView_love"               = "心形";
+"editView_flower"             = "花瓣";
+"editView_nature"             = "自然";
+"editView_grocery"            = "生活";
+
+"editView_Colur"              = "颜色";
+"editView_Pattern"            = "图案";
+"editView_Opacity"            = "透明度";
+
+"backTipMessage"              = "图片未保存";
+"backTipCancel"               = "取消";
+"backTipConfirm"              = "确定";
+
+"shareView_share"             = "分享";
+"shareView_save"              = "保存";
+"shareView_more"              = "更多";
+"shareView_NoInstagram"       = "你没有安装 instagram";
+"shareView_NoFacebook"        = "你没有安装 facebook";
+"shareView_saveSuccess"       = "图片已保存到相册";
+"shareView_saveFaile"         = "图片保存失败";
+"shareView_shareSuccess"      = "分享成功,图片已保存";
+"shareView_shareFaile"        = "分享失败";
+"shareView_rateMessage"       = "感谢使用shape for instagram,请花点时间给予五星评分，感谢你对我们的支持!";
+"shareView_remaindLater"      = "稍后再说";
+"shareView_NoMoreTip"         = "不再提醒";
+"shareView_rateNow"           = "马上评价";

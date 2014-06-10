@@ -36,6 +36,9 @@ UIImage* jpgImagePath(NSString *name);
 //数字转化为字符串
 NSString* stringForInteger(int value);
 
+//设置默认语言
+NSString *LocalizedString(NSString *translation_key, id none);
+
 //系统语言环境
 NSString* currentLanguage();
 

@@ -23,7 +23,7 @@
 
 + (UIImage *)getImageFromView:(UIView *)view;
 
-+ (UIImage *)getEditFinishedImageWithView:(UIView *)backView;
++ (UIImage *)getEditFinishedImageWithView:(UIView *)backView andContextSize:(CGSize)size;
 
 + (UIImage *)blurryBottomImage:(UIImage *)bottomImage andTopImage:(UIImage *)topImage withBlurLevel:(CGFloat)blur;
 

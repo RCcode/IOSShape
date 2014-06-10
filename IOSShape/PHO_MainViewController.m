@@ -141,39 +141,39 @@
         
         shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
         shapeImage.alpha = 0.7f;
-        backRealImage = shapeImage.image;
+        backRealImage = image;
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-        {
-            CGFloat scale = backRealImage.size.width/backRealImage.size.height;
-            
-            if (backRealImage.size.width >= backRealImage.size.height)
-            {
-                if (backRealImage.size.height < 1080 )
-                {
-                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.height*scale, backRealImage.size.height)];
-                }
-                else if (backRealImage.size.height > 1080)
-                {
-                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
-                }
-                filterMinImage = [backRealImage subImageWithRect:CGRectMake((backRealImage.size.width-backRealImage.size.height)/2, 0, backRealImage.size.height, backRealImage.size.height)];
-            }
-            else if (backRealImage.size.width < backRealImage.size.height)
-            {
-                if (backRealImage.size.width < 1080)
-                {
-                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.width, backRealImage.size.width/scale)];
-                }
-                else if (backRealImage.size.width > 1080)
-                {
-                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
-                }
-                filterMinImage = [backRealImage subImageWithRect:CGRectMake(0, (backRealImage.size.height-backRealImage.size.width)/2, backRealImage.size.width, backRealImage.size.width)];
-            }
-            filterMinImage = [filterMinImage rescaleImageToSize:CGSizeMake(200, 200)];
-            
-        });
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+//        {
+//            CGFloat scale = backRealImage.size.width/backRealImage.size.height;
+//            
+//            if (backRealImage.size.width >= backRealImage.size.height)
+//            {
+//                if (backRealImage.size.height < 1080 )
+//                {
+//                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.height*scale, backRealImage.size.height)];
+//                }
+//                else if (backRealImage.size.height > 1080)
+//                {
+//                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
+//                }
+//                filterMinImage = [backRealImage subImageWithRect:CGRectMake((backRealImage.size.width-backRealImage.size.height)/2, 0, backRealImage.size.height, backRealImage.size.height)];
+//            }
+//            else if (backRealImage.size.width < backRealImage.size.height)
+//            {
+//                if (backRealImage.size.width < 1080)
+//                {
+//                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.width, backRealImage.size.width/scale)];
+//                }
+//                else if (backRealImage.size.width > 1080)
+//                {
+//                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
+//                }
+//                filterMinImage = [backRealImage subImageWithRect:CGRectMake(0, (backRealImage.size.height-backRealImage.size.width)/2, backRealImage.size.width, backRealImage.size.width)];
+//            }
+//            filterMinImage = [filterMinImage rescaleImageToSize:CGSizeMake(200, 200)];
+//            
+//        });
        
         [backView addSubview:shapeImage];
         
@@ -303,8 +303,13 @@
     groupBackView.tag = 10;
     [shapeChooseView addSubview:groupBackView];
     
-    NSArray *groupNameArray = [NSArray arrayWithObjects:@"shape", @"love", @"flower", @"nature", @"grocery",nil];
-    
+//    NSArray *groupNameArray = [NSArray arrayWithObjects:@"shape", @"love", @"flower", @"nature", @"grocery",nil];
+    NSArray *groupNameArray = @[LocalizedString(@"editView_shape", @""),
+                                LocalizedString(@"editView_love", @""),
+                                LocalizedString(@"editView_flower", @""),
+                                LocalizedString(@"editView_nature", @""),
+                                LocalizedString(@"editView_grocery", @"")];
+
     for (int i = 0; i < [groupNameArray count]; i ++)
     {
         UIButton *chooseGroupButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -507,8 +512,11 @@
     backGroundSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
     backGroundSelectedView.layer.borderWidth = 2;
     
-    NSArray *typeNameArray = [NSArray arrayWithObjects:@"颜色", @"图案", @"透明度", nil];
-    
+//    NSArray *typeNameArray = [NSArray arrayWithObjects:@"颜色", @"图案", @"透明度", nil];
+    NSArray *typeNameArray = @[LocalizedString(@"editView_Colur", @""),
+                               LocalizedString(@"editView_Pattern", @""),
+                               LocalizedString(@"editView_Opacity", @""),];
+
     for (int i = 0; i < [typeNameArray count]; i ++)
     {
         @autoreleasepool
@@ -708,10 +716,16 @@
                    {
                        bottomImage.image = [self getGraphImage:tempImage];
                        
-                       dispatch_async(dispatch_get_main_queue(), ^
+//                       dispatch_aft(dispatch_get_main_queue(), ^
+//                       {
+//                           UIImage *tempShapeImage = [shapeImage.image changeGraph:bottomImage.image];
+//                           shapeImage.image = tempShapeImage;
+//                       });
+                       dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
+                       dispatch_after(time, dispatch_get_main_queue(), ^
                        {
-                           UIImage *tempShapeImage = [shapeImage.image changeGraph:bottomImage.image];
-                           shapeImage.image = tempShapeImage;
+//                           NSLog(@"waited at least three seconds.");
+                           shapeImage.image = [shapeImage.image changeGraph:bottomImage.image];
                        });
                    });
 
@@ -720,9 +734,7 @@
 //    UIImage *tempChooseImage = [bottomImage.image rescaleImageToSize:shapeImage.frame.size];
 //    shapeImage.image = [UIImage blurryBottomImage:bottomImage.image andTopImage:topImage.image withBlurLevel:blurSlider.value];
 //    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
-//    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
-//    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@"waited at least three seconds.");
-//        shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    
     
 
     
@@ -853,7 +865,8 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"照片未保存，是否返回" delegate:self cancelButtonTitle:@"返回" otherButtonTitles:@"继续", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"backTipMessage", @"") delegate:self cancelButtonTitle:LocalizedString(@"backTipCancel", @"") otherButtonTitles:LocalizedString(@"backTipConfirm", @""), nil];
+        
         [alert show];
     }
     
@@ -863,11 +876,11 @@
 {
     if (buttonIndex == 0)
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        return;
     }
     else if (buttonIndex == 1)
     {
-        return;
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -883,21 +896,43 @@
 {
     //分享
     UIView *passView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
+    if (backRealImage.size.width >= backRealImage.size.height)
+    {
+        if (backRealImage.size.height <= 1080)
+        {
+            passView.frame = CGRectMake(0, 0, backRealImage.size.height, backRealImage.size.height);
+        }
+        if (backRealImage.size.height > 1080)
+        {
+            passView.frame = CGRectMake(0, 0, 1080, 1080);
+        }
+        
+    }
+    else
+    {
+        if (backRealImage.size.width <= 1080)
+        {
+            passView.frame = CGRectMake(0, 0, backRealImage.size.width, backRealImage.size.width);
+        }
+        if (backRealImage.size.width > 1080)
+        {
+            passView.frame = CGRectMake(0, 0, 1080, 1080);
+        }
+    }
+
     
     UIImageView *passBackImageView = [[UIImageView alloc]initWithFrame:passView.frame];
-    passBackImageView.image = [UIImage getEditFinishedImageWithView:showView];
+    passBackImageView.image = [UIImage getEditFinishedImageWithView:showView andContextSize:passView.frame.size];
     [passView addSubview:passBackImageView];
     
     UIImageView *passImageView = [[UIImageView alloc]initWithFrame:passView.frame];
     [passView addSubview:passImageView];
     
     passImageView.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
-    
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1ull*NSEC_PER_SEC);
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1ull);
     dispatch_after(time, dispatch_get_main_queue(), ^
     {
-        NSLog(@"waited at least three seconds.");
-        UIImage *passImage = [UIImage getEditFinishedImageWithView:passView];
+        UIImage *passImage = [UIImage getEditFinishedImageWithView:passView andContextSize:passView.frame.size];
 
         if (shareContrller == nil)
         {
@@ -908,7 +943,8 @@
         [self.navigationController pushViewController:shareContrller animated:YES];
     });
     
-    
+//    showView.frame = tempRect;
+//    showView.showImageView.frame = tempRect;
 }
 
 -(UIImage *)getImageFromView:(UIView *)view

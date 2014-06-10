@@ -49,6 +49,8 @@
     beginangel = 0;
     beginDistance = 0;
     
+    self.backgroundColor = [UIColor clearColor];
+    
     showImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     //    show.backgroundColor = [UIColor redColor];
     //    show.image = [UIImage imageNamed:@"image3.png"];

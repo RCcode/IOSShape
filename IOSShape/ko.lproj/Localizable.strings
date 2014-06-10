@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+"newVersion"                  = "새 버전이 있습니다";
+"updateNow"                   = "업데이트";
+"remindLater"                 = "나중에";
+
+"aboutView_update"            = "업데이트";
+"aboutView_score"             = "평점";
+"aboutView_feedback"          = "피드백";
+"aboutView_shareApp"          = "공유하기";
+"aboutView_followUs"          = "팔로우";
+"aboutView_shareTitle"        = "shape for instagram";
+"aboutView_content"           = "제가 사용하고 있는 Shape for Instagram 어플 추천합니다! 110개 여러 종류의 모양으로 사진을 편집할 수 도 있고 100여개 사진 배경이랑 필터 기능도 있어요~ 한번 사용해 보세요!";
+
+"editView_shape"              = "모양";
+"editView_love"               = "사랑";
+"editView_flower"             = "꽃";
+"editView_nature"             = "자연";
+"editView_grocery"            = "스토어";
+
+"editView_Colur"              = "색상";
+"editView_Pattern"            = "디자인";
+"editView_Opacity"            = "투명도";
+
+"backTipMessage"              = "변경된 내용을 저장하지 않고 종료하시겠습니까?";
+"backTipCancel"               = "취소";
+"backTipConfirm"              = "확인";
+
+"shareView_share"             = "공유";
+"shareView_save"              = "저장";
+"shareView_more"              = "더보기";
+"shareView_NoInstagram"       = "Instagram 이 설치되어 있지 않습니다";
+"shareView_NoFacebook"        = "Facebook 이 설치되어 있지 않습니다";
+"shareView_saveSuccess"       = "갤러리에 사진이 저장되었습니다";
+"shareView_saveFaile"         = "저장 실패";
+"shareView_shareSuccess"      = "공유함, 이미지는 저장되었습니다";
+"shareView_shareFaile"        = "공유 실패";
+"shareView_rateMessage"       = "Shape for Instagram 을 사용해주셔서 감사합니다. 좋은 평점 부탁해요!";
+"shareView_remaindLater"      = "나중에";
+"shareView_NoMoreTip"         = "그만 알림";
+"shareView_rateNow"           = "평가 하러 가기";

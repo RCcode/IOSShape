@@ -16,6 +16,8 @@
 
 #import "PHO_DataRequest.h"
 
+#import "PHO_AppDelegate.h"
+
 
 @interface PHO_AboutUsViewController ()<UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 {
@@ -59,7 +61,12 @@
 //                LocalizedString(@"share", nil),
 //                LocalizedString(@"follow_us", nil)];
     
-    _titles = @[@"更新", @"评分", @"反馈", @"分享应用", @"关注我们"];
+    _titles = @[LocalizedString(@"aboutView_update", @""),
+                LocalizedString(@"aboutView_score", @""),
+                LocalizedString(@"aboutView_feedback", @""),
+                LocalizedString(@"aboutView_shareApp", @""),
+                LocalizedString(@"aboutView_followUs", @""),];
+ 
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 44)];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -116,7 +123,8 @@
         case 0://更新
         {
             [self sendMessage:@"home_menu_update" and:@"Home"];
-            [self checkVersion];
+            PHO_AppDelegate *appdelegate = (PHO_AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [appdelegate checkVersion];
         }
             
             break;
@@ -146,7 +154,7 @@
             
             [self sendMessage:@"home_menu_share" and:@"Home"];
             //需要分享的内容
-            NSString *shareContent = @"我正在用的Shape for instagram,可以为照片添加110多种漂亮有趣的形状，还有100多种背景和滤镜选择，你也来试试吧!";
+            NSString *shareContent = LocalizedString(@"aboutView_content", @"");
             NSArray *activityItems = @[shareContent];
             
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
@@ -154,7 +162,7 @@
             
             activityVC.completionHandler = ^(NSString *activityType,BOOL completed){
                 if(completed){
-                    MBProgressHUD *hud = showMBProgressHUD(@"share success", NO);
+                    MBProgressHUD *hud = showMBProgressHUD(LocalizedString(@"shareSuccess", @""), NO);
                     [hud performSelector:@selector(hide:) withObject:nil afterDelay:1.5];
                 }
                 [blockActivityVC dismissViewControllerAnimated:YES completion:nil];

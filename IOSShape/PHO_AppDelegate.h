@@ -25,6 +25,9 @@
 
 @property (strong, nonatomic) AFHTTPRequestOperationManager *manager;
 @property (nonatomic, copy) NSString *UpdateUrlStr;
+
 @property (nonatomic, strong) NSString *trackURL;//apple的iTunes地址
+
+- (void)checkVersion;
 
 @end

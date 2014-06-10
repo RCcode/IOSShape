@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+"newVersion"                  = "Nouvelle version disponible";
+"updateNow"                   = "Mettre à jour maintenant";
+"remindLater"                 = "Rappeler plus tard";
+
+"aboutView_update"            = "Mise à jour";
+"aboutView_score"             = "Score";
+"aboutView_feedback"          = "Feedback";
+"aboutView_shareApp"          = "Partagez l'app";
+"aboutView_followUs"          = "Suivez-nous";
+"aboutView_shareTitle"        = "shape for instagram";
+"aboutView_content"           = "J'utilise Shape for Instagram, je peux choisir parmi plus de 110 formes cool et intéressantes,ainsi que plus de 100 arrières-plan et filtres à ajouter aux photos, vous devez l'essayer!";
+
+"editView_shape"              = "forme";
+"editView_love"               = "amour";
+"editView_flower"             = "fleur";
+"editView_nature"             = "nature";
+"editView_grocery"            = "épicerie";
+
+"editView_Colur"              = "Couleur";
+"editView_Pattern"            = "Pattern";
+"editView_Opacity"            = "Opacity";
+
+"backTipMessage"              = "Photo non sauvegardée";
+"backTipCancel"               = "Annuler";
+"backTipConfirm"              = "Confirmer";
+
+"shareView_share"             = "Partager";
+"shareView_save"              = "Sauvegarder";
+"shareView_more"              = "Plus";
+"shareView_NoInstagram"       = "Vous n'avez pas installé Instagram";
+"shareView_NoFacebook"        = "Vous n'avez pas installé Facebook";
+"shareView_saveSuccess"       = "Photo sauvegardée dans les albums";
+"shareView_saveFaile"         = "La sauvegarde de la photo a echoué";
+"shareView_shareSuccess"      = "Partagé avec succès, photo sauvegardée";
+"shareView_shareFaile"        = "Echec du partage";
+"shareView_rateMessage"       = "Si vous appreciez Shape for Instagram,prenez un moment pour noter et revoir l'app!";
+"shareView_remaindLater"      = "Rappelez plus tard";
+"shareView_NoMoreTip"         = "Non merci";
+"shareView_rateNow"           = "Notez maintenant";

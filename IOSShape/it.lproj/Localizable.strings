@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+"newVersion"                  = "Nuova versione disponibile";
+"updateNow"                   = "Aggiorna adesso";
+"remindLater"                 = "Ricordamelo dopo";
+
+"aboutView_update"            = "Aggiornamento";
+"aboutView_score"             = "Punti";
+"aboutView_feedback"          = "Recencensioni";
+"aboutView_shareApp"          = "Condividi App";
+"aboutView_followUs"          = "Seguici";
+"aboutView_shareTitle"        = "Shape per instagram";
+"aboutView_content"           = "Sto usando Shape per Instagram, posso scegliere tra più di 110 forme speciali e 100 filtri e sfondi da aggiungere alle foto, devi provarlo assolutamente!";
+
+"editView_shape"              = "Forma";
+"editView_love"               = "Amore";
+"editView_flower"             = "Fiore";
+"editView_nature"             = "Natura";
+"editView_grocery"            = "Alimentari";
+
+"editView_Colur"              = "Colore";
+"editView_Pattern"            = "Deisign";
+"editView_Opacity"            = "Trasparenza";
+
+"backTipMessage"              = "Foto non salvata";
+"backTipCancel"               = "Cancella";
+"backTipConfirm"              = "Conferma";
+
+"shareView_share"             = "Condividi";
+"shareView_save"              = "Salva";
+"shareView_more"              = "Altro";
+"shareView_NoInstagram"       = "Non hai istallato Instagram";
+"shareView_NoFacebook"        = "Non hai istallato Facebook";
+"shareView_saveSuccess"       = "La foto è stata salvata negli album";
+"shareView_saveFaile"         = "Salvataggio foto non riuscito";
+"shareView_shareSuccess"      = "Condiviso con successo, foto salvata";
+"shareView_shareFaile"        = "Condivisione non riuscita";
+"shareView_rateMessage"       = "Se ti piace Shape per Istagram, non esitare a darci la tua opinione e votare la nostra App!";
+"shareView_remaindLater"      = "Ricordamelo dopo";
+"shareView_NoMoreTip"         = "No grazie";
+"shareView_rateNow"           = "Vota ora";

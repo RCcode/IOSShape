@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+
+"newVersion"                  = "Nova versão disponível";
+"updateNow"                   = "Atualize agora";
+"remindLater"                 = "Lembrar mais tarde";
+
+"aboutView_update"            = "Atualizar";
+"aboutView_score"             = "Avalie";
+"aboutView_feedback"          = "Comente";
+"aboutView_shareApp"          = "Compartilhe o aplicativo";
+"aboutView_followUs"          = "Siga-nos";
+"aboutView_shareTitle"        = "Formatos para Instagram";
+"aboutView_content"           = "Eu estou usando o Formatos para Instagram, posso escolher entre mais de 110 iradas e incríveis formatos, bem com mais de 100 planos de fundo, filtros para adicionar nas fotos. Você precisa experimentar!";
+
+"editView_shape"              = "Forma";
+"editView_love"               = "Amor";
+"editView_flower"             = "Flor";
+"editView_nature"             = "Natureza";
+"editView_grocery"            = "Mercearia";
+
+"editView_Colur"              = "Coloração";
+"editView_Pattern"            = "Modelo";
+"editView_Opacity"            = "Transparência";
+
+"backTipMessage"              = "Foto não salva";
+"backTipCancel"               = "Cancelar";
+"backTipConfirm"              = "Confirmar";
+
+"shareView_share"             = "Compartilhar";
+"shareView_save"              = "Salvar";
+"shareView_more"              = "Mais";
+"shareView_NoInstagram"       = "Você ainda não instalou o Instagram";
+"shareView_NoFacebook"        = "Você ainda não instalou o Facebook";
+"shareView_saveSuccess"       = "Foto foi salva no álbum";
+"shareView_saveFaile"         = "Falha ao salvar foto";
+"shareView_shareSuccess"      = "Compartilhada com sucesso, foto salva.";
+"shareView_shareFaile"        = "Falha ao compartilhar";
+"shareView_rateMessage"       = "Se você está curtindo Formatos para Instagram, por favor, gaste um minutinho e avalie esse aplicativo!";
+"shareView_remaindLater"      = "Lembrar mais tarde";
+"shareView_NoMoreTip"         = "Não obrigado";
+"shareView_rateNow"           = "Avaliar agora";
