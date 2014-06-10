@@ -80,7 +80,7 @@ NSString *LocalizedString(NSString *translation_key, id none)
     
     //只适配这么些种语言，其余一律用en
     if([CURR_LANG isEqualToString:@"zh-Hans"] ||
-       [CURR_LANG isEqualToString:@"zh-Hant"] ||
+       [CURR_LANG isEqualToString:@"zh-Hant-HK"] ||
        [CURR_LANG isEqualToString:@"de"] ||
        [CURR_LANG isEqualToString:@"es"] ||
        [CURR_LANG isEqualToString:@"fr"] ||

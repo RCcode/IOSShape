@@ -368,6 +368,12 @@
 		E82FAECF19416BE100CD7DDD /* UIImage+NC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+NC.h"; sourceTree = "<group>"; };
 		E82FAED019416BE100CD7DDD /* UIImage+NC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+NC.m"; sourceTree = "<group>"; };
 		E82FAF1C19416BEE00CD7DDD /* 滤纸图标 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "滤纸图标"; sourceTree = "<group>"; };
+		E862EC75194721E1001E97AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E862EC76194721E1001E97AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E862EC77194721E1001E97AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E862EC7B194724E0001E97AE /* zh-Hant-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant-HK"; path = "zh-Hant-HK.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		E862EC7C194724E0001E97AE /* zh-Hant-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant-HK"; path = "zh-Hant-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E862EC7D194724E0001E97AE /* zh-Hant-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant-HK"; path = "zh-Hant-HK.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E87C074B1935FB9A006B821F /* love */ = {isa = PBXFileReference; lastKnownFileType = folder; path = love; sourceTree = "<group>"; };
 		E87C074F1935FBA7006B821F /* shape */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shape; sourceTree = "<group>"; };
 		E87C07531935FD39006B821F /* graph */ = {isa = PBXFileReference; lastKnownFileType = folder; path = graph; sourceTree = "<group>"; };
@@ -1196,6 +1202,8 @@
 				ko,
 				pt,
 				"pt-PT",
+				"zh-Hant-TW",
+				"zh-Hant-HK",
 			);
 			mainGroup = E8F40A27192CCB0300A2F0A9;
 			productRefGroup = E8F40A31192CCB0300A2F0A9 /* Products */;
@@ -1417,6 +1425,8 @@
 				E8F7EFB01946B5DC00228EEB /* ko */,
 				E8F7EFB61946FAEE00228EEB /* pt */,
 				E8F7EFB91946FAF700228EEB /* pt-PT */,
+				E862EC75194721E1001E97AE /* es */,
+				E862EC7B194724E0001E97AE /* zh-Hant-HK */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1434,6 +1444,8 @@
 				E8F7EFB21946B5DC00228EEB /* ko */,
 				E8F7EFB81946FAEF00228EEB /* pt */,
 				E8F7EFBB1946FAF800228EEB /* pt-PT */,
+				E862EC77194721E1001E97AE /* es */,
+				E862EC7D194724E0001E97AE /* zh-Hant-HK */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1451,6 +1463,8 @@
 				E8F7EFB11946B5DC00228EEB /* ko */,
 				E8F7EFB71946FAEE00228EEB /* pt */,
 				E8F7EFBA1946FAF800228EEB /* pt-PT */,
+				E862EC76194721E1001E97AE /* es */,
+				E862EC7C194724E0001E97AE /* zh-Hant-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1474,7 +1488,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.rcplatform.IOSShape";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: com.rcplatform.IOSShape";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1492,6 +1507,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "67EE5C08-7915-46BA-9A69-5CC5C2235B78";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1513,7 +1529,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.rcplatform.IOSShape";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development IOS Push Services: com.rcplatform.IOSShape";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1524,6 +1541,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "67EE5C08-7915-46BA-9A69-5CC5C2235B78";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1534,6 +1552,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.rcplatform.IOSShape";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IOSShape/IOSShape-Prefix.pch";
 				INFOPLIST_FILE = "IOSShape/IOSShape-Info.plist";
@@ -1547,6 +1566,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "67EE5C08-7915-46BA-9A69-5CC5C2235B78";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 				"VALID_ARCHS[sdk=*]" = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1557,6 +1577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.rcplatform.IOSShape";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IOSShape/IOSShape-Prefix.pch";
 				INFOPLIST_FILE = "IOSShape/IOSShape-Info.plist";
@@ -1570,6 +1591,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "67EE5C08-7915-46BA-9A69-5CC5C2235B78";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

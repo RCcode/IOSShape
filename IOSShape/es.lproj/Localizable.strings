@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+
+"newVersion"                  = "Nueva versión disponible";
+"updateNow"                   = "Actualizar ahora";
+"remindLater"                 = "Recordar más tarde";
+
+"aboutView_update"            = "Actualizar";
+"aboutView_score"             = "Puntuación";
+"aboutView_feedback"          = "Evaluación";
+"aboutView_shareApp"          = "Compartir App";
+"aboutView_followUs"          = "Siguenos";
+"aboutView_shareTitle"        = "Shape para Instagram";
+"aboutView_content"           = "Estoy usando Shape para Instagram, puedo elegir entre más de 110 formar magníficas e interesantes, también más de 100 fondos y filtros para añadir a las fotos, ¡Tienes que probarlo!";
+
+"editView_shape"              = "Forma";
+"editView_love"               = "Amor";
+"editView_flower"             = "Flor";
+"editView_nature"             = "Natural";
+"editView_grocery"            = "Almacén";
+
+"editView_Colur"              = "Color";
+"editView_Pattern"            = "Diseño";
+"editView_Opacity"            = "Transparencia";
+
+"backTipMessage"              = "Foto no salvada";
+"backTipCancel"               = "Cancelar";
+"backTipConfirm"              = "Cancelar";
+
+"shareView_share"             = "Compartir";
+"shareView_save"              = "Salvar";
+"shareView_more"              = "Más";
+"shareView_NoInstagram"       = "No has instalado Instagram";
+"shareView_NoFacebook"        = "No has instalado Facebook";
+"shareView_saveSuccess"       = "La foto ha sido guardada en álbum";
+"shareView_saveFaile"         = "Fallo al guardar foto";
+"shareView_shareSuccess"      = "Compartir completado, foto salvada";
+"shareView_shareFaile"        = "Fallo al compartir";
+"shareView_rateMessage"       = "Si estás disfrutando de Shape para Instagram, por favor tomate un momento y puntuanos y escribe algún comentario";
+"shareView_remaindLater"      = "Recuérdamelo más tarde";
+"shareView_NoMoreTip"         = "No,gracias";
+"shareView_rateNow"           = "Puntuar ahora";

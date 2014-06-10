@@ -161,8 +161,18 @@
         case 0:
             //保存到相册
             {
-                [self sendMessage:@"share_save" and:@"Share"];
-                UIImageWriteToSavedPhotosAlbum(theBestImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+                if (isSaved)
+                {
+                    [MBProgressHUD showSuccess:LocalizedString(@"shareView_saveSuccess", @"")
+                                        toView:[UIApplication sharedApplication].keyWindow];
+                    return;
+                }
+                else
+                {
+                    [self sendMessage:@"share_save" and:@"Share"];
+                    UIImageWriteToSavedPhotosAlbum(theBestImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+                }
+                
             }
             break;
         case 1:
