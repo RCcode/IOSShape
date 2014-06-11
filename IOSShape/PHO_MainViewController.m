@@ -20,6 +20,8 @@
 
 #import "Filter_GPU/NCImage/NCVideoCamera.h"
 
+#import "MBProgressHUD+Add.h"
+
 
 #define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-79-KADHEIGHT, kScreen_Width, 79):CGRectMake(0, kScreen_Height-79-KADHEIGHT, kScreen_Width, 79))
 
@@ -299,8 +301,10 @@
     shapeChooseView.backgroundColor = colorWithHexString(@"#ededed");
     [showChooseView insertSubview:shapeChooseView atIndex:0];
     
-    UIView *groupBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, shapeChooseView.frame.size.width, 30)];
+    UIScrollView *groupBackView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, shapeChooseView.frame.size.width, 30)];
     groupBackView.tag = 10;
+    groupBackView.showsVerticalScrollIndicator = NO;
+    groupBackView.showsHorizontalScrollIndicator = NO;
     [shapeChooseView addSubview:groupBackView];
     
 //    NSArray *groupNameArray = [NSArray arrayWithObjects:@"shape", @"love", @"flower", @"nature", @"grocery",nil];
@@ -310,10 +314,14 @@
                                 LocalizedString(@"editView_nature", @""),
                                 LocalizedString(@"editView_grocery", @"")];
 
+    CGFloat buttonX = 20;
     for (int i = 0; i < [groupNameArray count]; i ++)
     {
+        NSString *titleString = [groupNameArray objectAtIndex:i];
+        CGSize buttonSize = [titleString sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Medium" size:15]}];
+        
         UIButton *chooseGroupButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [chooseGroupButton setFrame:CGRectMake((groupBackView.frame.size.width/groupNameArray.count)*i, 0, groupBackView.frame.size.width/groupNameArray.count, 30)];
+        [chooseGroupButton setFrame:CGRectMake(buttonX + 20*i, 0, buttonSize.width, 30)];
         [chooseGroupButton addTarget:self action:@selector(chooseGroupButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         chooseGroupButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:15];
         [chooseGroupButton setTitleColor:colorWithHexString(@"#a2a2a2") forState:UIControlStateNormal];
@@ -327,6 +335,18 @@
         chooseGroupButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         chooseGroupButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         [groupBackView addSubview:chooseGroupButton];
+        buttonX = buttonX + buttonSize.width;
+        groupBackView.contentSize = CGSizeMake(chooseGroupButton.frame.origin.x + chooseGroupButton.frame.size.width, 0);
+    }
+    if (groupBackView.contentSize.width < kScreen_Width)
+    {
+        CGFloat adjustWidth = (kScreen_Width-groupBackView.contentSize.width)/[groupNameArray count];
+        for (int j = 0; j < [groupNameArray count]; j++)
+        {
+            UIButton *tempButton = (UIButton *)[groupBackView viewWithTag:10 + j];
+            tempButton.frame = CGRectMake(tempButton.frame.origin.x + adjustWidth * j, tempButton.frame.origin.y, tempButton.frame.size.width + adjustWidth, tempButton.frame.size.height);
+        }
+        
     }
     
     shapeChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
@@ -895,6 +915,10 @@
 - (void)shareButtonPressed:(id)sender
 {
     //分享
+//    [MBProgressHUD showSuccess:LocalizedString(@"", @"") toView:[UIApplication sharedApplication].keyWindow];
+
+//    [MBProgressHUD showMessage:@"正在处理" toView:[UIApplication sharedApplication].keyWindow];
+    
     UIView *passView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 1080, 1080)];
     if (backRealImage.size.width >= backRealImage.size.height)
     {

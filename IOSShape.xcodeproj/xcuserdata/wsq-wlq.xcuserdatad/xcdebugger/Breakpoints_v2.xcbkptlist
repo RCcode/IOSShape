@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IOSShape/PHO_MainViewController.m"
-            timestampString = "424074068.806285"
+            timestampString = "424151793.49539"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "839"
-            endingLineNumber = "839"
+            startingLineNumber = "857"
+            endingLineNumber = "857"
             landmarkName = "-chooseFilterButtonPressed:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IOSShape/PHO_MainViewController.m"
-            timestampString = "424074068.806285"
+            timestampString = "424151793.49539"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "-chooseShapeButtonPressed:"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IOSShape/PHO_MainViewController.m"
-            timestampString = "424074068.806285"
+            timestampString = "424151793.49539"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "668"
-            endingLineNumber = "668"
+            startingLineNumber = "686"
+            endingLineNumber = "686"
             landmarkName = "-chooseColorButtonPressed:"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "IOSShape/PHO_MainViewController.m"
-            timestampString = "424077964.385541"
+            timestampString = "424151793.49539"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "898"
-            endingLineNumber = "898"
+            startingLineNumber = "916"
+            endingLineNumber = "916"
             landmarkName = "-shareButtonPressed:"
             landmarkType = "5">
          </BreakpointContent>
@@ -176,6 +176,22 @@
             startingLineNumber = "115"
             endingLineNumber = "115"
             landmarkName = "-application:didReceiveRemoteNotification:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "IOSShape/PHO_ShareViewController.m"
+            timestampString = "424145237.945362"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "-shareToButtonPressed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

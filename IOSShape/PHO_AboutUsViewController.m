@@ -71,7 +71,7 @@
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 44)];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.text = @"Share";
+    titleLabel.text = LocalizedString(@"shareView_share", @"");
     titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
     self.navigationItem.titleView = titleLabel;
     

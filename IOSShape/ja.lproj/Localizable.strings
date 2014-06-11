@@ -32,7 +32,7 @@
 "backTipConfirm"              = "はい";
 
 "shareView_share"             = "シェア";
-"shareView_save"              = "Save";
+"shareView_save"              = "保存";
 "shareView_more"              = "そのほか";
 "shareView_NoInstagram"       = "instagramがインストールされていません";
 "shareView_NoFacebook"        = "facebookがインストールされていません";
