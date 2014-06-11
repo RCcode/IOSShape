@@ -131,7 +131,7 @@
         case 1://评分
         {
             [self sendMessage:@"home_menu_tateus" and:@"Home"];
-            NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", kiTunesID];
+            NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appleID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
         }
             break;
@@ -195,7 +195,7 @@
     {
         if(buttonIndex==0)
         {
-            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/qun-xiang-dao/id%@?ls=1&mt=8",kiTunesID ]];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/qun-xiang-dao/id%@?ls=1&mt=8",appleID ]];
             [[UIApplication sharedApplication]openURL:url];
         }
     }

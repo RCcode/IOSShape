@@ -38,7 +38,7 @@
 //#define kPushURL @"http://192.168.0.88:8081/IOSPushWeb/userinfo/regiUserInfo.do"
 
 static NSString *kiTunesID = @"";
-static NSString *kFollwUsURL = @"";
+static NSString *kFollwUsURL = @"http://www.instagram.com/rc_nocrop";
 static NSString *kFeedbackEmail = @"rctalk.service@gmail.com";
 static NSString *DEVICE_TOKEN = @"deviceToken";
 

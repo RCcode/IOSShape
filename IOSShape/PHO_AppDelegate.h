@@ -15,7 +15,7 @@
 
 @class PHO_HomeViewController;
 
-@interface PHO_AppDelegate : UIResponder <UIApplicationDelegate>
+@interface PHO_AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -72,10 +72,6 @@
 //    customNavgationView.backgroundColor = [UIColor redColor];
 //    [self.view addSubview:customNavgationView];
     
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareIsPopTipToRateus) name:KShareSuccess object:nil];
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -154,6 +150,7 @@
 
 - (void)shareToButtonPressed:(id)sender
 {
+    
     UIButton *tempButton = (UIButton *)sender;
     NSInteger tag = tempButton.tag - 10;
     switch (tag)
@@ -204,8 +201,8 @@
         case 2:
             //分享到faceBook
             {
-                if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
-                {
+//                if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+//                {
                     slComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
 //                    [slComposerSheet setInitialText:self.sharingText];
                     if([[NSFileManager defaultManager] fileExistsAtPath:kTheBestImagePath]){
@@ -219,13 +216,13 @@
                     [slComposerSheet addImage:image];
                     [slComposerSheet addURL:[NSURL URLWithString:@"http://www.facebook.com/"]];
                     [self presentViewController:slComposerSheet animated:YES completion:nil];
-                }
-                else
-                {
-                    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareFaile", @"")
-                                        toView:[UIApplication sharedApplication].keyWindow];
-                    return;
-                }
+//                }
+//                else
+//                {
+//                    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareFaile", @"")
+//                                        toView:[UIApplication sharedApplication].keyWindow];
+//                    return;
+//                }
                 __block PHO_ShareViewController *controller = self;
                 __block UIImage *blockImage = theBestImage;
                 [slComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result)
@@ -340,6 +337,7 @@
                         toView:[UIApplication sharedApplication].keyWindow];
     UIImageWriteToSavedPhotosAlbum(theBestImage, self, nil, nil);
     [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:1];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     
 }
 
@@ -377,7 +375,7 @@
                 
                 [self sendMessage:@"home_menu_rateus" and:@"Home"];
                 
-                NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", kiTunesID];
+                NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appleID];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
             }
         }
@@ -386,6 +384,11 @@
     
     
     
+}
+
+-(void)documentInteractionController:(UIDocumentInteractionController *)controller didEndSendingToApplication:(NSString *)application
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareIsPopTipToRateus) name:KShareSuccess object:nil];
 }
 
 #pragma mark 发送统计

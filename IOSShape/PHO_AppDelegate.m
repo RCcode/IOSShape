@@ -66,6 +66,19 @@
     //程序退出时上传数据
     [Flurry setSessionReportsOnCloseEnabled:YES];
     
+    //程序是否为激活状态
+    
+//    NSLog(@"%@",[[UIDevice currentDevice]model]);
+//    NSLog(@"%@",[[UIDevice currentDevice]localizedModel]);
+//    NSLog(@"%@",[[UIDevice currentDevice]name]);
+//    NSLog(@"%@",[[UIDevice currentDevice]systemName]);
+//    NSLog(@"%@",[[UIDevice currentDevice]systemVersion]);
+    
+    NSDictionary *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (remoteNotif)
+    {
+        [self doNotificationActionWithInfo:remoteNotif];
+    }
     
     
     
@@ -112,39 +125,65 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+
     NSLog(@"userInfo = %@",userInfo);
+    [self doNotificationActionWithInfo:userInfo];
     
-    //    NSDictionary *dictionary = [userInfo objectForKey:@"aps"];
-    //    NSString *alert = [dictionary objectForKey:@"alert"];
-    //    NSString *type = [userInfo objectForKey:@"type"];
-    //    NSString *urlStr = [userInfo objectForKey:@"url"];
-    //    switch (type.intValue) {
-    //        case 0:
-    //        {
-    //            // Ads
-    //            [self OpenUrl:urlStr];
-    //        }
-    //            break;
-    //        case 1:
-    //        {
-    //            //Update
-    //            self.UpdateUrlStr = urlStr;
-    //            [[[UIAlertView alloc] initWithTitle:@"通知" message: alert delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"前去升级", nil] show];
-    //        }
-    //            break;
-    //        case 2:
-    //            //Font
-    //            break;
-    //        case 3:
-    //            //Tags
-    //            break;
-    //        case 4:
-    //            //Filter
-    //            break;
-    //        default:
-    //            break;
-    //    }
+}
+
+- (void)doNotificationActionWithInfo:(NSDictionary *)dic
+{
+    NSDictionary *dictionary = [dic objectForKey:@"aps"];
+    NSString *alert = [dictionary objectForKey:@"alert"];
+    NSString *type = [dic objectForKey:@"type"];
+    NSString *urlStr = [dic objectForKey:@"url"];
+    switch (type.intValue) {
+        case 0:
+        {
+            // Ads
+            //判断程序是否是由通知打开
+            self.UpdateUrlStr = urlStr;
+
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@""
+                                                               message:alert
+                                                              delegate:self
+                                                     cancelButtonTitle:LocalizedString(@"backTipCancel", @"")
+                                                     otherButtonTitles:LocalizedString(@"backTipConfirm", @""), nil];
+            [alertView show];
+
+        }
+            break;
+        case 1:
+        {
+            //Update
+            self.UpdateUrlStr = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/hei-tian-e/id%@?l=en&mt=8",appleID];
+            //            self.UpdateUrlStr = urlStr;
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
+                                                           message:LocalizedString(@"newVersion", @"")
+                                                          delegate:self
+                                                 cancelButtonTitle:LocalizedString(@"remindLater", @"")
+                                                 otherButtonTitles:LocalizedString(@"updateNow", @""), nil];
+            [alert show];
+        }
+            break;
+        case 2:
+            //Font
+            //            [self OpenUrl:[NSURL URLWithString:urlStr]];
+            break;
+        case 3:
+            //Tags
+            //            [self OpenUrl:[NSURL URLWithString:urlStr]];
+            break;
+        case 4:
+            //Filter
+            //            [self OpenUrl:[NSURL URLWithString:urlStr]];
+            break;
+        default:
+            break;
+    }
+    
     [self cancelNotification];
+
 }
 
 - (void)registNotification{
@@ -273,6 +312,15 @@ void uncaughtExceptionHandler(NSException *exception)
                                                     otherButtonTitles:LocalizedString(@"updateNow", @""), nil];
                 [alert show];
             }
+            else
+            {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
+                                                               message:LocalizedString(@"newVersion", @"")
+                                                              delegate:self
+                                                     cancelButtonTitle:LocalizedString(@"remindLater", @"")
+                                                     otherButtonTitles:LocalizedString(@"updateNow", @""), nil];
+                [alert show];
+            }
         }
             break;
         case 11:
@@ -285,6 +333,16 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     hideMBProgressHUD();
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        [self OpenUrl:self.UpdateUrlStr];
+    }
+}
+
+
 - (void)requestFailed:(NSInteger)tag
 {
     
@@ -298,7 +356,7 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
