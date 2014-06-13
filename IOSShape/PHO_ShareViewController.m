@@ -232,8 +232,7 @@
                 __block UIImage *blockImage = theBestImage;
                 [slComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result)
                 {
-                    [controller isPopTipToRateus];
-                    UIImageWriteToSavedPhotosAlbum(blockImage, controller, nil, nil);
+                    
                     NSLog(@"start completion block");
                     NSString *output;
                     switch (result) {
@@ -241,6 +240,7 @@
                             output = @"Action Cancelled";
                             break;
                         case SLComposeViewControllerResultDone:
+                            
                             output = @"Post Successfull";
                             break;
                         default:
@@ -248,8 +248,10 @@
                     }
                     if (result != SLComposeViewControllerResultCancelled)
                     {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook Message" message:output delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-                        [alert show];
+                        [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareSuccess", @"")
+                                            toView:[UIApplication sharedApplication].keyWindow];
+                        [controller isPopTipToRateus];
+                        UIImageWriteToSavedPhotosAlbum(blockImage, controller, nil, nil);
                     }
                 }];
 
