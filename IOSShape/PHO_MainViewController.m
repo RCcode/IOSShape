@@ -596,7 +596,7 @@
     alphaSlider = [[UISlider alloc]initWithFrame:sliderRect];
     [alphaSlider addTarget:self action:@selector(alphaSliderValueChange:) forControlEvents:UIControlEventValueChanged];
     [alphaSlider setMinimumTrackTintColor:colorWithHexString(@"#fe8c3f")];
-    [alphaSlider setValue:0.8f];
+    [alphaSlider setValue:0.2f];
     [alphaSlider setMinimumValue:0.0f];
     [alphaSlider setMaximumValue:1.0f];
     [alphaSliderView addSubview:alphaSlider];
@@ -777,7 +777,7 @@
 {
     UISlider *tempslider = (UISlider *)sender;
     
-    shapeImage.alpha = tempslider.value;
+    shapeImage.alpha = 1-tempslider.value;
     
     valuePercentLabel.text = [NSString stringWithFormat:@"%d%%",(int)((tempslider.value/alphaSlider.maximumValue)*100)];
 }

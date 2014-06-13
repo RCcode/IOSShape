@@ -17,7 +17,11 @@
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
 
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #import "PHO_AppDelegate.h"
+
+
 
 @interface PHO_HomeViewController ()
 
@@ -167,13 +171,13 @@
     NSInteger tag = tembtn.tag;
     if (tag == 100)
     {
-        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-        if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
+        ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+        if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocalizedString(@"camena_not_availabel", @"")
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
                                                             message:LocalizedString(@"user_library_step", @"")
-                                                           delegate:nil
-                                                  cancelButtonTitle:LocalizedString(@"ok", @"")
+                                                           delegate:self
+                                                  cancelButtonTitle:LocalizedString(@"backTipConfirm", @"")
                                                   otherButtonTitles:nil];
             [alert show];
         }
@@ -181,20 +185,16 @@
         //打开相册
         [self sendMessage:@"home_gallery" and:@"Home"];
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:imagePicker animated:YES
-                         completion:^{//设置overlayview
-                         }];
-        
     }
     else if (tag == 101)
     {
         AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
         if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocalizedString(@"camena_not_availabel", @"")
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
                                                             message:LocalizedString(@"user_camera_step", @"")
-                                                           delegate:nil
-                                                  cancelButtonTitle:LocalizedString(@"ok", @"")
+                                                           delegate:self
+                                                  cancelButtonTitle:LocalizedString(@"backTipConfirm", @"")
                                                   otherButtonTitles:nil];
             [alert show];
         }
@@ -202,10 +202,13 @@
         //打开相机
         [self sendMessage:@"home_camera" and:@"Home"];
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        [self presentViewController:imagePicker animated:YES
-                         completion:^{//设置overlayview
-                         }];
+        
     }
+    
+    
+    [self presentViewController:imagePicker animated:YES
+                     completion:^{//设置overlayview
+                     }];
     
     PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
     UIView *adBanner = (UIView *)app.adBanner;

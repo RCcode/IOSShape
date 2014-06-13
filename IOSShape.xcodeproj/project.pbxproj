@@ -409,6 +409,7 @@
 		E8CFC16E193F238C006DD57A /* libFlurry_5.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.0.0.a; sourceTree = "<group>"; };
 		E8CFC172193F34E6006DD57A /* PHO_DataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHO_DataRequest.h; sourceTree = "<group>"; };
 		E8CFC173193F34E6006DD57A /* PHO_DataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHO_DataRequest.m; sourceTree = "<group>"; };
+		E8E1D911194A9C240018C342 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		E8E42A7C194012A200AC4825 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		E8E42A7D194012A200AC4825 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		E8E42A7E194012A200AC4825 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -1005,6 +1006,7 @@
 		E8F40A32192CCB0300A2F0A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8E1D911194A9C240018C342 /* MobileCoreServices.framework */,
 				E82E798319498B5E00D6AFDA /* Social.framework */,
 				E8F7EFB41946E2BD00228EEB /* AssetsLibrary.framework */,
 				E8CFC16A193EFECB006DD57A /* libsqlite3.dylib */,
