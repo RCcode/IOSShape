@@ -1,0 +1,49 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+
+"newVersion"                  = "有新版本";
+"updateNow"                   = "馬上升級";
+"remindLater"                 = "稍後再說";
+"user_camera_step"            = "請為Shape開放相機權限：手機設置->隱私->相機->Shape（打開）";
+"user_library_step"           = "請為Shape開放相機權限：手機設置->隱私->照片->Shape（打開）";
+
+"aboutView_update"            = "更新";
+"aboutView_score"             = "評價";
+"aboutView_feedback"          = "反饋";
+"aboutView_shareApp"          = "分享應用";
+"aboutView_followUs"          = "關注我們";
+"aboutView_shareTitle"        = "分享到 instagram";
+"aboutView_content"           = "我正在用的Shape for instagram,可以為照片添加110多種漂亮有趣的形狀，還有100多種背景和濾鏡選擇，你也來試試吧!";
+
+"editView_shape"              = "形狀";
+"editView_love"               = "心形";
+"editView_flower"             = "花瓣";
+"editView_nature"             = "自然";
+"editView_grocery"            = "生活";
+
+"editView_Colur"              = "顏色";
+"editView_Pattern"            = "圖案";
+"editView_Opacity"            = "透明度";
+
+"backTipMessage"              = "圖片未保存";
+"backTipCancel"               = "取消";
+"backTipConfirm"              = "確定";
+
+"shareView_share"             = "分享";
+"shareView_save"              = "保存";
+"shareView_more"              = "更多";
+"shareView_NoInstagram"       = "你沒有安裝 instagram";
+"shareView_NoFacebook"        = "你沒有安裝 facebook";
+"shareView_saveSuccess"       = "圖片已保存到相冊";
+"shareView_saveFaile"         = "圖片保存失敗";
+"shareView_shareSuccess"      = "分享成功,圖片已保存";
+"shareView_shareFaile"        = "分享失敗";
+"shareView_rateMessage"       = "感謝使用shape for instagram,請花點時間給予五星評分，感謝你對我們的支持!";
+"shareView_remaindLater"      = "稍後再說";
+"shareView_NoMoreTip"         = "不再提醒";
+"shareView_rateNow"           = "馬上評價";

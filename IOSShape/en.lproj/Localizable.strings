@@ -9,6 +9,8 @@
 "newVersion"                  = "New version available";
 "updateNow"                   = "Upgrade Now";
 "remindLater"                 = "Remind Later";
+"user_camera_step"            = "Please open the camera for the Shape permissions: Phone Settings -> Privacy -> Camera -> Shape (open)";
+"user_library_step"           = "Please open the camera for the Shape permissions: Phone Settings -> Privacy -> Photos -> Shape (open)";
 
 "aboutView_update"            = "Update";
 "aboutView_score"             = "Score";

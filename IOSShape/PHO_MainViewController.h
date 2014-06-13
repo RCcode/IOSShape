@@ -32,7 +32,7 @@ typedef enum _whichTypeUsed
     UIImage *backRealImage;
     UIImage *filterMaxImage;
     UIImage *filterMinImage;
-    UIImageView *shapeSelectedView;
+    UIView *shapeSelectedView;
     UIImageView *backGroundSelectedView;
     UIImageView *filterSelectedView;
     
@@ -75,6 +75,6 @@ typedef enum _whichTypeUsed
     UIButton *hideShowChooseViewButton;
 }
 
--(id)initWithImage:(UIImage *)image;
+- (void)setImage:(UIImage *)image;
 
 @end

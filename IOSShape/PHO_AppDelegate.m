@@ -15,9 +15,17 @@
 #import "PHO_DataRequest.h"
 
 
+#import "GADBannerView.h"
+#import "GADRequest.h"
+#import <AdSupport/AdSupport.h>
+
+#import "PHO_MainViewController.h"
+
 @implementation PHO_AppDelegate
 
+@synthesize rootNav;
 @synthesize homeViewController;
+@synthesize adBanner;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -26,7 +34,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     homeViewController = [[PHO_HomeViewController alloc]init];
-    UINavigationController *rootNav = [[UINavigationController alloc]initWithRootViewController:homeViewController];
+    rootNav = [[UINavigationController alloc]initWithRootViewController:homeViewController];
     [rootNav.navigationBar setBarTintColor:colorWithHexString(@"#fe8c3f")];
     self.window.rootViewController = rootNav;
     [self.window makeKeyAndVisible];
@@ -45,6 +53,9 @@
     
     //检查更新
     [self checkVersion];
+    
+    //配置admob
+    [self setAdMob];
     
     /** google analytics **/
     // Optional: automatically send uncaught exceptions to Google Analytics.
@@ -83,6 +94,42 @@
     
     
     return YES;
+}
+
+#pragma mark -
+#pragma mark 从其它应用中跳转过来
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+    if(image == nil){
+        return YES;
+    }
+    
+    PHO_MainViewController *mainViewController = [[PHO_MainViewController alloc]init];
+    [mainViewController setImage:image];
+    [homeViewController.navigationController pushViewController:mainViewController animated:YES];
+    
+    return YES;
+}
+
+
+#pragma mark 配置admob
+- (void)setAdMob
+{
+    CGPoint origin = CGPointMake(0.0,
+                                 self.window.frame.size.height -
+                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height);
+    
+    // Use predefined GADAdSize constants to define the GADBannerView.
+    adBanner = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait origin:origin];
+    
+    // Note: Edit SampleConstants.h to provide a definition for kSampleAdUnitID before compiling.
+    adBanner.adUnitID = AdmobAPPKey;
+    adBanner.delegate = self;
+    adBanner.backgroundColor = [UIColor blackColor];
+    adBanner.rootViewController = rootNav;
+    [self.window addSubview:adBanner];
+    [adBanner loadRequest:[GADRequest request]];
 }
 
 #pragma mark -
@@ -333,6 +380,34 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     hideMBProgressHUD();
 }
+
+
+#pragma mark GADRequest generation
+
+- (GADRequest *)request {
+    GADRequest *request = [GADRequest request];
+    
+    // Make the request for a test ad. Put in an identifier for the simulator as well as any devices
+    // you want to receive test ads.
+    request.testDevices = @[
+                            //    // TODO: Add your device/simulator test identifiers here. Your device identifier is printed to
+                            //    // the console when the app is launched.
+                            ////    GAD_SIMULATOR_ID,
+                            [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]];
+    return request;
+}
+
+#pragma mark GADBannerViewDelegate implementation
+
+// We've received an ad successfully.
+- (void)adViewDidReceiveAd:(GADBannerView *)adView {
+    NSLog(@"Received ad successfully");
+}
+
+- (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"Failed to receive ad with error: %@", [error localizedFailureReason]);
+}
+
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

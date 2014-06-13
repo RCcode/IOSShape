@@ -11,14 +11,17 @@
 
 #import "AFHTTPRequestOperationManager.h"
 #import "PRJ_ProtocolClass.h"
+#import "GADBannerViewDelegate.h"
 
-
+@class GADBannerView;
+@class GADRequest;
 @class PHO_HomeViewController;
 
-@interface PHO_AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
+@interface PHO_AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate,GADBannerViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (strong, nonatomic) UINavigationController *rootNav;
 @property (strong, nonatomic) PHO_HomeViewController *homeViewController;
 
 @property(nonatomic, strong) id<GAITracker> tracker;
@@ -27,6 +30,8 @@
 @property (nonatomic, copy) NSString *UpdateUrlStr;
 
 @property (nonatomic, strong) NSString *trackURL;//apple的iTunes地址
+
+@property (strong, nonatomic) GADBannerView *adBanner;
 
 - (void)checkVersion;
 

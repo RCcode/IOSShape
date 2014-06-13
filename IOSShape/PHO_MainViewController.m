@@ -23,7 +23,7 @@
 #import "MBProgressHUD+Add.h"
 
 
-#define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-79-KADHEIGHT, kScreen_Width, 79):CGRectMake(0, kScreen_Height-79-KADHEIGHT, kScreen_Width, 79))
+#define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-82-KADHEIGHT, kScreen_Width, 82):CGRectMake(0, kScreen_Height-82-KADHEIGHT, kScreen_Width, 82))
 
 
 @interface PHO_MainViewController ()
@@ -49,161 +49,147 @@
     return self;
 }
 
-/**********************************************************
- 函数名称：-(id)initWithImage:(UIImage *)image
- 函数描述：初始化修饰图片
- 输入参数：(UIImage *)image:用户选中图片
- 输出参数：(UIImage *)chooseImage:待处理图片
- 返回值：  self
- **********************************************************/
-
-- (id)initWithImage:(UIImage *)image
+- (void)setImage:(UIImage *)image
 {
-    self = [super init];
-    if (self)
+    shapeGroupName = @"shape";
+    shapeSelectedGroup = @"shape";
+    uMengEditType = @"edit_shape";
+    filterSelectedIndex = 0;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+                   {
+                       shapeMulArray = [[NSMutableArray alloc]init];
+                       shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
+                       
+                       colorMulArray = [[NSMutableArray alloc]
+                                        initWithObjects:@"#ffffff",
+                                        @"#000000",
+                                        @"#fff1f1",
+                                        @"#f6e5c2",
+                                        @"#f7f4c2",
+                                        @"#f3705c",
+                                        @"#f4ee64",
+                                        @"#e55958",
+                                        @"#2b5ca9",
+                                        @"#f073ab",
+                                        @"#fdb934",
+                                        @"#75a454",
+                                        @"#6f589c",
+                                        @"#90d7eb",
+                                        @"#ee5c71",
+                                        @"#f48221",
+                                        @"#9c95c9",
+                                        @"#ffc20f",
+                                        @"#bfd743",
+                                        @"#65c295",
+                                        @"#f8aaa6",
+                                        @"#dbc4f6",
+                                        @"#eec3f6",
+                                        @"#f7c3d7",
+                                        @"#663dae",
+                                        @"#85418b",
+                                        @"#9a6bea",
+                                        @"#cc6fd4",
+                                        @"#f589b5",
+                                        @"#e46a7c",
+                                        @"#4b4a4a",
+                                        @"#777777",
+                                        @"#acacac",
+                                        @"#6d3938",
+                                        @"#53402d",
+                                        @"#6e5844", nil];
+                       
+                       graphMulArray = [[NSMutableArray alloc]init];
+                       graphMulArray = [getImagesArray(@"graph",@"jpg") mutableCopy];
+                       
+                       
+                       filterMulArray = [[NSMutableArray alloc]init];
+                       
+                   });
+    
+    
+    
+    
+    
+    backView = [[UIView alloc]initWithFrame:CGRectMake(0, TOPORIGIN_Y + 44, 320, 320)];
+    backView.backgroundColor = [UIColor clearColor];
+    backView.layer.masksToBounds = YES;
+    [self.view addSubview:backView];
+    
+    showView = [[PHO_MainShowView alloc]initWithFrame:CGRectMake(0, 0, backView.frame.size.width, backView.frame.size.height)];
+    [showView getPicture:image];
+    [backView addSubview:showView];
+    
+    shapeImage = [[UIImageView alloc]initWithFrame:showView.frame];
+    topImage = [[UIImageView alloc]initWithFrame:backView.frame];
+    bottomImage = [[UIImageView alloc]initWithFrame:backView.frame];
+    backRealImage = [[UIImage alloc]init];
+    filterMaxImage = [[UIImage alloc]init];
+    filterMinImage = [[UIImage alloc]init];
+    
+    topImage.image = getImageFromDirectory([[[shapeMulArray objectAtIndex:0] lastPathComponent] stringByDeletingPathExtension], [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
+    bottomImage.image = [UIImage imageNamed:@"color-1.png"];
+    
+    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    shapeImage.alpha = 0.7f;
+    backRealImage = image;
+    
+    //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+    //        {
+    //            CGFloat scale = backRealImage.size.width/backRealImage.size.height;
+    //
+    //            if (backRealImage.size.width >= backRealImage.size.height)
+    //            {
+    //                if (backRealImage.size.height < 1080 )
+    //                {
+    //                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.height*scale, backRealImage.size.height)];
+    //                }
+    //                else if (backRealImage.size.height > 1080)
+    //                {
+    //                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
+    //                }
+    //                filterMinImage = [backRealImage subImageWithRect:CGRectMake((backRealImage.size.width-backRealImage.size.height)/2, 0, backRealImage.size.height, backRealImage.size.height)];
+    //            }
+    //            else if (backRealImage.size.width < backRealImage.size.height)
+    //            {
+    //                if (backRealImage.size.width < 1080)
+    //                {
+    //                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.width, backRealImage.size.width/scale)];
+    //                }
+    //                else if (backRealImage.size.width > 1080)
+    //                {
+    //                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
+    //                }
+    //                filterMinImage = [backRealImage subImageWithRect:CGRectMake(0, (backRealImage.size.height-backRealImage.size.width)/2, backRealImage.size.width, backRealImage.size.width)];
+    //            }
+    //            filterMinImage = [filterMinImage rescaleImageToSize:CGSizeMake(200, 200)];
+    //
+    //        });
+    
+    [backView addSubview:shapeImage];
+    
+    showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
+    //        showChooseView.backgroundColor = colorWithHexString(@"#ededed");
+    showChooseView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:showChooseView];
+    if (!iPhone5)
     {
-        shapeGroupName = @"shape";
-        shapeSelectedGroup = @"shape";
-        uMengEditType = @"edit_shape";
-        filterSelectedIndex = 0;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissShowChooseView)];
+        tap.delegate = self;
+        tap.numberOfTapsRequired = 1;
+        tap.numberOfTouchesRequired = 1;
+        [backView addGestureRecognizer:tap];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-        {
-            shapeMulArray = [[NSMutableArray alloc]init];
-            shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
-            
-            colorMulArray = [[NSMutableArray alloc]
-                             initWithObjects:@"#ffffff",
-                             @"#000000",
-                             @"#fff1f1",
-                             @"#f6e5c2",
-                             @"#f7f4c2",
-                             @"#f3705c",
-                             @"#f4ee64",
-                             @"#e55958",
-                             @"#2b5ca9",
-                             @"#f073ab",
-                             @"#fdb934",
-                             @"#75a454",
-                             @"#6f589c",
-                             @"#90d7eb",
-                             @"#ee5c71",
-                             @"#f48221",
-                             @"#9c95c9",
-                             @"#ffc20f",
-                             @"#bfd743",
-                             @"#65c295",
-                             @"#f8aaa6",
-                             @"#dbc4f6",
-                             @"#eec3f6",
-                             @"#f7c3d7",
-                             @"#663dae",
-                             @"#85418b",
-                             @"#9a6bea",
-                             @"#cc6fd4",
-                             @"#f589b5",
-                             @"#e46a7c",
-                             @"#4b4a4a",
-                             @"#777777",
-                             @"#acacac",
-                             @"#6d3938",
-                             @"#53402d",
-                             @"#6e5844", nil];
-            
-            graphMulArray = [[NSMutableArray alloc]init];
-            graphMulArray = [getImagesArray(@"graph",@"jpg") mutableCopy];
-            
-            
-            filterMulArray = [[NSMutableArray alloc]init];
-            
-        });
+        //            hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        //            [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-32, showChooseView.frame.origin.y-18, 22, 22)];
+        //            hideShowChooseViewButton.backgroundColor = [UIColor clearColor];
+        //            [hideShowChooseViewButton addTarget:self action:@selector(hideShowChooseViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        //            [hideShowChooseViewButton setBackgroundImage:[UIImage imageNamed:@"XXX.png"] forState:UIControlStateNormal];
+        //            [self.view addSubview:hideShowChooseViewButton];
         
-        
-        
-        
-
-        backView = [[UIView alloc]initWithFrame:CGRectMake(0, TOPORIGIN_Y + 44, 320, 320)];
-        backView.backgroundColor = [UIColor clearColor];
-        backView.layer.masksToBounds = YES;
-        [self.view addSubview:backView];
-        
-        showView = [[PHO_MainShowView alloc]initWithFrame:CGRectMake(0, 0, backView.frame.size.width, backView.frame.size.height)];
-        [showView getPicture:image];
-        [backView addSubview:showView];
-        
-        shapeImage = [[UIImageView alloc]initWithFrame:showView.frame];
-        topImage = [[UIImageView alloc]initWithFrame:backView.frame];
-        bottomImage = [[UIImageView alloc]initWithFrame:backView.frame];
-        backRealImage = [[UIImage alloc]init];
-        filterMaxImage = [[UIImage alloc]init];
-        filterMinImage = [[UIImage alloc]init];
-        
-        topImage.image = getImageFromDirectory([[[shapeMulArray objectAtIndex:0] lastPathComponent] stringByDeletingPathExtension], [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
-        bottomImage.image = [UIImage imageNamed:@"color-1.png"];
-        
-        shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
-        shapeImage.alpha = 0.7f;
-        backRealImage = image;
-        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
-//        {
-//            CGFloat scale = backRealImage.size.width/backRealImage.size.height;
-//            
-//            if (backRealImage.size.width >= backRealImage.size.height)
-//            {
-//                if (backRealImage.size.height < 1080 )
-//                {
-//                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.height*scale, backRealImage.size.height)];
-//                }
-//                else if (backRealImage.size.height > 1080)
-//                {
-//                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
-//                }
-//                filterMinImage = [backRealImage subImageWithRect:CGRectMake((backRealImage.size.width-backRealImage.size.height)/2, 0, backRealImage.size.height, backRealImage.size.height)];
-//            }
-//            else if (backRealImage.size.width < backRealImage.size.height)
-//            {
-//                if (backRealImage.size.width < 1080)
-//                {
-//                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(backRealImage.size.width, backRealImage.size.width/scale)];
-//                }
-//                else if (backRealImage.size.width > 1080)
-//                {
-//                    filterMaxImage = [backRealImage rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
-//                }
-//                filterMinImage = [backRealImage subImageWithRect:CGRectMake(0, (backRealImage.size.height-backRealImage.size.width)/2, backRealImage.size.width, backRealImage.size.width)];
-//            }
-//            filterMinImage = [filterMinImage rescaleImageToSize:CGSizeMake(200, 200)];
-//            
-//        });
-       
-        [backView addSubview:shapeImage];
-        
-        showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
-//        showChooseView.backgroundColor = colorWithHexString(@"#ededed");
-        showChooseView.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:showChooseView];
-        if (!iPhone5)
-        {
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissShowChooseView)];
-            tap.delegate = self;
-            tap.numberOfTapsRequired = 1;
-            tap.numberOfTouchesRequired = 1;
-            [backView addGestureRecognizer:tap];
-            
-//            hideShowChooseViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//            [hideShowChooseViewButton setFrame:CGRectMake(showChooseView.frame.size.width-32, showChooseView.frame.origin.y-18, 22, 22)];
-//            hideShowChooseViewButton.backgroundColor = [UIColor clearColor];
-//            [hideShowChooseViewButton addTarget:self action:@selector(hideShowChooseViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//            [hideShowChooseViewButton setBackgroundImage:[UIImage imageNamed:@"XXX.png"] forState:UIControlStateNormal];
-//            [self.view addSubview:hideShowChooseViewButton];
-            
-        }
-
-        [self initShapeChooseView];
-
     }
-    return self;
+    
+    [self initShapeChooseView];
 }
 
 -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -356,9 +342,11 @@
     shapeChooseScrollView.showsVerticalScrollIndicator = NO;
     [shapeChooseView addSubview:shapeChooseScrollView];
     
-    shapeSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    shapeSelectedView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
     shapeSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
     shapeSelectedView.layer.borderWidth = 2;
+    shapeSelectedView.userInteractionEnabled = NO;
+    [shapeChooseScrollView addSubview:shapeSelectedView];
     
     for (int i = 0; i < [shapeMulArray count]; i ++)
     {
@@ -369,13 +357,13 @@
             [chooseShapeButton setBackgroundImage:[UIImage imageWithContentsOfFile:[shapeMulArray objectAtIndex:i]] forState:UIControlStateNormal];
             if (i == 0)
             {
-                shapeSelectedView.frame = chooseShapeButton.frame;
+                shapeSelectedView.center = chooseShapeButton.center;
             }
             chooseShapeButton.tag = i + 10;
-            [shapeChooseScrollView insertSubview:chooseShapeButton atIndex:0];
+            [shapeChooseScrollView addSubview:chooseShapeButton];
         }
     }
-    [shapeChooseScrollView addSubview:shapeSelectedView];
+    
 }
 
 -(void)chooseShapeButtonPressed:(id)sender
@@ -383,11 +371,11 @@
     //选择哪个图形
     UIButton *tempButton = (UIButton *)sender;
     
-    if (shapeSelectedView.center.x == tempButton.center.x && shapeSelectedView.center.y == tempButton.center.y)
+    if (shapeSelectedView.hidden == NO && shapeSelectedView.center.x == tempButton.center.x && shapeSelectedView.center.y == tempButton.center.y)
     {
         return;
     }
-    shapeSelectedView.frame = tempButton.frame;
+    shapeSelectedView.center = tempButton.center;
     shapeSelectedView.hidden = NO;
     
     shapeSelectedGroup = shapeGroupName;
@@ -488,7 +476,7 @@
             [chooseShapeButton addTarget:self action:@selector(chooseShapeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [chooseShapeButton setBackgroundImage:[UIImage imageWithContentsOfFile:[shapeMulArray objectAtIndex:i]] forState:UIControlStateNormal];
             chooseShapeButton.tag = i + 10;
-            [shapeChooseScrollView insertSubview:chooseShapeButton atIndex:0];
+            [shapeChooseScrollView addSubview:chooseShapeButton];
         }
     }
     

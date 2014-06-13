@@ -25,7 +25,7 @@
 #define KShareSuccess @"sharesuccess"
 
 
-#define appleID           @""
+#define appleID           @"888215372"
 #define UmengAPPKey       @"5379996956240b8e43131db9"
 #define FlurryAPPKey      @"TDWM2F2ZXBDCVRVFBS8Z"
 //#define FlurryAPPKey      @"SCF6NC6HZ62WM8ZZCQV9" //自测key
@@ -42,5 +42,15 @@ static NSString *kFollwUsURL = @"http://www.instagram.com/rc_nocrop";
 static NSString *kFeedbackEmail = @"rctalk.service@gmail.com";
 static NSString *DEVICE_TOKEN = @"deviceToken";
 
+
+//release发布不打印日志
+#endif
+
+#ifdef DEBUG
+#define NSLog(...) NSLog(__VA_ARGS__)
+#define debugMethod() NSLog(@"%s", __func__)
+#else
+#define NSLog(...)
+#define debugMethod()
 
 #endif

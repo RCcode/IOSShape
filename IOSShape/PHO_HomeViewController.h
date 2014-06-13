@@ -8,23 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GADBannerViewDelegate.h"
 
-@class GADBannerView;
-@class GADRequest;
+
 @class PHO_AboutUsViewController;
 
-@interface PHO_HomeViewController : UIViewController<UIImagePickerControllerDelegate, GADBannerViewDelegate, MFMailComposeViewControllerDelegate>
+@interface PHO_HomeViewController : UIViewController<UIImagePickerControllerDelegate,UIAlertViewDelegate>
 {
     UIImagePickerController *imagePicker;
     UIImage *chooseImage;
     UIView *moreView;
     PHO_AboutUsViewController *aboutUs;
 }
-
-@property(strong, nonatomic) GADBannerView *adBanner;
-
-- (GADRequest *)request;
 
 
 @end

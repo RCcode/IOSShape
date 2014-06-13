@@ -8,6 +8,8 @@
 "newVersion"                  = "Nouvelle version disponible";
 "updateNow"                   = "Mettre à jour maintenant";
 "remindLater"                 = "Rappeler plus tard";
+"user_camera_step"            = "S'il vous plaît ouvrir l'appareil photo pour les autorisations de Shape: Paramètres du téléphone -> Confidentialité -> Caméra -> Shape (ouverte)";
+"user_library_step"           = "S'il vous plaît ouvrir l'appareil photo pour les autorisations de Shape: Paramètres du téléphone -> Confidentialité -> Photos -> Shape (ouverte)";
 
 "aboutView_update"            = "Mise à jour";
 "aboutView_score"             = "Score";

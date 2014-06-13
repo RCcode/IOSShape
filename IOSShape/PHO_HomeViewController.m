@@ -12,14 +12,12 @@
 
 #import "PHO_AboutUsViewController.h"
 
-#import "GADBannerView.h"
-#import "GADRequest.h"
-#import <AdSupport/AdSupport.h>
-
 #import "MBProgressHUD+Add.h"
 
 #import "GAITracker.h"
 #import "GAIDictionaryBuilder.h"
+
+#import "PHO_AppDelegate.h"
 
 @interface PHO_HomeViewController ()
 
@@ -27,7 +25,6 @@
 
 @implementation PHO_HomeViewController
 
-@synthesize adBanner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,20 +54,7 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
-    CGPoint origin = CGPointMake(0.0,
-                                 self.view.frame.size.height -
-                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height);
     
-    // Use predefined GADAdSize constants to define the GADBannerView.
-    self.adBanner = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait origin:origin];
-    
-    // Note: Edit SampleConstants.h to provide a definition for kSampleAdUnitID before compiling.
-    self.adBanner.adUnitID = AdmobAPPKey;
-    self.adBanner.delegate = self;
-    self.adBanner.backgroundColor = [UIColor blackColor];
-    self.adBanner.rootViewController = self.navigationController;
-    [self.navigationController.view addSubview:self.adBanner];
-    [self.adBanner loadRequest:[self request]];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:pngImagePath(@"wallbase")];
     
@@ -91,15 +75,24 @@
     [self.view addSubview:nameImageView];
 //
 
-    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectZero];
+    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreen_Height, 320, 140)];
     if (iPhone5)
     {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationCurve:3.0];
+        [UIView setAnimationDelay:0.8];
         buttonView.frame = CGRectMake(0, kScreen_Height-217, 320, 140);
+        [UIView commitAnimations];
     }
     else
     {
-        buttonView.frame = CGRectMake(0, kScreen_Height-190, 320, 140);
         nameImageView.center = CGPointMake(self.view.center.x, 150);
+
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationCurve:3.0];
+        [UIView setAnimationDelay:0.8];
+        buttonView.frame = CGRectMake(0, kScreen_Height-190, 320, 140);
+        [UIView commitAnimations];
     }
     buttonView.backgroundColor = colorWithHexString(@"#ffffff");
 //    buttonView.layer.borderColor = colorWithHexString(@"dcdcdc").CGColor;
@@ -109,64 +102,38 @@
     
     UIButton *openlibrary = [UIButton buttonWithType:UIButtonTypeCustom];
     [openlibrary setBackgroundImage:[UIImage imageNamed:@"gallery.png"] forState:UIControlStateNormal];
-    [openlibrary setFrame:CGRectMake(49, 0, 65, 65)];
-    openlibrary.center = CGPointMake(openlibrary.frame.origin.x, buttonView.center.y);
+    [openlibrary setFrame:CGRectMake(19, 38, 65, 65)];
+//    openlibrary.center = CGPointMake(openlibrary.frame.origin.x, buttonView.center.y);
     openlibrary.tag = 100;
     [openlibrary addTarget:self action:@selector(choosePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:openlibrary];
+    [buttonView addSubview:openlibrary];
     
     UIButton *openCamera = [UIButton buttonWithType:UIButtonTypeCustom];
     [openCamera setBackgroundImage:[UIImage imageNamed:@"Camera.png"] forState:UIControlStateNormal];
-    [openCamera setFrame:CGRectMake(160, 160, 65, 65)];
-    openCamera.center = CGPointMake(openCamera.frame.origin.x, buttonView.center.y);
+    [openCamera setFrame:CGRectMake(130, 38, 65, 65)];
+//    openCamera.center = CGPointMake(openCamera.frame.origin.x, buttonView.center.y);
     openCamera.tag = 101;
     [openCamera addTarget:self action:@selector(choosePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:openCamera];
+    [buttonView addSubview:openCamera];
     
     UIButton *openNoCropButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [openNoCropButton setBackgroundImage:[UIImage imageNamed:@"Nocrop.png"] forState:UIControlStateNormal];
-    [openNoCropButton setFrame:CGRectMake(271, 220, 65, 65)];
-    openNoCropButton.center = CGPointMake(openNoCropButton.frame.origin.x, buttonView.center.y);
+    [openNoCropButton setFrame:CGRectMake(241, 38, 65, 65)];
+//    openNoCropButton.center = CGPointMake(openNoCropButton.frame.origin.x, buttonView.center.y);
     [openNoCropButton addTarget:self action:@selector(openNoCropButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:openNoCropButton];
+    [buttonView addSubview:openNoCropButton];
     
     imagePicker = [[UIImagePickerController alloc]init];
     imagePicker.allowsEditing = NO;
     //    imagePicker.showsCameraControls = NO;
     imagePicker.delegate = self;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 
     
     //    [self setOverLayView];
     //    imagePicker.cameraOverlayView = takePictureView;
     
     // Do any additional setup after loading the view.
-}
-
-#pragma mark GADRequest generation
-
-- (GADRequest *)request {
-    GADRequest *request = [GADRequest request];
-    
-    // Make the request for a test ad. Put in an identifier for the simulator as well as any devices
-    // you want to receive test ads.
-      request.testDevices = @[
-    //    // TODO: Add your device/simulator test identifiers here. Your device identifier is printed to
-    //    // the console when the app is launched.
-    ////    GAD_SIMULATOR_ID,
-        [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]];
-    return request;
-}
-
-#pragma mark GADBannerViewDelegate implementation
-
-// We've received an ad successfully.
-- (void)adViewDidReceiveAd:(GADBannerView *)adView {
-    NSLog(@"Received ad successfully");
-}
-
-- (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSLog(@"Failed to receive ad with error: %@", [error localizedFailureReason]);
 }
 
 
@@ -194,10 +161,23 @@
 
 - (void)choosePhoto:(id)sender
 {
+    
+    
     UIButton *tembtn = (UIButton *)sender;
     NSInteger tag = tembtn.tag;
     if (tag == 100)
     {
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocalizedString(@"camena_not_availabel", @"")
+                                                            message:LocalizedString(@"user_library_step", @"")
+                                                           delegate:nil
+                                                  cancelButtonTitle:LocalizedString(@"ok", @"")
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+
         //打开相册
         [self sendMessage:@"home_gallery" and:@"Home"];
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -208,6 +188,17 @@
     }
     else if (tag == 101)
     {
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LocalizedString(@"camena_not_availabel", @"")
+                                                            message:LocalizedString(@"user_camera_step", @"")
+                                                           delegate:nil
+                                                  cancelButtonTitle:LocalizedString(@"ok", @"")
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+
         //打开相机
         [self sendMessage:@"home_camera" and:@"Home"];
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -216,6 +207,10 @@
                          }];
     }
     
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+    UIView *adBanner = (UIView *)app.adBanner;
+    adBanner.hidden = YES;
+
 }
 /**********************************************************
  函数名称：-(void)imagePickerController:(UIImagePickerController *)picker
@@ -228,12 +223,14 @@
  **********************************************************/
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    
+//    chooseImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary)
     {
         chooseImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
     }
-    
+/*改变图片旋转90度问题*/
     UIImage *cameraPic = [info objectForKey:UIImagePickerControllerOriginalImage];
 //    NSLog(@"cameraPic.imageOrientation == %ld",cameraPic.imageOrientation);
     
@@ -312,14 +309,30 @@
     
     if (chooseImage)
     {
-        PHO_MainViewController *mainViewController = [[PHO_MainViewController alloc]initWithImage:chooseImage];
-        [self.navigationController pushViewController:mainViewController animated:YES];
+        [picker dismissViewControllerAnimated:YES completion:^
+        {
+            PHO_MainViewController *mainViewController = [[PHO_MainViewController alloc]init];
+            [mainViewController setImage:chooseImage];
+            [self.navigationController pushViewController:mainViewController animated:YES];
+            
+            PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+            UIView *adBanner = (UIView *)app.adBanner;
+            adBanner.hidden = NO;
+
+        }];
+        
     }
     
-    [self performSelector:@selector(dismissPicker) withObject:self afterDelay:0.3f];
-    
 }
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+    UIView *adBanner = (UIView *)app.adBanner;
+    adBanner.hidden = NO;
 
+}
 /**********************************************************
  函数名称：-(void)dismissPicker
  函数描述：退出相册或相机
@@ -332,6 +345,12 @@
 {
     [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self dismissPicker];
+}
+
 
 - (void)openNoCropButtonPressed:(id)sender
 {
@@ -369,11 +388,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
--(void)dealloc
-{
-    adBanner.delegate = nil;
 }
 
 

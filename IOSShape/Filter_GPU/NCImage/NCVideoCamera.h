@@ -1,8 +1,11 @@
 
 #import "GPUImage.h"
+
 #import "NCFilters.h"
 
 @class NCVideoCamera;
+
+typedef void(^FilterCompletionBlock) (UIImage *filterImage);
 
 @protocol IFVideoCameraDelegate <NSObject>
 
@@ -16,7 +19,7 @@
 
 @interface NCVideoCamera : GPUImageVideoCamera
 
-
+@property (strong, readonly) GPUImageView *gpuImageView;
 @property (strong, readonly) GPUImageView *gpuImageView_HD;
 @property (nonatomic, strong) UIImage *rawImage;
 @property (nonatomic, unsafe_unretained) id delegate;
@@ -25,7 +28,7 @@
 /**
  *  addSubView展示即可
  */
-@property (strong, nonatomic) GPUImageView *gpuImageView;
+//@property (strong, nonatomic) GPUImageView *gpuImageView;
 
 - (id)initWithSessionPreset:(NSString *)sessionPreset cameraPosition:(AVCaptureDevicePosition)cameraPosition highVideoQuality:(BOOL)isHighQuality WithFrame:(CGRect)frame;
 
@@ -43,5 +46,7 @@
  *  @param rawImage 需要进行滤镜处理的image对象
  */
 + (instancetype)videoCameraWithFrame:(CGRect)frame Image:(UIImage *)rawImage;
+
+- (void)switchFilter:(NCFilterType)type WithCompletionBlock:(FilterCompletionBlock)completion;
 
 @end

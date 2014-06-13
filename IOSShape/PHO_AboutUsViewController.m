@@ -149,12 +149,12 @@
             [self presentViewController:picker animated:YES completion:nil];
         }
             break;
-        case 3://分享
+        case 3://分享应用
         {
             
             [self sendMessage:@"home_menu_share" and:@"Home"];
             //需要分享的内容
-            NSString *shareContent = LocalizedString(@"aboutView_content", @"");
+            NSString *shareContent = [NSString stringWithFormat:@"%@ http://bit.ly/1jlOK8k",LocalizedString(@"aboutView_content", @"")];
             NSArray *activityItems = @[shareContent];
             
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];

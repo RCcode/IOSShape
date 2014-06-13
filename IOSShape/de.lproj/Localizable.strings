@@ -8,6 +8,8 @@
 "newVersion"                  = "Neuere Version erhältlich";
 "updateNow"                   = "jetzt upgraden";
 "remindLater"                 = "Später erinnern";
+"user_camera_step"            = "Bitte öffnen Sie die Kamera für die Shape Berechtigungen: Telefon-Einstellungen -> Datenschutz -> Kamera -> Shape (offen)";
+"user_library_step"           = "Bitte öffnen Sie die Kamera für die Shape Berechtigungen: Telefon-Einstellungen -> Datenschutz -> Fotos -> Shape (offen)";
 
 "aboutView_update"            = "Update";
 "aboutView_score"             = "Score";

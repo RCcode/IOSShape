@@ -8,6 +8,8 @@
 "newVersion"                  = "新しいバージョンがあります";
 "updateNow"                   = "今すぐアップグレード";
 "remindLater"                 = "また後で";
+"user_camera_step"            = "Shapeアクセス権のためのカメラを開いてください：電話の設定 - >プライバシー - >カメラ - > Shape（オープン）";
+"user_library_step"           = "Shapeアクセス権のためのカメラを開いてください：電話の設定 - >プライバシー - >写真 ​​- > Shape（オープン）";
 
 "aboutView_update"            = "アップデート";
 "aboutView_score"             = "評価";

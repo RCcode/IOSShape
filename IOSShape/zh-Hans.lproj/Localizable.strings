@@ -8,6 +8,8 @@
 "newVersion"                  = "有新版本";
 "updateNow"                   = "马上升级";
 "remindLater"                 = "稍后再说";
+"user_camera_step"            = "请为Shape开放相机权限：手机设置->隐私->相机->Shape（打开）";
+"user_library_step"           = "请为Shape开放相机权限：手机设置->隐私->照片->Shape（打开）";
 
 "aboutView_update"            = "更新";
 "aboutView_score"             = "评价";

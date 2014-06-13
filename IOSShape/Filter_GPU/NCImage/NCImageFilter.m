@@ -89,7 +89,7 @@
     {
         glActiveTexture(GL_TEXTURE5);
         glBindTexture(GL_TEXTURE_2D, filterSourceTexture4);
-        glUniform1i(filterInputTextureUniform4, 5);	
+        glUniform1i(filterInputTextureUniform4, 5);
     }
     if (filterSourceTexture5 != 0)
     {
@@ -113,6 +113,11 @@
     {
         [currentTarget setInputSize:inputTextureSize];
         [currentTarget newFrameReady];
+    }
+    
+//    NSLog(@"renderToTextureWithVertices OK");
+    if([_delegate respondsToSelector:@selector(imageFilterdidFinishRender:)]){
+        [_delegate imageFilterdidFinishRender:self];
     }
 }
 
@@ -179,7 +184,7 @@
     else if (filterSourceTexture6 == 0) {
         filterSourceTexture6 = newInputTexture;
     }
-
+    
 }
 
 

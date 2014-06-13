@@ -1,46 +1,47 @@
 
-
-typedef enum { 
-    NC_NORMAL_FILTER = 0,
-    NC_AMARO_FILTER,
-    NC_RISE_FILTER,
-    NC_HUDSON_FILTER,
-    NC_XPROII_FILTER,
-    NC_SIERRA_FILTER,
-    NC_LOMOFI_FILTER,
-    NC_EARLYBIRD_FILTER,
-    NC_SUTRO_FILTER,
-    NC_TOASTER_FILTER,
-    NC_BRANNAN_FILTER,
-    NC_INKWELL_FILTER,
-    NC_WALDEN_FILTER,
-    NC_HEFE_FILTER,
-    NC_VALENCIA_FILTER,
-    NC_NASHVILLE_FILTER,
-    NC_OLD_FILTER,
-    NC_LORDKELVIN_FILTER,
+typedef enum {
+    NC_NORMAL_FILTER,
+    
+    NC_F1_FILTER,
+    NC_F2_FILTER,
+    NC_F3_FILTER,
+    NC_F4_FILTER,
+    NC_F5_FILTER,
+    NC_F6_FILTER,
+    NC_F7_FILTER,
+    NC_F8_FILTER,
+    NC_F9_FILTER,
+    NC_F10_FILTER,
+    NC_F11_FILTER,
+    NC_F12_FILTER,
+    NC_F13_FILTER,
+    NC_F14_FILTER,
+    NC_F15_FILTER,
+    NC_F16_FILTER,
+    NC_F17_FILTER,
+    
     NC_FILTER_TOTAL_NUMBER
 } NCFilterType;
 
 #import "UIImage+NC.h"
 #import "NCImageFilter.h"
 #import "NCVideoCamera.h"
-#import "NCSutroFilter.h"
+#import "NCF8Filter.h"
 #import "NCRotationFilter.h"
-#import "NCAmaroFilter.h"
+#import "NCF1Filter.h"
 #import "NCNormalFilter.h"
-#import "NCRiseFilter.h"
-#import "NCHudsonFilter.h"
-#import "NCXproIIFilter.h"
-#import "NCSierraFilter.h"
-#import "NCLomofiFilter.h"
-#import "NCEarlybirdFilter.h"
-#import "NCToasterFilter.h"
-#import "NCBrannanFilter.h"
-#import "NCInkwellFilter.h"
-#import "NCWaldenFilter.h"
-#import "NCHefeFilter.h"
-#import "NCValenciaFilter.h"
-#import "NCNashvilleFilter.h"
-#import "NCOldFilter.h"
-#import "NCLordKelvinFilter.h"
+#import "NCF2Filter.h"
+#import "NCF3Filter.h"
+#import "NCF4Filter.h"
+#import "NCF5Filter.h"
+#import "NCF6Filter.h"
+#import "NCF7Filter.h"
+#import "NCF9Filter.h"
+#import "NCF10Filter.h"
+#import "NCF11Filter.h"
+#import "NCF12Filter.h"
+#import "NCF13Filter.h"
+#import "NCF14Filter.h"
+#import "NCF15Filter.h"
+#import "NCF16Filter.h"
+#import "NCF17Filter.h"

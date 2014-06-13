@@ -124,11 +124,22 @@ void dataProviderReleaseCallback (void *info, const void *data, size_t size)
     UIImage *finalImage = [UIImage imageWithCGImage:cgImageFromBytes scale:1.0 orientation:UIImageOrientationLeft];
 
     CGImageRelease(cgImageFromBytes);
-    CGDataProviderRelease(dataProvider);
     CGColorSpaceRelease(defaultRGBColorSpace);
+    CGDataProviderRelease(dataProvider);
 //    free(rawImagePixels);
     
+    UIImageWriteToSavedPhotosAlbum(finalImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+    
     return finalImage;
+}
+
+#pragma mark 保存至本地相册 结果反馈
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    if(error == nil) {
+        MBProgressHUD *hud = showMBProgressHUD(LocalizedString(@"saved_in_album", nil), NO);
+        [hud performSelector:@selector(hide:) withObject:nil afterDelay:1.5];
+    }
 }
 
 - (UIImage *)imageByFilteringImage:(UIImage *)imageToFilter;

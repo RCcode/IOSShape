@@ -8,6 +8,8 @@
 "newVersion"                  = "새 버전이 있습니다";
 "updateNow"                   = "업데이트";
 "remindLater"                 = "나중에";
+"user_camera_step"            = "Shape 권한 카메라를여십시오 : 전화 설정 -> 개인 정보 보호 -> 카메라 -> Shape (오픈)";
+"user_library_step"           = "Shape 권한 카메라를여십시오 : 전화 설정 -> 개인 정보 보호 -> 사진 -> Shape (오픈)";
 
 "aboutView_update"            = "업데이트";
 "aboutView_score"             = "평점";

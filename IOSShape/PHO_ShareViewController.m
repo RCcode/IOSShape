@@ -48,6 +48,7 @@
 - (void)getImage:(UIImage *)image
 {
     theBestImage = image;
+    isSaved = NO;
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -56,11 +57,6 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    isSaved = NO;
-}
 
 - (void)viewDidLoad
 {
@@ -127,7 +123,16 @@
 //返回上一层
 - (void)backButtonPressed:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (isSaved)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"backTipMessage", @"") delegate:self cancelButtonTitle:LocalizedString(@"backTipCancel", @"") otherButtonTitles:LocalizedString(@"backTipConfirm", @""), nil];
+        alert.tag = 100;
+        [alert show];
+    }
 }
 
 //返回到主页
@@ -201,9 +206,9 @@
         case 2:
             //分享到faceBook
             {
-//                if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
-//                {
-                    slComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+                if([SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo])
+                {
+                    slComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
 //                    [slComposerSheet setInitialText:self.sharingText];
                     if([[NSFileManager defaultManager] fileExistsAtPath:kTheBestImagePath]){
                         [[NSFileManager defaultManager] removeItemAtPath:kTheBestImagePath error:nil];
@@ -216,13 +221,13 @@
                     [slComposerSheet addImage:image];
                     [slComposerSheet addURL:[NSURL URLWithString:@"http://www.facebook.com/"]];
                     [self presentViewController:slComposerSheet animated:YES completion:nil];
-//                }
-//                else
-//                {
-//                    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareFaile", @"")
-//                                        toView:[UIApplication sharedApplication].keyWindow];
-//                    return;
-//                }
+                }
+                else
+                {
+                    [MBProgressHUD showError:LocalizedString(@"shareView_shareFaile", @"")
+                                        toView:[UIApplication sharedApplication].keyWindow];
+                    return;
+                }
                 __block PHO_ShareViewController *controller = self;
                 __block UIImage *blockImage = theBestImage;
                 [slComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result)
