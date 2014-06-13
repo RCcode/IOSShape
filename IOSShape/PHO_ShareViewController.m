@@ -89,7 +89,7 @@
     NSArray *shareToArray = [NSArray arrayWithObjects:@"相册.png", @"share-to-insta.png", @"fb.png", @"更多.png",nil];
 //    NSArray *shareToNameArray = [NSArray arrayWithObjects:@"save", @"instagram", @"faceBook", @"more", nil];
     NSArray *shareToNameArray = @[LocalizedString(@"shareView_save", @""),
-                                  @"instagram",@"faceBook",
+                                  @"Instagram",@"Facebook",
                                   LocalizedString(@"shareView_more", @"")];
     
     for (int i = 0; i < 4; i ++)
