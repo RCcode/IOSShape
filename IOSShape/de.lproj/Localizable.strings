@@ -40,7 +40,7 @@
 "shareView_NoFacebook"        = "Facebook ist nicht installiert!";
 "shareView_saveSuccess"       = "Bild wurde in Alben gespeichert";
 "shareView_saveFaile"         = "Speichern des Bildes fehlgeschlagen";
-"shareView_shareSuccess"      = "Teilen erfolgreich, Bild gespeichert";
+"shareView_shareSuccess"      = "Teilen erfolgreicht";
 "shareView_shareFaile"        = "Teilen fehlgeschlagen";
 "shareView_rateMessage"       = "Wenn dir Shape für Instagram gefällt, gib uns doch bitte kurz eine Bewertung!";
 "shareView_remaindLater"      = "Später erinnern";

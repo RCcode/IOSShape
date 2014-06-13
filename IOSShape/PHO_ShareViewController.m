@@ -206,9 +206,9 @@
         case 2:
             //分享到faceBook
             {
-                if([SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo])
+                if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
                 {
-                    slComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
+                    slComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
 //                    [slComposerSheet setInitialText:self.sharingText];
                     if([[NSFileManager defaultManager] fileExistsAtPath:kTheBestImagePath]){
                         [[NSFileManager defaultManager] removeItemAtPath:kTheBestImagePath error:nil];
@@ -338,8 +338,8 @@
 
 - (void)shareIsPopTipToRateus
 {
-    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareSuccess", @"")
-                        toView:[UIApplication sharedApplication].keyWindow];
+//    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareSuccess", @"")
+//                        toView:[UIApplication sharedApplication].keyWindow];
     UIImageWriteToSavedPhotosAlbum(theBestImage, self, nil, nil);
     [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:1];
     [[NSNotificationCenter defaultCenter]removeObserver:self];

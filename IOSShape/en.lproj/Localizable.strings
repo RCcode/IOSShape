@@ -41,7 +41,7 @@
 "shareView_NoFacebook"        = "You haven't installed facebook";
 "shareView_saveSuccess"       = "Picture was saved in albums";
 "shareView_saveFaile"         = "Picture save failed";
-"shareView_shareSuccess"      = "Successfully shared, picture saved";
+"shareView_shareSuccess"      = "Successfully shared";
 "shareView_shareFaile"        = "Share failed";
 "shareView_rateMessage"       = "If you're enjoying Shape for Instagram, please take a moment to rate and review the app!";
 "shareView_remaindLater"      = "Remind later";

@@ -40,7 +40,7 @@
 "shareView_NoFacebook"        = "Non hai istallato Facebook";
 "shareView_saveSuccess"       = "La foto è stata salvata negli album";
 "shareView_saveFaile"         = "Salvataggio foto non riuscito";
-"shareView_shareSuccess"      = "Condiviso con successo, foto salvata";
+"shareView_shareSuccess"      = "Condiviso con successo";
 "shareView_shareFaile"        = "Condivisione non riuscita";
 "shareView_rateMessage"       = "Se ti piace Shape per Istagram, non esitare a darci la tua opinione e votare la nostra App!";
 "shareView_remaindLater"      = "Ricordamelo dopo";

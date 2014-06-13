@@ -40,7 +40,7 @@
 "shareView_NoFacebook"        = "Facebook 이 설치되어 있지 않습니다";
 "shareView_saveSuccess"       = "갤러리에 사진이 저장되었습니다";
 "shareView_saveFaile"         = "저장 실패";
-"shareView_shareSuccess"      = "공유함, 이미지는 저장되었습니다";
+"shareView_shareSuccess"      = "공유함";
 "shareView_shareFaile"        = "공유 실패";
 "shareView_rateMessage"       = "Shape for Instagram 을 사용해주셔서 감사합니다. 좋은 평점 부탁해요!";
 "shareView_remaindLater"      = "나중에";

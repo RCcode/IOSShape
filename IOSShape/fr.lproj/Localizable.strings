@@ -40,7 +40,7 @@
 "shareView_NoFacebook"        = "Vous n'avez pas installé Facebook";
 "shareView_saveSuccess"       = "Photo sauvegardée dans les albums";
 "shareView_saveFaile"         = "La sauvegarde de la photo a echoué";
-"shareView_shareSuccess"      = "Partagé avec succès, photo sauvegardée";
+"shareView_shareSuccess"      = "Partagé avec succès";
 "shareView_shareFaile"        = "Echec du partage";
 "shareView_rateMessage"       = "Si vous appreciez Shape for Instagram,prenez un moment pour noter et revoir l'app!";
 "shareView_remaindLater"      = "Rappelez plus tard";

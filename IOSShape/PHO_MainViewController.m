@@ -941,6 +941,8 @@
     [passView addSubview:passImageView];
     
     passImageView.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    passImageView.alpha = shapeImage.alpha;
+    
     dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1ull);
     dispatch_after(time, dispatch_get_main_queue(), ^
     {

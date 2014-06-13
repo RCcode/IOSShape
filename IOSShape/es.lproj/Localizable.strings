@@ -41,7 +41,7 @@
 "shareView_NoFacebook"        = "No has instalado Facebook";
 "shareView_saveSuccess"       = "La foto ha sido guardada en álbum";
 "shareView_saveFaile"         = "Fallo al guardar foto";
-"shareView_shareSuccess"      = "Compartir completado, foto salvada";
+"shareView_shareSuccess"      = "Compartir completado";
 "shareView_shareFaile"        = "Fallo al compartir";
 "shareView_rateMessage"       = "Si estás disfrutando de Shape para Instagram, por favor tomate un momento y puntuanos y escribe algún comentario";
 "shareView_remaindLater"      = "Recuérdamelo más tarde";

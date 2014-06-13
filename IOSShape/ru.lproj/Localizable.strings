@@ -40,7 +40,7 @@
 "shareView_NoFacebook"        = "Вы не установили Facebook";
 "shareView_saveSuccess"       = "Изображение сохранено в галерее";
 "shareView_saveFaile"         = "Не удалось сохранить изображение";
-"shareView_shareSuccess"      = "Опубликовано. Изображение сохранено";
+"shareView_shareSuccess"      = "Опубликовано";
 "shareView_shareFaile"        = "Не удалось опубликовать";
 "shareView_rateMessage"       = "Если вам нравится приложение \"Формы для Instagram\", пожалуйста, оцените его и оставьте отзыв!";
 "shareView_remaindLater"      = "Напомнить позже";

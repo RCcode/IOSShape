@@ -41,7 +41,7 @@
 "shareView_NoFacebook"        = "Você ainda não instalou o Facebook";
 "shareView_saveSuccess"       = "Foto foi salva no álbum";
 "shareView_saveFaile"         = "Falha ao salvar foto";
-"shareView_shareSuccess"      = "Compartilhada com sucesso, foto salva.";
+"shareView_shareSuccess"      = "Compartilhada com sucesso";
 "shareView_shareFaile"        = "Falha ao compartilhar";
 "shareView_rateMessage"       = "Se você está curtindo Formatos para Instagram, por favor, gaste um minutinho e avalie esse aplicativo!";
 "shareView_remaindLater"      = "Lembrar mais tarde";

@@ -41,7 +41,7 @@
 "shareView_NoFacebook"        = "你沒有安裝 facebook";
 "shareView_saveSuccess"       = "圖片已保存到相冊";
 "shareView_saveFaile"         = "圖片保存失敗";
-"shareView_shareSuccess"      = "分享成功,圖片已保存";
+"shareView_shareSuccess"      = "分享成功";
 "shareView_shareFaile"        = "分享失敗";
 "shareView_rateMessage"       = "感謝使用shape for instagram,請花點時間給予五星評分，感謝你對我們的支持!";
 "shareView_remaindLater"      = "稍後再說";

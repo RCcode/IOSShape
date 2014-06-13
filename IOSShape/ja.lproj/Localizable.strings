@@ -40,7 +40,7 @@
 "shareView_NoFacebook"        = "facebookがインストールされていません";
 "shareView_saveSuccess"       = "アルバムに保存されました";
 "shareView_saveFaile"         = "写真の保存に失敗しました";
-"shareView_shareSuccess"      = "シェアに成功しました。写真が保存されました";
+"shareView_shareSuccess"      = "シェアに成功しました";
 "shareView_shareFaile"        = "シェアに失敗しました";
 "shareView_rateMessage"       = "shape for instagramのご利用ありがとうございます。これからも支持されるよう努力致します";
 "shareView_remaindLater"      = "また後で";
