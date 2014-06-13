@@ -147,6 +147,8 @@
 		E8CFC16B193EFECB006DD57A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFC16A193EFECB006DD57A /* libsqlite3.dylib */; };
 		E8CFC16F193F238C006DD57A /* libFlurry_5.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFC16E193F238C006DD57A /* libFlurry_5.0.0.a */; };
 		E8CFC174193F34E6006DD57A /* PHO_DataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFC173193F34E6006DD57A /* PHO_DataRequest.m */; };
+		E8E0BA27194B21DF0084F923 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E0BA25194B21DF0084F923 /* Icon-76.png */; };
+		E8E0BA28194B21DF0084F923 /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8E0BA26194B21DF0084F923 /* Icon-76@2x.png */; };
 		E8E42A8F194012A200AC4825 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E42A7D194012A200AC4825 /* AFHTTPRequestOperation.m */; };
 		E8E42A90194012A200AC4825 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E42A7F194012A200AC4825 /* AFHTTPRequestOperationManager.m */; };
 		E8E42A91194012A200AC4825 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E42A81194012A200AC4825 /* AFHTTPSessionManager.m */; };
@@ -409,6 +411,8 @@
 		E8CFC16E193F238C006DD57A /* libFlurry_5.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.0.0.a; sourceTree = "<group>"; };
 		E8CFC172193F34E6006DD57A /* PHO_DataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHO_DataRequest.h; sourceTree = "<group>"; };
 		E8CFC173193F34E6006DD57A /* PHO_DataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHO_DataRequest.m; sourceTree = "<group>"; };
+		E8E0BA25194B21DF0084F923 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		E8E0BA26194B21DF0084F923 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
 		E8E1D911194A9C240018C342 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		E8E42A7C194012A200AC4825 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		E8E42A7D194012A200AC4825 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -873,6 +877,8 @@
 		E8946FEA1941965B00BEA743 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				E8E0BA25194B21DF0084F923 /* Icon-76.png */,
+				E8E0BA26194B21DF0084F923 /* Icon-76@2x.png */,
 				E80F566A1945D283006B6E2F /* Default-568h@2x.png */,
 				E80F566B1945D283006B6E2F /* Default@2x.png */,
 				E8946FEB194196DF00BEA743 /* Icon-60@2x.png */,
@@ -1274,6 +1280,7 @@
 				E88F6BE61949C02F00485947 /* NCF4Map.png in Resources */,
 				E88F6BF81949C02F00485947 /* NCSoftLight.png in Resources */,
 				E806CD3419371AFE00459E9D /* 更新@2x.png in Resources */,
+				E8E0BA28194B21DF0084F923 /* Icon-76@2x.png in Resources */,
 				E88F6BD81949C02F00485947 /* NCF12Map.png in Resources */,
 				E8287498192F069B0047611C /* MBProgressHUD.bundle in Resources */,
 				E88F6BEC1949C02F00485947 /* NCF7Map.png in Resources */,
@@ -1320,6 +1327,7 @@
 				E806CD3B19371CB100459E9D /* PHO_AboutUsTableViewCell.xib in Resources */,
 				E88F6BE71949C02F00485947 /* NCF5Map.png in Resources */,
 				E8F66BFA1935B92F006EC81E /* Nocrop@2x.png in Resources */,
+				E8E0BA27194B21DF0084F923 /* Icon-76.png in Resources */,
 				E88F6BF01949C02F00485947 /* NCF8Metal.png in Resources */,
 				E806CD2219370ED700459E9D /* home@2x.png in Resources */,
 			);
@@ -1558,7 +1566,6 @@
 		E8F40A5D192CCB0300A2F0A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.rcplatform.IOSShape";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IOSShape/IOSShape-Prefix.pch";
@@ -1583,7 +1590,6 @@
 		E8F40A5E192CCB0300A2F0A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development IOS Push Services: com.rcplatform.IOSShape";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IOSShape/IOSShape-Prefix.pch";
