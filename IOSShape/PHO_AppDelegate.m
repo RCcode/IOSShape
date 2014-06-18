@@ -351,21 +351,12 @@ void uncaughtExceptionHandler(NSException *exception)
             
             if ([currentVersion compare:version options:NSNumericSearch] == NSOrderedAscending)
             {
-                
+                self.UpdateUrlStr = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/hei-tian-e/id%@?l=en&mt=8", appleID];
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
                                                         message:LocalizedString(@"newVersion", @"")
                                                         delegate:self
                                                     cancelButtonTitle:LocalizedString(@"remindLater", @"")
                                                     otherButtonTitles:LocalizedString(@"updateNow", @""), nil];
-                [alert show];
-            }
-            else
-            {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
-                                                               message:LocalizedString(@"newVersion", @"")
-                                                              delegate:self
-                                                     cancelButtonTitle:LocalizedString(@"remindLater", @"")
-                                                     otherButtonTitles:LocalizedString(@"updateNow", @""), nil];
                 [alert show];
             }
         }

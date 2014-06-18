@@ -6,6 +6,7 @@
   Copyright (c) 2014年 wsq-wlq. All rights reserved.
 */
 "newVersion"                  = "Neuere Version erhältlich";
+"isLatestVersion"             = "Dies ist die aktuellste Version";
 "updateNow"                   = "jetzt upgraden";
 "remindLater"                 = "Später erinnern";
 "user_camera_step"            = "Bitte öffnen Sie die Kamera für die Shape Berechtigungen: Telefon-Einstellungen -> Datenschutz -> Kamera -> Shape (offen)";

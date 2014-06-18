@@ -663,7 +663,7 @@
     //选择哪个颜色
     UIButton *tempButton = (UIButton *)sender;
     //友盟统计
-    NSString *tempStr = [NSString stringWithFormat:@"edit_background_color_%ld",tempButton.tag-10];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_background_color_%d",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit_background_color"];
     
     if (![colorChooseScrollView.subviews containsObject:backGroundSelectedView])
@@ -704,7 +704,7 @@
     UIButton *tempButton = (UIButton *)sender;
     //友盟统计
     
-    NSString *tempStr = [NSString stringWithFormat:@"edit_background_pattern_%ld",tempButton.tag-10];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_background_pattern_%d",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit_background_pattern"];
     
     if (![graphChooseScrollView.subviews containsObject:backGroundSelectedView])
@@ -822,6 +822,10 @@
             if (i == 0)
             {
                 filterSelectedView.frame = chooseFilterButton.frame;
+                [chooseFilterButton setTitle:@"Origin" forState:UIControlStateNormal];
+                [chooseFilterButton setTitleEdgeInsets:UIEdgeInsetsMake(22, 0, 0, 0)];
+                chooseFilterButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:12];
+                chooseFilterButton.titleLabel.textAlignment = NSTextAlignmentCenter;
             }
             chooseFilterButton.tag = i + 10;
             [filterChooseScrollView addSubview:chooseFilterButton];
@@ -847,7 +851,7 @@
         return;
     }
     filterSelectedView.frame = tempButton.frame;
-    NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%ld",tempButton.tag-10];
+    NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%d",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit_filter"];
     filterSelectedView.frame = tempButton.frame;
     

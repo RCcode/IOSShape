@@ -123,8 +123,8 @@
         case 0://更新
         {
             [self sendMessage:@"home_menu_update" and:@"Home"];
-            PHO_AppDelegate *appdelegate = (PHO_AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [appdelegate checkVersion];
+            NSString *upDateString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/hei-tian-e/id%@?l=en&mt=8", appleID];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:upDateString]];
         }
             
             break;

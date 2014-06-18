@@ -7,6 +7,7 @@
 */
 
 "newVersion"                  = "New version available";
+"isLatestVersion"             = "Using latest version";
 "updateNow"                   = "Upgrade Now";
 "remindLater"                 = "Remind Later";
 "user_camera_step"            = "Please open the camera for the Shape permissions: Phone Settings -> Privacy -> Camera -> Shape (open)";

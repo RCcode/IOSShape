@@ -6,6 +6,7 @@
   Copyright (c) 2014年 wsq-wlq. All rights reserved.
 */
 "newVersion"                  = "新しいバージョンがあります";
+"isLatestVersion"             = "最新のバージョンです";
 "updateNow"                   = "今すぐアップグレード";
 "remindLater"                 = "また後で";
 "user_camera_step"            = "Shapeアクセス権のためのカメラを開いてください：電話の設定 - >プライバシー - >カメラ - > Shape（オープン）";

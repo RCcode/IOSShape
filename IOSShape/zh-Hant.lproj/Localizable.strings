@@ -7,6 +7,7 @@
 */
 
 "newVersion"                  = "有新版本";
+"isLatestVersion"             = "已是最新版";
 "updateNow"                   = "馬上升級";
 "remindLater"                 = "稍後再說";
 "user_camera_step"            = "請為Shape開放相機權限：手機設置->隱私->相機->Shape（打開）";

@@ -6,6 +6,7 @@
   Copyright (c) 2014年 wsq-wlq. All rights reserved.
 */
 "newVersion"                  = "Доступна новая версия";
+"isLatestVersion"             = "Используется последняя версия";
 "updateNow"                   = "Обновить сейчас";
 "remindLater"                 = "Напомнить позже";
 "user_camera_step"            = "Пожалуйста открыть камеру для разрешений Shape: Настройки телефона -> Безопасность -> Камера -> Shape (открытый)";

@@ -6,6 +6,7 @@
   Copyright (c) 2014年 wsq-wlq. All rights reserved.
 */
 "newVersion"                  = "새 버전이 있습니다";
+"isLatestVersion"             = "현재 최신 버전입니다";
 "updateNow"                   = "업데이트";
 "remindLater"                 = "나중에";
 "user_camera_step"            = "Shape 권한 카메라를여십시오 : 전화 설정 -> 개인 정보 보호 -> 카메라 -> Shape (오픈)";
