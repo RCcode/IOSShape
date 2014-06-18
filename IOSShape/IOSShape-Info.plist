@@ -9,7 +9,7 @@
 			<string>com.rcplatform.IOSShape</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>rcApp</string>
+				<string>rcAppShape</string>
 			</array>
 		</dict>
 	</array>
