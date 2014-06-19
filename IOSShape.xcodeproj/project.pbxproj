@@ -48,6 +48,7 @@
 		E8287499192F069B0047611C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E8287496192F069B0047611C /* MBProgressHUD.m */; };
 		E82874B0192F3DA80047611C /* color-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E82874AF192F3DA80047611C /* color-1.png */; };
 		E82E798419498B5E00D6AFDA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E82E798319498B5E00D6AFDA /* Social.framework */; };
+		E8777DF019519BF600B9F132 /* 切换@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8777DEF19519BF600B9F132 /* 切换@2x.png */; };
 		E87C074C1935FB9A006B821F /* love in Resources */ = {isa = PBXBuildFile; fileRef = E87C074B1935FB9A006B821F /* love */; };
 		E87C07501935FBA7006B821F /* shape in Resources */ = {isa = PBXBuildFile; fileRef = E87C074F1935FBA7006B821F /* shape */; };
 		E87C07541935FD39006B821F /* graph in Resources */ = {isa = PBXBuildFile; fileRef = E87C07531935FD39006B821F /* graph */; };
@@ -267,6 +268,7 @@
 		E862EC75194721E1001E97AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E862EC76194721E1001E97AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E862EC77194721E1001E97AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E8777DEF19519BF600B9F132 /* 切换@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "切换@2x.png"; sourceTree = "<group>"; };
 		E87C074B1935FB9A006B821F /* love */ = {isa = PBXFileReference; lastKnownFileType = folder; path = love; sourceTree = "<group>"; };
 		E87C074F1935FBA7006B821F /* shape */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shape; sourceTree = "<group>"; };
 		E87C07531935FD39006B821F /* graph */ = {isa = PBXFileReference; lastKnownFileType = folder; path = graph; sourceTree = "<group>"; };
@@ -892,6 +894,7 @@
 		E8C851EF193445F5008BDE26 /* 编辑页切图 */ = {
 			isa = PBXGroup;
 			children = (
+				E8777DEF19519BF600B9F132 /* 切换@2x.png */,
 				E806375A19385E6000B2ED10 /* XXX@2x.png */,
 				E8C851F019344625008BDE26 /* 滤镜@2x.png */,
 				E8C851F119344625008BDE26 /* 滤镜(选中)@2x.png */,
@@ -1246,6 +1249,7 @@
 				E8C8520119344625008BDE26 /* share-icon@2x.png in Resources */,
 				E8C851FB19344625008BDE26 /* 前景编辑@2x.png in Resources */,
 				E80F566C1945D283006B6E2F /* Default-568h@2x.png in Resources */,
+				E8777DF019519BF600B9F132 /* 切换@2x.png in Resources */,
 				E88F6BF51949C02F00485947 /* NCF9SoftLight.png in Resources */,
 				E87C07501935FBA7006B821F /* shape in Resources */,
 				E8946FF2194196DF00BEA743 /* Icon@2x.png in Resources */,

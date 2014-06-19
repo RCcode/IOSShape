@@ -20,7 +20,7 @@
                     <rect key="frame" x="0.0" y="64" width="320" height="90"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Icon-60@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="y5C-CO-Kgj">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Icon-60.png" translatesAutoresizingMaskIntoConstraints="NO" id="y5C-CO-Kgj">
                             <rect key="frame" x="8" y="15" width="60" height="60"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -73,6 +73,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Icon-60@2x.png" width="60" height="60"/>
+        <image name="Icon-60.png" width="60" height="60"/>
     </resources>
 </document>

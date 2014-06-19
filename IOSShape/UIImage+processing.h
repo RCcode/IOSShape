@@ -11,13 +11,13 @@
 @interface UIImage (processing)
 
 
-- (UIImage *)changeTintColor:(UIColor *)tintColor andAlpha:(CGFloat)alpha;
+- (UIImage *)changeTintColor:(UIColor *)tintColor;
 
 - (UIImage *)changeGraph:(UIImage *)image;
 
 - (UIImage *)subImageWithRect:(CGRect)rect;
 
-+ (UIImage *)shapeMakeWithBottomImage:(UIImage *)_bottomImage andTopImage:(UIImage *)_topImage;
++ (UIImage *)shapeMakeWithBottomImage:(UIImage *)_bottomImage andTopImage:(UIImage *)_topImage andBlendMode:(CGBlendMode)blendMode;
 
 + (UIImage *)blurryImage:(UIImage *)image withBlurLevel:(CGFloat)blur;
 
@@ -28,5 +28,7 @@
 + (UIImage *)blurryBottomImage:(UIImage *)bottomImage andTopImage:(UIImage *)topImage withBlurLevel:(CGFloat)blur;
 
 - (UIImage *)rescaleImageToSize:(CGSize)size;
+
+- (UIImage *)turnShapeWithImage:(UIImage *)image;
 
 @end

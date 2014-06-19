@@ -123,16 +123,16 @@
 //返回上一层
 - (void)backButtonPressed:(id)sender
 {
-    if (isSaved)
-    {
+//    if (isSaved)
+//    {
         [self.navigationController popViewControllerAnimated:YES];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"backTipMessage", @"") delegate:self cancelButtonTitle:LocalizedString(@"backTipCancel", @"") otherButtonTitles:LocalizedString(@"backTipConfirm", @""), nil];
-        alert.tag = 100;
-        [alert show];
-    }
+//    }
+//    else
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"backTipMessage", @"") delegate:self cancelButtonTitle:LocalizedString(@"backTipCancel", @"") otherButtonTitles:LocalizedString(@"backTipConfirm", @""), nil];
+//        alert.tag = 100;
+//        [alert show];
+//    }
 }
 
 //返回到主页

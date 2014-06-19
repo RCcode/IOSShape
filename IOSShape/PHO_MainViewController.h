@@ -73,6 +73,9 @@ typedef enum _whichTypeUsed
     PHO_ShareViewController *shareContrller;
     
     UIButton *hideShowChooseViewButton;
+    
+    CGBlendMode blendMode;
+    
 }
 
 - (void)setImage:(UIImage *)image;

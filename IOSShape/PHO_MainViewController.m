@@ -55,6 +55,7 @@
     shapeSelectedGroup = @"shape";
     uMengEditType = @"edit_shape";
     filterSelectedIndex = 0;
+    blendMode = kCGBlendModeDestinationOut;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
                    {
@@ -130,7 +131,7 @@
     topImage.image = getImageFromDirectory([[[shapeMulArray objectAtIndex:0] lastPathComponent] stringByDeletingPathExtension], [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
     bottomImage.image = [UIImage imageNamed:@"color-1.png"];
     
-    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image andBlendMode:blendMode];
     shapeImage.alpha = 0.7f;
     backRealImage = image;
     
@@ -190,20 +191,43 @@
     }
     
     [self initShapeChooseView];
+    
+    UIButton *turnShapeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [turnShapeButton setTitle:@"转" forState:UIControlStateNormal];
+//    turnShapeButton.backgroundColor = [UIColor blueColor];
+    [turnShapeButton setBackgroundImage:[UIImage imageNamed:@"切换.png"] forState:UIControlStateNormal];
+    turnShapeButton.frame = CGRectMake(kScreen_Width-46, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+74, 40, 40);
+    [turnShapeButton addTarget:self action:@selector(turnButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:turnShapeButton];
 }
 
--(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]])
+    if ([touch.view isKindOfClass:[UIButton class]])
     {
-        return YES;
+        return NO;
     }
-    return NO;
+    return YES;
 }
 
 - (void)dismissShowChooseView
 {
     showChooseView.hidden = YES;
+}
+
+#pragma mark 切换前景显示模式
+
+- (void)turnButtonPressed:(id)sender
+{
+    if (blendMode == kCGBlendModeDestinationOut)
+    {
+        blendMode = kCGBlendModeDestinationIn;
+    }
+    else
+    {
+        blendMode = kCGBlendModeDestinationOut;
+    }
+   shapeImage.image = [shapeImage.image turnShapeWithImage:bottomImage.image];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -223,8 +247,9 @@
 //    customNavgationView.backgroundColor = [UIColor redColor];
 //    [self.view addSubview:customNavgationView];
     
+    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setFrame:CGRectMake(10, 10, 12, 20)];
+    [backButton setFrame:CGRectMake(10, 0, 12, 20)];
     [backButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -232,7 +257,7 @@
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [shareButton setFrame:CGRectMake(280, 10, 19, 26)];
+    [shareButton setFrame:CGRectMake(280, 0, 19, 26)];
     [shareButton addTarget:self action:@selector(shareButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [shareButton setBackgroundImage:[UIImage imageNamed:@"share-icon.png"] forState:UIControlStateNormal];
     
@@ -390,18 +415,13 @@
     
 //    topImage.image = [UIImage imageWithContentsOfFile:pathStr];
     
-//    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
-//    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@"waited at least three seconds.");
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-                   {
-                       UIImage *image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
-                       dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           shapeImage.image = image;
-                       });
-                   });
-    
-//});
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
+    dispatch_after(time, dispatch_get_main_queue(), ^
+    {
+        UIImage *image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image andBlendMode:blendMode];
+        shapeImage.image = image;
+        
+});
 }
 
 - (void)chooseGroupButtonPressed:(id)sender
@@ -690,7 +710,7 @@
         bottomImage.image = [UIImage getImageFromView:backColorView];
     });
     
-    shapeImage.image = [shapeImage.image changeTintColor:colorWithHexString([colorMulArray objectAtIndex:tempButton.tag-10]) andAlpha:1];
+    shapeImage.image = [shapeImage.image changeTintColor:colorWithHexString([colorMulArray objectAtIndex:tempButton.tag-10])];
     
 //    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0);
 //    dispatch_after(time, dispatch_get_main_queue(), ^{ NSLog(@"waited at least three seconds.");
@@ -944,7 +964,7 @@
     UIImageView *passImageView = [[UIImageView alloc]initWithFrame:passView.frame];
     [passView addSubview:passImageView];
     
-    passImageView.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image];
+    passImageView.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image andBlendMode:blendMode];
     passImageView.alpha = shapeImage.alpha;
     
     dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1ull);
