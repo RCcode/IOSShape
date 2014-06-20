@@ -358,7 +358,7 @@
         }
         else if (buttonIndex == 1)
         {
-            [self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
         
     }

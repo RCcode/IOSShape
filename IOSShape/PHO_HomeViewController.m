@@ -171,6 +171,8 @@
     NSInteger tag = tembtn.tag;
     if (tag == 100)
     {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        
         ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
         if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied)
         {
@@ -184,11 +186,15 @@
 
         //打开相册
         [self sendMessage:@"home_gallery" and:@"Home"];
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        
     }
     else if (tag == 101)
     {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
         AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        
+        NSLog(@"%d",authStatus);
         if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied)
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
@@ -201,7 +207,7 @@
 
         //打开相机
         [self sendMessage:@"home_camera" and:@"Home"];
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
         
     }
     
