@@ -184,40 +184,29 @@
     
     if (picture.size.width >= picture.size.height)
     {
-        if (picture.size.height < 1080 )
-        {
-            picture = [picture rescaleImageToSize:CGSizeMake(picture.size.height*scale, picture.size.height)];
-        }
-        else if (picture.size.height > 1080)
-        {
-            picture = [picture rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
-        }
+//        if (picture.size.height < 1080 )
+//        {
+//            picture = [picture rescaleImageToSize:CGSizeMake(picture.size.height*scale, picture.size.height)];
+//        }
+//        else if (picture.size.height > 1080)
+//        {
+//            picture = [picture rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
+//        }
         showImageView.frame = CGRectMake(showImageView.frame.origin.x, showImageView.frame.origin.y, 320*scale, 320);
     }
     else if (picture.size.width < picture.size.height)
     {
-        if (picture.size.width < 1080)
-        {
-            picture = [picture rescaleImageToSize:CGSizeMake(picture.size.width, picture.size.width/scale)];
-        }
-        else if (picture.size.width > 1080)
-        {
-            picture = [picture rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
-        }
+//        if (picture.size.width < 1080)
+//        {
+//            picture = [picture rescaleImageToSize:CGSizeMake(picture.size.width, picture.size.width/scale)];
+//        }
+//        else if (picture.size.width > 1080)
+//        {
+//            picture = [picture rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
+//        }
         
         showImageView.frame = CGRectMake(showImageView.frame.origin.x, showImageView.frame.origin.y, 320, 320/scale);
     }
-    
-//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(showImageView.frame.size.width, showImageView.frame.size.height), NO, 0);
-//    //    [picture drawAtPoint:CGPointMake(0,0)];
-//    //
-//    //    [picture drawAtPoint:CGPointMake(self.frame.size.width,0)];
-//    
-//    [picture drawInRect:CGRectMake(0, 0, showImageView.frame.size.width, showImageView.frame.size.height)];
-//    
-//    UIImage *im = UIGraphicsGetImageFromCurrentImageContext();
-//    
-//    UIGraphicsEndImageContext();
     
 
     filterView = [NCVideoCamera videoCameraWithFrame:showImageView.frame Image:picture];

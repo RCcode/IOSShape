@@ -101,16 +101,9 @@
                        
                        graphMulArray = [[NSMutableArray alloc]init];
                        graphMulArray = [getImagesArray(@"graph",@"jpg") mutableCopy];
-                       
-                       
                        filterMulArray = [[NSMutableArray alloc]init];
                        
                    });
-    
-    
-    
-    
-    
     backView = [[UIView alloc]initWithFrame:CGRectMake(0, TOPORIGIN_Y + 44, 320, 320)];
     backView.backgroundColor = [UIColor clearColor];
     backView.layer.masksToBounds = YES;
