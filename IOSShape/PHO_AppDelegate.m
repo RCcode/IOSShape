@@ -195,7 +195,7 @@ void uncaughtExceptionHandler(NSException *exception)
         case 1:
         {
             //Update
-            self.UpdateUrlStr = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/hei-tian-e/id%@?l=en&mt=8",appleID];
+            self.UpdateUrlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@",appleID];
             //            self.UpdateUrlStr = urlStr;
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
                                                            message:LocalizedString(@"newVersion", @"")
@@ -343,7 +343,7 @@ void uncaughtExceptionHandler(NSException *exception)
             
             if ([currentVersion compare:version options:NSNumericSearch] == NSOrderedAscending)
             {
-                self.UpdateUrlStr = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/hei-tian-e/id%@?l=en&mt=8", appleID];
+                self.UpdateUrlStr = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@",appleID];
                 UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@""
                                                         message:LocalizedString(@"newVersion", @"")
                                                         delegate:self
