@@ -43,6 +43,7 @@
 		E8103EFC192DEC8A005AFA16 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8103EFB192DEC8A005AFA16 /* MessageUI.framework */; };
 		E8103EFE192DECA2005AFA16 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8103EFD192DECA2005AFA16 /* MediaPlayer.framework */; };
 		E8103F30192E1A1A005AFA16 /* PHO_ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8103F2F192E1A1A005AFA16 /* PHO_ShareViewController.m */; };
+		E812C342195454FA00BC2333 /* nocrop_banner@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E812C341195454FA00BC2333 /* nocrop_banner@2x.jpg */; };
 		E8287497192F069B0047611C /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = E8287493192F069B0047611C /* MBProgressHUD+Add.m */; };
 		E8287498192F069B0047611C /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E8287494192F069B0047611C /* MBProgressHUD.bundle */; };
 		E8287499192F069B0047611C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E8287496192F069B0047611C /* MBProgressHUD.m */; };
@@ -144,7 +145,6 @@
 		E8C8520019344625008BDE26 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C851F719344625008BDE26 /* back@2x.png */; };
 		E8C8520119344625008BDE26 /* share-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C851F819344625008BDE26 /* share-icon@2x.png */; };
 		E8C852051934481D008BDE26 /* CMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C852041934481D008BDE26 /* CMethods.m */; };
-		E8CFC169193EFBB4006DD57A /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFC168193EFBB4006DD57A /* libGoogleAnalyticsServices.a */; };
 		E8CFC16B193EFECB006DD57A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFC16A193EFECB006DD57A /* libsqlite3.dylib */; };
 		E8CFC16F193F238C006DD57A /* libFlurry_5.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E8CFC16E193F238C006DD57A /* libFlurry_5.0.0.a */; };
 		E8CFC174193F34E6006DD57A /* PHO_DataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E8CFC173193F34E6006DD57A /* PHO_DataRequest.m */; };
@@ -255,6 +255,7 @@
 		E8103F01192DF3CF005AFA16 /* GADModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADModules.h; sourceTree = "<group>"; };
 		E8103F2E192E1A1A005AFA16 /* PHO_ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHO_ShareViewController.h; sourceTree = "<group>"; };
 		E8103F2F192E1A1A005AFA16 /* PHO_ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHO_ShareViewController.m; sourceTree = "<group>"; };
+		E812C341195454FA00BC2333 /* nocrop_banner@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "nocrop_banner@2x.jpg"; sourceTree = "<group>"; };
 		E8287492192F069B0047611C /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		E8287493192F069B0047611C /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
 		E8287494192F069B0047611C /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
@@ -401,13 +402,6 @@
 		E8C852031934481D008BDE26 /* CMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMethods.h; sourceTree = "<group>"; };
 		E8C852041934481D008BDE26 /* CMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMethods.m; sourceTree = "<group>"; };
 		E8C8520619344888008BDE26 /* Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
-		E8CFC162193EFBA3006DD57A /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		E8CFC163193EFBA3006DD57A /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
-		E8CFC164193EFBA3006DD57A /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
-		E8CFC165193EFBA3006DD57A /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
-		E8CFC166193EFBA3006DD57A /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		E8CFC167193EFBA3006DD57A /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		E8CFC168193EFBB4006DD57A /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
 		E8CFC16A193EFECB006DD57A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		E8CFC16D193F238C006DD57A /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		E8CFC16E193F238C006DD57A /* libFlurry_5.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.0.0.a; sourceTree = "<group>"; };
@@ -523,7 +517,6 @@
 				E8103EF6192DEC63005AFA16 /* AdSupport.framework in Frameworks */,
 				E806CD131936D9EC00459E9D /* libMobClickLibrary.a in Frameworks */,
 				E8103EF2192DEC4D005AFA16 /* Security.framework in Frameworks */,
-				E8CFC169193EFBB4006DD57A /* libGoogleAnalyticsServices.a in Frameworks */,
 				E8103EF0192DEC40005AFA16 /* CoreTelephony.framework in Frameworks */,
 				E8103EEE192DEC2F005AFA16 /* AVFoundation.framework in Frameworks */,
 				E8F40A36192CCB0300A2F0A9 /* CoreGraphics.framework in Frameworks */,
@@ -559,6 +552,7 @@
 		E806CD1919370EC100459E9D /* 分享页切图 */ = {
 			isa = PBXGroup;
 			children = (
+				E812C341195454FA00BC2333 /* nocrop_banner@2x.jpg */,
 				E806CD1A19370ED700459E9D /* 更多@2x.png */,
 				E806CD1B19370ED700459E9D /* 相册@2x.png */,
 				E806CD1C19370ED700459E9D /* fb@2x.png */,
@@ -620,7 +614,6 @@
 				E8E42A9D1940156100AC4825 /* checkNet */,
 				E8E42A7B194012A200AC4825 /* AFNetworking */,
 				E8CFC16C193F233F006DD57A /* flurryAnalytics */,
-				E8CFC157193EFAD8006DD57A /* GoogleAnalytics */,
 				E806CD0F1936D9EC00459E9D /* uMengSDK */,
 				E8287491192F069B0047611C /* MBProgressHUD */,
 				E8103EE0192DEB93005AFA16 /* AdMobSDK */,
@@ -916,20 +909,6 @@
 				E8C852041934481D008BDE26 /* CMethods.m */,
 			);
 			name = publicMetod;
-			sourceTree = "<group>";
-		};
-		E8CFC157193EFAD8006DD57A /* GoogleAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				E8CFC168193EFBB4006DD57A /* libGoogleAnalyticsServices.a */,
-				E8CFC162193EFBA3006DD57A /* GAI.h */,
-				E8CFC163193EFBA3006DD57A /* GAIDictionaryBuilder.h */,
-				E8CFC164193EFBA3006DD57A /* GAIFields.h */,
-				E8CFC165193EFBA3006DD57A /* GAILogger.h */,
-				E8CFC166193EFBA3006DD57A /* GAITrackedViewController.h */,
-				E8CFC167193EFBA3006DD57A /* GAITracker.h */,
-			);
-			name = GoogleAnalytics;
 			sourceTree = "<group>";
 		};
 		E8CFC16C193F233F006DD57A /* flurryAnalytics */ = {
@@ -1310,6 +1289,7 @@
 				E88F6BDB1949C02F00485947 /* NCF13Metal.png in Resources */,
 				E88F6BDA1949C02F00485947 /* NCF13Map.png in Resources */,
 				E8C851F919344625008BDE26 /* 滤镜@2x.png in Resources */,
+				E812C342195454FA00BC2333 /* nocrop_banner@2x.jpg in Resources */,
 				E88F6BE31949C02F00485947 /* NCF2Map.png in Resources */,
 				E806375B19385E6000B2ED10 /* XXX@2x.png in Resources */,
 				E88F6BF21949C02F00485947 /* NCF9Curves.png in Resources */,

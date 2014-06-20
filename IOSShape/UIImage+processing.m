@@ -135,7 +135,6 @@
 + (UIImage *)shapeMakeWithBottomImage:(UIImage *)_bottomImage andTopImage:(UIImage *)_topImage andBlendMode:(CGBlendMode)blendMode
 {
     
-    
     UIImage *bottomImage = _bottomImage;
     UIImage *topImage = _topImage;
     

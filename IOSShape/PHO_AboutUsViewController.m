@@ -11,9 +11,6 @@
 #import "MBProgressHUD.h"
 #import <MessageUI/MFMailComposeViewController.h>
 
-#import "GAITracker.h"
-#import "GAIDictionaryBuilder.h"
-
 #import "PHO_DataRequest.h"
 
 #import "PHO_AppDelegate.h"
@@ -123,7 +120,7 @@
         case 0://更新
         {
             [self sendMessage:@"home_menu_update" and:@"Home"];
-            NSString *upDateString = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/hei-tian-e/id%@?l=en&mt=8", appleID];
+            NSString *upDateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appleID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:upDateString]];
         }
             
@@ -131,7 +128,7 @@
         case 1://评分
         {
             [self sendMessage:@"home_menu_tateus" and:@"Home"];
-            NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appleID];
+            NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appleID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
         }
             break;
@@ -220,12 +217,6 @@
     //友盟统计
     [MobClick event:event label:nil];
     
-    //GoogleAnalytics
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"
-                                                          action:@"touch"
-                                                           label:event
-                                                           value:nil] build]];
     //flurryAnalytics
     [Flurry logEvent:event];
 }

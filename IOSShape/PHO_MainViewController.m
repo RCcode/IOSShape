@@ -8,15 +8,13 @@
 
 #import "PHO_MainViewController.h"
 
+#import "PHO_AppDelegate.h"
+
 #import "PHO_MainShowView.h"
 
 #import "UIImage+processing.h"
 
 #import "PHO_ShareViewController.h"
-
-
-#import "GAITracker.h"
-#import "GAIDictionaryBuilder.h"
 
 #import "Filter_GPU/NCImage/NCVideoCamera.h"
 
@@ -51,6 +49,7 @@
 
 - (void)setImage:(UIImage *)image
 {
+    
     shapeGroupName = @"shape";
     shapeSelectedGroup = @"shape";
     uMengEditType = @"edit_shape";
@@ -394,13 +393,14 @@
 -(void)chooseShapeButtonPressed:(id)sender
 {
     //选择哪个图形
+    
     UIButton *tempButton = (UIButton *)sender;
     
     if (shapeSelectedView.hidden == NO && shapeSelectedView.center.x == tempButton.center.x && shapeSelectedView.center.y == tempButton.center.y)
     {
         return;
     }
-    shapeSelectedView.center = tempButton.center;
+    
     shapeSelectedView.hidden = NO;
     
     shapeSelectedGroup = shapeGroupName;
@@ -410,16 +410,15 @@
     
     NSString *pathStr = [shapeMulArray objectAtIndex:tempButton.tag - 10];
     
-    topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension] , [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
-    
-    
 //    topImage.image = [UIImage imageWithContentsOfFile:pathStr];
     
-    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0 );
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1);
     dispatch_after(time, dispatch_get_main_queue(), ^
     {
+        topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension] , [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
         UIImage *image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image andBlendMode:blendMode];
         shapeImage.image = image;
+        shapeSelectedView.center = tempButton.center;
         
 });
 }
@@ -1127,13 +1126,7 @@
 {
     //友盟统计
     [MobClick event:event label:nil];
-    
-    //GoogleAnalytics
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"
-                                                          action:@"touch"
-                                                           label:event
-                                                           value:nil] build]];
+
     //flurryAnalytics
     [Flurry logEvent:event];
 }

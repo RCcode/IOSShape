@@ -14,9 +14,6 @@
 
 #import "MBProgressHUD+Add.h"
 
-#import "GAITracker.h"
-#import "GAIDictionaryBuilder.h"
-
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "PHO_AppDelegate.h"
@@ -29,6 +26,7 @@
 
 @implementation PHO_HomeViewController
 
+@synthesize imagePicker;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -127,15 +125,8 @@
     [openNoCropButton addTarget:self action:@selector(openNoCropButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:openNoCropButton];
     
-    imagePicker = [[UIImagePickerController alloc]init];
-    imagePicker.allowsEditing = NO;
-    //    imagePicker.showsCameraControls = NO;
-    imagePicker.delegate = self;
-//    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-
-    
-    //    [self setOverLayView];
-    //    imagePicker.cameraOverlayView = takePictureView;
+    self.imagePicker = [[UIImagePickerController alloc]init];
+    self.imagePicker.delegate = self;
     
     // Do any additional setup after loading the view.
 }
@@ -155,6 +146,39 @@
 }
 
 
+//- (void)getImage:(UIImage *)picture
+//{
+//    
+//    CGFloat scale = picture.size.width/picture.size.height;
+//    
+//    if (picture.size.width >= picture.size.height)
+//    {
+//        if (picture.size.height < 1080 )
+//        {
+//            picture = [picture rescaleImageToSize:CGSizeMake(picture.size.height*scale, picture.size.height)];
+//        }
+//        else if (picture.size.height > 1080)
+//        {
+//            picture = [picture rescaleImageToSize:CGSizeMake(1080*scale, 1080)];
+//        }
+////        showImageView.frame = CGRectMake(showImageView.frame.origin.x, showImageView.frame.origin.y, 320*scale, 320);
+//    }
+//    else if (picture.size.width < picture.size.height)
+//    {
+//        if (picture.size.width < 1080)
+//        {
+//            picture = [picture rescaleImageToSize:CGSizeMake(picture.size.width, picture.size.width/scale)];
+//        }
+//        else if (picture.size.width > 1080)
+//        {
+//            picture = [picture rescaleImageToSize:CGSizeMake(1080, 1080/scale)];
+//        }
+//        
+////        showImageView.frame = CGRectMake(showImageView.frame.origin.x, showImageView.frame.origin.y, 320, 320/scale);
+//    }
+//
+//}
+
 /**********************************************************
  函数名称：-(void)choosePhoto:(id)sender
  函数描述：打开相册或相机
@@ -171,8 +195,8 @@
     NSInteger tag = tembtn.tag;
     if (tag == 100)
     {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
+        //打开相册
+        self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
         if (author == ALAuthorizationStatusRestricted || author == ALAuthorizationStatusDenied)
         {
@@ -182,15 +206,14 @@
                                                   cancelButtonTitle:LocalizedString(@"backTipConfirm", @"")
                                                   otherButtonTitles:nil];
             [alert show];
-        }
-
-        //打开相册
+        }        
         [self sendMessage:@"home_gallery" and:@"Home"];
         
     }
     else if (tag == 101)
     {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        //打开相机
+        self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
         AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
         
@@ -204,8 +227,6 @@
                                                   otherButtonTitles:nil];
             [alert show];
         }
-
-        //打开相机
         [self sendMessage:@"home_camera" and:@"Home"];
         
         
@@ -213,8 +234,7 @@
     
     
     [self presentViewController:imagePicker animated:YES
-                     completion:^{//设置overlayview
-                     }];
+                     completion:nil];
     
     PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
     UIView *adBanner = (UIView *)app.adBanner;
@@ -239,103 +259,95 @@
         chooseImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
     }
-/*改变图片旋转90度问题*/
-    UIImage *cameraPic = [info objectForKey:UIImagePickerControllerOriginalImage];
-//    NSLog(@"cameraPic.imageOrientation == %ld",cameraPic.imageOrientation);
-    
-    if (cameraPic.imageOrientation != UIImageOrientationUp)
+    else
     {
+        /*改变图片旋转90度问题*/
+        UIImage *cameraPic = [info objectForKey:UIImagePickerControllerOriginalImage];
+        //    NSLog(@"cameraPic.imageOrientation == %ld",cameraPic.imageOrientation);
         
-        int mi = cameraPic.imageOrientation;
-        // We need to calculate the proper transformation to make the image upright.
-        // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
-        CGAffineTransform transform = CGAffineTransformIdentity;
-        
-        switch (mi)
+        if (cameraPic.imageOrientation != UIImageOrientationUp)
         {
-            case UIImageOrientationDown:
-            case UIImageOrientationDownMirrored:
-                transform = CGAffineTransformTranslate(transform, cameraPic.size.width, cameraPic.size.height);
-                transform = CGAffineTransformRotate(transform, M_PI);
-                break;
-                
-            case UIImageOrientationLeft:
-            case UIImageOrientationLeftMirrored:
-                transform = CGAffineTransformTranslate(transform, cameraPic.size.width, 0);
-                transform = CGAffineTransformRotate(transform, M_PI_2);
-                break;
-                
-            case UIImageOrientationRight:
-            case UIImageOrientationRightMirrored:
-                transform = CGAffineTransformTranslate(transform, 0, cameraPic.size.height);
-                transform = CGAffineTransformRotate(transform, -M_PI_2);
-                break;
+            
+            int mi = cameraPic.imageOrientation;
+            // We need to calculate the proper transformation to make the image upright.
+            // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+            CGAffineTransform transform = CGAffineTransformIdentity;
+            
+            switch (mi)
+            {
+                case UIImageOrientationDown:
+                case UIImageOrientationDownMirrored:
+                    transform = CGAffineTransformTranslate(transform, cameraPic.size.width, cameraPic.size.height);
+                    transform = CGAffineTransformRotate(transform, M_PI);
+                    break;
+                    
+                case UIImageOrientationLeft:
+                case UIImageOrientationLeftMirrored:
+                    transform = CGAffineTransformTranslate(transform, cameraPic.size.width, 0);
+                    transform = CGAffineTransformRotate(transform, M_PI_2);
+                    break;
+                    
+                case UIImageOrientationRight:
+                case UIImageOrientationRightMirrored:
+                    transform = CGAffineTransformTranslate(transform, 0, cameraPic.size.height);
+                    transform = CGAffineTransformRotate(transform, -M_PI_2);
+                    break;
+            }
+            
+            switch (mi)
+            {
+                case UIImageOrientationUpMirrored:
+                case UIImageOrientationDownMirrored:
+                    transform = CGAffineTransformTranslate(transform, cameraPic.size.width, 0);
+                    transform = CGAffineTransformScale(transform, -1, 1);
+                    break;
+                    
+                case UIImageOrientationLeftMirrored:
+                case UIImageOrientationRightMirrored:
+                    transform = CGAffineTransformTranslate(transform, cameraPic.size.height, 0);
+                    transform = CGAffineTransformScale(transform, -1, 1);
+                    break;
+            }
+            
+            // Now we draw the underlying CGImage into a new context, applying the transform
+            // calculated above.
+            CGContextRef ctx = CGBitmapContextCreate(NULL, cameraPic.size.width, cameraPic.size.height,
+                                                     CGImageGetBitsPerComponent(cameraPic.CGImage), 0,
+                                                     CGImageGetColorSpace(cameraPic.CGImage),
+                                                     CGImageGetBitmapInfo(cameraPic.CGImage));
+            CGContextConcatCTM(ctx, transform);
+            switch (mi)
+            {
+                case UIImageOrientationLeft:
+                case UIImageOrientationLeftMirrored:
+                case UIImageOrientationRight:
+                case UIImageOrientationRightMirrored:
+                    // Grr...
+                    CGContextDrawImage(ctx, CGRectMake(0,0,cameraPic.size.height,cameraPic.size.width), cameraPic.CGImage);
+                    break;
+                    
+                default:
+                    CGContextDrawImage(ctx, CGRectMake(0,0,cameraPic.size.width,cameraPic.size.height), cameraPic.CGImage);
+                    break;
+            }
+            
+            // And now we just create a new UIImage from the drawing context
+            CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+            chooseImage = [UIImage imageWithCGImage:cgimg];
+            CGContextRelease(ctx);
+            CGImageRelease(cgimg);
         }
-        
-        switch (mi)
-        {
-            case UIImageOrientationUpMirrored:
-            case UIImageOrientationDownMirrored:
-                transform = CGAffineTransformTranslate(transform, cameraPic.size.width, 0);
-                transform = CGAffineTransformScale(transform, -1, 1);
-                break;
-                
-            case UIImageOrientationLeftMirrored:
-            case UIImageOrientationRightMirrored:
-                transform = CGAffineTransformTranslate(transform, cameraPic.size.height, 0);
-                transform = CGAffineTransformScale(transform, -1, 1);
-                break;
-        }
-        
-        // Now we draw the underlying CGImage into a new context, applying the transform
-        // calculated above.
-        CGContextRef ctx = CGBitmapContextCreate(NULL, cameraPic.size.width, cameraPic.size.height,
-                                                 CGImageGetBitsPerComponent(cameraPic.CGImage), 0,
-                                                 CGImageGetColorSpace(cameraPic.CGImage),
-                                                 CGImageGetBitmapInfo(cameraPic.CGImage));
-        CGContextConcatCTM(ctx, transform);
-        switch (mi)
-        {
-            case UIImageOrientationLeft:
-            case UIImageOrientationLeftMirrored:
-            case UIImageOrientationRight:
-            case UIImageOrientationRightMirrored:
-                // Grr...
-                CGContextDrawImage(ctx, CGRectMake(0,0,cameraPic.size.height,cameraPic.size.width), cameraPic.CGImage);
-                break;
-                
-            default:
-                CGContextDrawImage(ctx, CGRectMake(0,0,cameraPic.size.width,cameraPic.size.height), cameraPic.CGImage);
-                break;
-        }
-        
-        // And now we just create a new UIImage from the drawing context
-        CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
-        chooseImage = [UIImage imageWithCGImage:cgimg];
-        CGContextRelease(ctx);
-        CGImageRelease(cgimg);
     }
-    
+
     if (chooseImage)
     {
-        [picker dismissViewControllerAnimated:YES completion:^
-        {
-            PHO_MainViewController *mainViewController = [[PHO_MainViewController alloc]init];
-            [mainViewController setImage:chooseImage];
-            [self.navigationController pushViewController:mainViewController animated:YES];
-            
-            PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
-            UIView *adBanner = (UIView *)app.adBanner;
-            adBanner.hidden = NO;
-
-        }];
-        
+        [self dismissPicker];
     }
     
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
     
     PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
     UIView *adBanner = (UIView *)app.adBanner;
@@ -352,7 +364,18 @@
 
 - (void)dismissPicker
 {
-    [imagePicker dismissViewControllerAnimated:YES completion:nil];
+    
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
+    
+    PHO_MainViewController *mainViewController = [[PHO_MainViewController alloc]init];
+    [mainViewController setImage:chooseImage];
+    [self.navigationController pushViewController:mainViewController animated:YES];
+    
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+    UIView *adBanner = (UIView *)app.adBanner;
+    adBanner.hidden = NO;
+    
+    
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -383,12 +406,6 @@
     //友盟统计
     [MobClick event:event label:nil];
     
-    //GoogleAnalytics
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"
-                                                          action:@"touch"
-                                                           label:event
-                                                           value:nil] build]];
     //flurryAnalytics
     [Flurry logEvent:event];
 }

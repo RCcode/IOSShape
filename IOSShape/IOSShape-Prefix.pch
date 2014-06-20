@@ -16,8 +16,6 @@
     #import"Defines.h"
     #import"CMethods.h"
     #import"MobClick.h"
-    #import"GAI.h"
-    #import"GAIFields.h"
     #import"Flurry.h"
 
 

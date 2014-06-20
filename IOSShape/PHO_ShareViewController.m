@@ -13,9 +13,6 @@
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 
-#import "GAITracker.h"
-#import "GAIDictionaryBuilder.h"
-
 
 #define kTheBestImagePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"shareImage.igo"]
 #define kToMorePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"shareImage.jpg"]
@@ -110,12 +107,41 @@
         }
     }
     
-//    UILabel *shareToLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height+116, 60, 44)];
-//    shareToLabel.text = @"";
-//    shareToLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-//    [self.view addSubview:shareToLabel];
+    UIScrollView *sloganScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height+106, kScreen_Width, kScreen_Height-(self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height+106))];
+    sloganScroll.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:sloganScroll];
+    
+    UILabel *sloganNoCropLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
+    sloganNoCropLabel.text = LocalizedString(@"shareView_sloganNoCrop", @"");
+    sloganNoCropLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
+    [sloganScroll addSubview:sloganNoCropLabel];
+    
+    UIButton *NoCropButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    NoCropButton.frame = CGRectMake(sloganNoCropLabel.frame.origin.x, sloganNoCropLabel.frame.origin.y+sloganNoCropLabel.frame.size.height+10, 290, 120);
+    [NoCropButton setBackgroundImage:[UIImage imageNamed:@"nocrop_banner@2x.jpg"] forState:UIControlStateNormal];
+    [NoCropButton addTarget:self action:@selector(NoCropButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [sloganScroll addSubview:NoCropButton];
+    
     
     // Do any additional setup after loading the view.
+}
+
+#pragma mark banner按扭跳转方法
+
+- (void)NoCropButtonPressed:(id)sender
+{
+//    [self sendMessage:@"NoCrop share_hidewatermark" and:@"Share"];
+    
+    BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
+    if (!canOpen)
+    {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/cn/app/hei-tian-e/id878086629?l=en&mt=8"]]];
+    }
+    else
+    {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
+    }
+
 }
 
 #pragma mark 导航按扭方法
@@ -405,12 +431,6 @@
     //友盟统计
     [MobClick event:event label:nil];
     
-    //GoogleAnalytics
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"UX"
-                                                          action:@"touch"
-                                                           label:event
-                                                           value:nil] build]];
     //flurryAnalytics
     [Flurry logEvent:event];
 }

@@ -47,5 +47,12 @@
 "shareView_remaindLater"      = "Später erinnern";
 "shareView_NoMoreTip"         = "Nein danke";
 "shareView_rateNow"           = "Jetzt bewerten";
-"shareView_slogan"            = "Füge interessante Formen zu deinen Instagram Photos hinzu";
+"shareView_sloganShape"       = "Füge interessante Formen zu deinen Instagram Photos hinzu";
+"shareView_sloganNoCrop"      = "Poste unbeschnittene Photos in voller Größe auf Instagram";
+
+
+
+
+
+
 

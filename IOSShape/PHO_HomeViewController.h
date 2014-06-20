@@ -12,7 +12,7 @@
 
 @class PHO_AboutUsViewController;
 
-@interface PHO_HomeViewController : UIViewController<UIImagePickerControllerDelegate,UIAlertViewDelegate>
+@interface PHO_HomeViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate>
 {
     UIImagePickerController *imagePicker;
     UIImage *chooseImage;
@@ -20,5 +20,6 @@
     PHO_AboutUsViewController *aboutUs;
 }
 
+@property (strong, nonatomic) UIImagePickerController *imagePicker;
 
 @end

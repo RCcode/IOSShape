@@ -27,6 +27,7 @@
 @synthesize homeViewController;
 @synthesize adBanner;
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -56,15 +57,6 @@
     
     //配置admob
     [self setAdMob];
-    
-    /** google analytics **/
-    // Optional: automatically send uncaught exceptions to Google Analytics.
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
-    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-    [GAI sharedInstance].dispatchInterval = 20;
-//    [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
-    // Create tracker instance.
-    _tracker = [[GAI sharedInstance] trackerWithTrackingId:GAAPPKey];
     
     
     /** flurry相关设置 **/
@@ -100,13 +92,13 @@
 #pragma mark 从其它应用中跳转过来
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
     
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
-    if(image == nil){
+    UIImage *editImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+    if(editImage == nil){
         return YES;
     }
     
     PHO_MainViewController *mainViewController = [[PHO_MainViewController alloc]init];
-    [mainViewController setImage:image];
+    [mainViewController setImage:editImage];
     [homeViewController.navigationController pushViewController:mainViewController animated:YES];
     
     return YES;

@@ -24,7 +24,6 @@
 @property (strong, nonatomic) UINavigationController *rootNav;
 @property (strong, nonatomic) PHO_HomeViewController *homeViewController;
 
-@property(nonatomic, strong) id<GAITracker> tracker;
 
 @property (strong, nonatomic) AFHTTPRequestOperationManager *manager;
 @property (nonatomic, copy) NSString *UpdateUrlStr;
