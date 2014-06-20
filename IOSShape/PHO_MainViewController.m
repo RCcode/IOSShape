@@ -399,20 +399,22 @@
     shapeSelectedGroup = shapeGroupName;
     
     NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%ld_%d",(long)[self getGroupNum],tempButton.tag - 10];
+    
     [self sendMessage:tempStr and:@"edit_shape"];
     
+    shapeSelectedView.center = tempButton.center;
+    
     NSString *pathStr = [shapeMulArray objectAtIndex:tempButton.tag - 10];
+    
+    topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension] , [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
     
 //    topImage.image = [UIImage imageWithContentsOfFile:pathStr];
     
     dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1);
     dispatch_after(time, dispatch_get_main_queue(), ^
     {
-        topImage.image = getImageFromDirectory([[pathStr lastPathComponent] stringByDeletingPathExtension] , [NSString stringWithFormat:@"Max_%@",shapeGroupName]);
-        UIImage *image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image andBlendMode:blendMode];
-        shapeImage.image = image;
-        shapeSelectedView.center = tempButton.center;
         
+        shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image andBlendMode:blendMode];
 });
 }
 
