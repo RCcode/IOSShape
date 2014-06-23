@@ -549,7 +549,7 @@
 }
 
 + (instancetype)videoCameraWithFrame:(CGRect)frame Image:(UIImage *)rawImage{
-    NCVideoCamera *instance = [[[self class] alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack highVideoQuality:YES WithFrame:frame];
+    NCVideoCamera *instance = [[[self class] alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionUnspecified highVideoQuality:YES WithFrame:frame];
     
     instance.rawImage = rawImage;
     [instance switchFilter:NC_NORMAL_FILTER];
