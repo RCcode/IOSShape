@@ -348,7 +348,7 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self dismissPicker];
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 

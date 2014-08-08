@@ -10,6 +10,10 @@
 #include <stdio.h>
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "PHO_AppDelegate.h"
+#import "sys/sysctl.h"
+#include <mach/mach.h>
+
 
 @interface CMethods : NSObject
 {
@@ -55,6 +59,8 @@ UIColor* colorWithHexString(NSString *stringToConvert);
 //把字典转化为json串
 NSData* toJSONData(id theData);
 
+NSString *doDevicePlatform();
+
 MBProgressHUD * showMBProgressHUD(NSString *content,BOOL showView);
 void hideMBProgressHUD();
 
@@ -66,5 +72,7 @@ NSString *appVersion();
 CGRect getTextLabelRectWithContentAndFont(NSString *content ,UIFont *font);
 
 CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize);
+
+void cancleAllRequests();
 
 @end

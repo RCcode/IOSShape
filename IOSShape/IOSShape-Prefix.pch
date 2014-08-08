@@ -38,9 +38,10 @@
 
 static NSString *kiTunesID = @"";
 static NSString *kFollwUsURL = @"http://www.instagram.com/rc_apps";
-static NSString *kFeedbackEmail = @"rctalk.service@gmail.com";
+static NSString *kFeedbackEmail = @"rcplatform.help@gmail.com";
 static NSString *DEVICE_TOKEN = @"deviceToken";
 static NSString *FONTNAMESTRING = @"HelveticaNeue-Light";
+static NSString *kShareHotTags = @"（Made with @rc_shapegram) #shapegram";
 
 static int moreAppID = 20057;
 

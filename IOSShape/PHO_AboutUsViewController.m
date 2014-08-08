@@ -111,6 +111,23 @@
 }
 
 
+//- (void)evaluate
+//{
+//    SKStoreProductViewController *storeProductViewContorller = [[SKStoreProductViewController alloc] init];
+//    storeProductViewContorller.delegate = self;
+//    [storeProductViewContorller loadProductWithParameters: @{SKStoreProductParameterITunesItemIdentifier : appleID} completionBlock:^(BOOL result, NSError *error)
+//    {
+//        if(error)
+//        {
+//            NSLog(@"error %@ with userInfo %@",error,[error userInfo]);
+//        }
+//        else
+//        {
+//            [self presentViewController:storeProductViewContorller animated:YES completion:^{ }];
+//        }
+//    }];
+//}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     //隐藏moreTable
@@ -127,6 +144,7 @@
             break;
         case 1://评分
         {
+//            if ([[UIDevice currentDevice].systemVersion intValue] >= 6.0 ){ [self evaluate];}
             [self sendMessage:@"home_menu_tateus" and:@"home"];
             NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appleID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
@@ -137,12 +155,40 @@
             
             [self sendMessage:@"home_menu_feedback" and:@"home"];
             
+            // app名称 版本
+            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+            
+            NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+            NSString *app_Version = [infoDictionary objectForKey:@"CFBundleVersion"];
+            
+            //设备型号 系统版本
+            NSString *deviceName = doDevicePlatform();
+            NSString *deviceSystemName = [[UIDevice currentDevice] systemName];
+            NSString *deviceSystemVer = [[UIDevice currentDevice] systemVersion];
+            
+            //设备分辨率
+            CGFloat scale = [UIScreen mainScreen].scale;
+            CGFloat resolutionW = [UIScreen mainScreen].bounds.size.width * scale;
+            CGFloat resolutionH = [UIScreen mainScreen].bounds.size.height * scale;
+            NSString *resolution = [NSString stringWithFormat:@"%.f * %.f", resolutionW, resolutionH];
+            
+            //本地语言
+            NSString *language = [[NSLocale preferredLanguages] firstObject];
+            
+            //NSString *diveceInfo = @"app版本号 手机型号 手机系统版本 分辨率 语言";
+            NSString *diveceInfo = [NSString stringWithFormat:@"%@ %@, %@, %@ %@, %@, %@", app_Name, app_Version, deviceName, deviceSystemName, deviceSystemVer,  resolution, language];
+            
+            //需要分享的内容
+            NSString *shareContent = [NSString stringWithFormat:@"%@ http://bit.ly/1jlOK8k",LocalizedString(@"aboutView_content", @"")];
+            NSArray *activityItems = @[shareContent];
+
             //直接发邮件
             MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
             picker.mailComposeDelegate =self;
-            NSString *subject = @"-Photo Collage Feedback";
+            NSString *subject = @"-Shapegram Feedback";
             [picker setSubject:subject];
             [picker setToRecipients:@[kFeedbackEmail]];
+            [picker setMessageBody:diveceInfo isHTML:NO];
             [self presentViewController:picker animated:YES completion:nil];
         }
             break;
@@ -150,6 +196,8 @@
         {
             
             [self sendMessage:@"home_menu_share" and:@"home"];
+            
+            
             //需要分享的内容
             NSString *shareContent = [NSString stringWithFormat:@"%@ http://bit.ly/1jlOK8k",LocalizedString(@"aboutView_content", @"")];
             NSArray *activityItems = @[shareContent];

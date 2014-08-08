@@ -814,19 +814,34 @@
 
 - (void)initFilterChooseView
 {
-    filterChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
-    
+    filterChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
     filterSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
     filterSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
     filterSelectedView.layer.borderWidth = 2;
     
-    UIScrollView *filterChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 52)];
+    UIScrollView *filterChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
     filterChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
-    filterChooseScrollView.contentSize = CGSizeMake(46*[filterMulArray count], 52);
+    filterChooseScrollView.contentSize = CGSizeMake(65*[filterMulArray count], 82);
     filterChooseScrollView.showsHorizontalScrollIndicator = NO;
     filterChooseScrollView.showsVerticalScrollIndicator = NO;
     [filterChooseView addSubview:filterChooseScrollView];
     
+    CGSize buttonSize ;
+    if (iPhone5)
+    {
+        filterChooseView.frame = CGRectMake(0, 0, kScreen_Width, 82);
+        filterChooseScrollView.frame = CGRectMake(0, 0, kScreen_Width, 82);
+        filterChooseScrollView.contentSize = CGSizeMake(65*[filterMulArray count], 82);
+        buttonSize = CGSizeMake(59, 59);
+    }
+    else
+    {
+        filterChooseView.frame = CGRectMake(0, 30, kScreen_Width, 52);
+        filterChooseScrollView.frame = CGRectMake(0, 0, kScreen_Width, 52);
+        CGSizeMake(46*[filterMulArray count], 52);
+        buttonSize = CGSizeMake(40, 40);
+
+    }
 //    NSArray *itemTitles = @[@"Origin", @"Lomo", @"Sunset",
 //                            @"Warm", @"Ice", @"Grayscale",
 //                            @"Blues", @"Shadows", @"Yesterday",
@@ -837,7 +852,7 @@
     {
         @autoreleasepool {
             UIButton *chooseFilterButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [chooseFilterButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
+            [chooseFilterButton setFrame:CGRectMake(6*(i+1)+buttonSize.width*i, (filterChooseView.frame.size.height-buttonSize.height)/2, buttonSize.width, buttonSize.height)];
             [chooseFilterButton addTarget:self action:@selector(chooseFilterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 //            [chooseFilterButton setTitle:[itemTitles objectAtIndex:i] forState:UIControlStateNormal];
 //            chooseFilterButton.titleLabel.backgroundColor = [UIColor blackColor];

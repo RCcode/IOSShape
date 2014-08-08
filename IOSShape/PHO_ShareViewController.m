@@ -293,7 +293,7 @@
                 _documetnInteractionController.delegate = self;
                 _documetnInteractionController.UTI = @"com.instagram.photo";
                 //    _documetnInteractionController.UTI = @"public.png";
-                //    _documetnInteractionController.annotation = @{@"InstagramCaption":@"来自NoCrop"};
+                _documetnInteractionController.annotation = @{@"InstagramCaption":kShareHotTags};
                 BOOL canOpne = [_documetnInteractionController presentOpenInMenuFromRect:CGRectMake(0, 0, 0, 0) inView:self.view animated:YES];
                 if (canOpne == NO)
                 {
@@ -318,7 +318,6 @@
                     UIImage *image = [UIImage imageWithContentsOfFile:kTheBestImagePath];
                     
                     [slComposerSheet addImage:image];
-                    [slComposerSheet addURL:[NSURL URLWithString:@"http://www.facebook.com/"]];
                     [self presentViewController:slComposerSheet animated:YES completion:nil];
                 }
                 else
