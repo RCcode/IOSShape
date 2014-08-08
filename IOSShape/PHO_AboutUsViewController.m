@@ -146,7 +146,7 @@
         {
 //            if ([[UIDevice currentDevice].systemVersion intValue] >= 6.0 ){ [self evaluate];}
             [self sendMessage:@"home_menu_tateus" and:@"home"];
-            NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appleID];
+            NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", appleID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
         }
             break;

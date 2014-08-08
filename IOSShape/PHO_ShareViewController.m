@@ -480,7 +480,7 @@
                 
                 [self sendMessage:@"home_menu_rateus" and:@"home"];
                 
-                NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@",appleID];
+                NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",appleID];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
             }
         }
