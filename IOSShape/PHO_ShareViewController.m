@@ -13,6 +13,13 @@
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 
+#import "PHO_AppDelegate.h"
+#import "FONT_SQLMassager.h"
+#import "PHO_DataRequest.h"
+#import "UIImage+processing.h"
+#import "ME_AppInfo.h"
+#import "UIImageView+WebCache.h"
+
 
 #define kTheBestImagePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"shareImage.igo"]
 #define kToMorePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"shareImage.jpg"]
@@ -45,6 +52,23 @@
 - (void)getImage:(UIImage *)image
 {
     theBestImage = image;
+    
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    
+    if (app.isOn)
+    {
+        [userDefault setObject:[NSNumber numberWithBool:YES] forKey:@"waterMark"];
+        saveImage = [UIImage addwaterMarkOrnotWithImage:theBestImage];
+    }
+    else
+    {
+        saveImage = theBestImage;
+        [userDefault setObject:[NSNumber numberWithBool:NO] forKey:@"waterMark"];
+    }
+    
+    [userDefault synchronize];
+
     isSaved = NO;
 }
 
@@ -107,41 +131,90 @@
         }
     }
     
-    UIScrollView *sloganScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height+106, kScreen_Width, kScreen_Height-(self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height+106))];
-    sloganScroll.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:sloganScroll];
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    UILabel *sloganNoCropLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
-    sloganNoCropLabel.text = LocalizedString(@"shareView_sloganNoCrop", @"");
-    sloganNoCropLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
-    [sloganScroll addSubview:sloganNoCropLabel];
+    UILabel *markLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 165, 240, 40)];
+    markLabel.text = LocalizedString(@"showwatermark", nil);
+    markLabel.textColor = [UIColor blackColor];
+    markLabel.font = [UIFont systemFontOfSize:14.f];
+    [self.view addSubview:markLabel];
     
-    UIButton *NoCropButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    NoCropButton.frame = CGRectMake(sloganNoCropLabel.frame.origin.x+5, sloganNoCropLabel.frame.origin.y+sloganNoCropLabel.frame.size.height+10, 290, 120);
-    [NoCropButton setBackgroundImage:[UIImage imageNamed:@"nocrop_banner@2x.jpg"] forState:UIControlStateNormal];
-    [NoCropButton addTarget:self action:@selector(NoCropButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [sloganScroll addSubview:NoCropButton];
+    UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(250, 170, 80, 40)];
+    if (app.isOn)
+    {
+        [switchBtn setOn:YES];
+    }
+    else
+    {
+        [switchBtn setOn:NO];
+    }
+    [switchBtn addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:switchBtn];
+    
+    //判断是否已下载完数据
+    if (app.appsArray.count == 0)
+    {
+        //查看数据库中是否存在
+        if ([[FONT_SQLMassager shareStance] getAllData].count == 0)
+        {
+            //Bundle Id
+            NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+            NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+            NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+            NSString *language = [[NSLocale preferredLanguages] firstObject];
+            if ([language isEqualToString:@"zh-Hans"])
+            {
+                language = @"zh";
+            }
+            
+            NSDictionary *dic = @{@"appId":[NSNumber numberWithInt:moreAppID],@"packageName":bundleIdentifier,@"language":language,@"version":currentVersion,@"platform":[NSNumber numberWithInt:0]};
+            PHO_DataRequest *request = [[PHO_DataRequest alloc] initWithDelegate:self];
+            [request moreApp:dic withTag:11];
+        }
+        else
+        {
+            app.appsArray = [[FONT_SQLMassager shareStance] getAllData];
+        }
+    }
+    
+    appMoretableView = [[UITableView alloc]initWithFrame:CGRectZero];
+    
+    if (iPhone5)
+    {
+        appMoretableView.frame = CGRectMake(0, 210, 320, kScreen_Height-210-50);
+    }
+    else
+    {
+        appMoretableView.frame = CGRectMake(0, 210, 320, kScreen_Height-210);
+    }
+    
+    [appMoretableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    appMoretableView.delegate = self;
+    appMoretableView.dataSource = self;
+    appMoretableView.backgroundColor = [UIColor clearColor];
+    appMoretableView.backgroundView = nil;
+    appMoretableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:appMoretableView];
     
     
     // Do any additional setup after loading the view.
 }
 
-#pragma mark banner按扭跳转方法
-
-- (void)NoCropButtonPressed:(id)sender
+- (void)switchChanged:(UISwitch *)switchBtn
 {
-//    [self sendMessage:@"NoCrop share_hidewatermark" and:@"Share"];
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
-    if (!canOpen)
+    app.isOn = switchBtn.isOn;
+    if (app.isOn)
     {
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id878086629"]]];
+        [self sendMessage:@"share_showwatermark" and:@"share"];
+        saveImage = [UIImage addwaterMarkOrnotWithImage:theBestImage];
     }
     else
     {
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
+        [self sendMessage:@"share_hidewatermark" and:@"share"];
+        saveImage = theBestImage;
     }
-
 }
 
 #pragma mark 导航按扭方法
@@ -197,8 +270,8 @@
                 }
                 else
                 {
-                    [self sendMessage:@"share_save" and:@"Share"];
-                    UIImageWriteToSavedPhotosAlbum(theBestImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+                    [self sendMessage:@"share_save" and:@"share"];
+                    UIImageWriteToSavedPhotosAlbum(saveImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
                 }
                 
             }
@@ -206,12 +279,12 @@
         case 1:
             //分享到instagram
             {
-                [self sendMessage:@"share_instagram" and:@"Share"];
+                [self sendMessage:@"share_instagram" and:@"share"];
                 if([[NSFileManager defaultManager] fileExistsAtPath:kTheBestImagePath]){
                     [[NSFileManager defaultManager] removeItemAtPath:kTheBestImagePath error:nil];
                 }
                 
-                NSData *imageData = UIImageJPEGRepresentation(theBestImage, 0.8);
+                NSData *imageData = UIImageJPEGRepresentation(saveImage, 0.8);
                 [imageData writeToFile:kTheBestImagePath atomically:YES];
                 
                 //分享
@@ -240,7 +313,7 @@
                         [[NSFileManager defaultManager] removeItemAtPath:kTheBestImagePath error:nil];
                     }
                     
-                    NSData *imageData = UIImageJPEGRepresentation(theBestImage, 0.8);
+                    NSData *imageData = UIImageJPEGRepresentation(saveImage, 0.8);
                     [imageData writeToFile:kTheBestImagePath atomically:YES];
                     UIImage *image = [UIImage imageWithContentsOfFile:kTheBestImagePath];
                     
@@ -286,13 +359,13 @@
         case 3:
             //更多
             {
-                [self sendMessage:@"share_more" and:@"Share"];
+                [self sendMessage:@"share_more" and:@"share"];
                 //保存本地 如果已存在，则删除
                 if([[NSFileManager defaultManager] fileExistsAtPath:kToMorePath]){
                     [[NSFileManager defaultManager] removeItemAtPath:kToMorePath error:nil];
                 }
                 
-                NSData *imageData = UIImageJPEGRepresentation(theBestImage, 0.8);
+                NSData *imageData = UIImageJPEGRepresentation(saveImage, 0.8);
                 [imageData writeToFile:kToMorePath atomically:YES];
                 
                 NSURL *fileURL = [NSURL fileURLWithPath:kToMorePath];
@@ -406,7 +479,7 @@
             {
                 [rateusDictionary setObject:@"rateusted" forKey:@"status"];
                 
-                [self sendMessage:@"home_menu_rateus" and:@"Home"];
+                [self sendMessage:@"home_menu_rateus" and:@"home"];
                 
                 NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@",appleID];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
@@ -419,6 +492,133 @@
     
 }
 
+#pragma mark -
+#pragma mark UITableViewDelegate And UITableDataSource
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 170.f;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [(PHO_AppDelegate *)[[UIApplication sharedApplication] delegate] appsArray].count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor clearColor];
+    
+    for (UIView *subView in [cell.contentView subviews])
+    {
+        [subView removeFromSuperview];
+    }
+    
+    ME_AppInfo *appInfo = [[(PHO_AppDelegate *)[[UIApplication sharedApplication] delegate] appsArray] objectAtIndex:indexPath.row];
+    
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+    titleLabel.numberOfLines = 0;
+    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    CGSize labelsize = sizeWithContentAndFont(appInfo.appDesc, CGSizeMake(300, 100), 12);
+    
+    [titleLabel setFrame:CGRectMake(20, 0, labelsize.width, labelsize.height)];
+    titleLabel.text = appInfo.appDesc;
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.font = [UIFont systemFontOfSize:12.f];
+    titleLabel.textAlignment = NSTextAlignmentLeft;
+    [cell.contentView addSubview:titleLabel];
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, labelsize.height + 10, 290, 120)];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:appInfo.bannerUrl] placeholderImage:nil];
+    [cell.contentView addSubview:imageView];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    ME_AppInfo *appInfo = [app.appsArray objectAtIndex:indexPath.row];
+        
+    [self sendMessage:[NSString stringWithFormat:@"shareMoreApp_%d",appInfo.appId] and:@"home"];
+    
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:appInfo.openUrl]])
+    {
+        NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@",appInfo.downUrl];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appInfo.openUrl]];
+    }
+}
+
+#pragma mark -
+#pragma mark WebRequestDelegate
+- (void)didReceivedData:(NSDictionary *)dic withTag:(NSInteger)tag
+{
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    NSArray *infoArray = [dic objectForKey:@"list"];
+    NSMutableArray *isDownArray = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *noDownArray = [NSMutableArray arrayWithCapacity:0];
+    for (NSDictionary *infoDic in infoArray)
+    {
+        ME_AppInfo *appInfo = [[ME_AppInfo alloc]initWithDictionary:infoDic];
+        if (appInfo.isHave)
+        {
+            [isDownArray addObject:appInfo];
+        }
+        else
+        {
+            [noDownArray addObject:appInfo];
+        }
+    }
+    NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+    [dataArray addObjectsFromArray:noDownArray];
+    [dataArray addObjectsFromArray:isDownArray];
+    app.appsArray = dataArray;
+    
+    //判断是否有新应用
+    if (app.appsArray.count > 0)
+    {
+        NSMutableArray *dataArray = [[FONT_SQLMassager shareStance] getAllData];
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+        
+        for (ME_AppInfo *app in [(PHO_AppDelegate *)[[UIApplication sharedApplication] delegate] appsArray])
+        {
+            BOOL isHave = NO;
+            for (ME_AppInfo *appInfo in dataArray)
+            {
+                if (app.appId == appInfo.appId)
+                {
+                    isHave = YES;
+                }
+            }
+            if (!isHave) {
+                [array addObject:app];
+            }
+        }
+        
+        //插入新数据
+        if (array.count > 0)
+        {
+            [[FONT_SQLMassager shareStance] insertAppInfo:array];
+        }
+    }
+    [appMoretableView reloadData];
+}
+
+- (void)requestFailed:(NSInteger)tag
+{
+    
+}
+
+
 -(void)documentInteractionController:(UIDocumentInteractionController *)controller didEndSendingToApplication:(NSString *)application
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareIsPopTipToRateus) name:KShareSuccess object:nil];
@@ -426,10 +626,10 @@
 
 #pragma mark 发送统计
 
-- (void)sendMessage:(NSString *)event and:(NSString *)label
+- (void)sendMessage:(NSString *)label and:(NSString *)event
 {
     //友盟统计
-    [MobClick event:event label:nil];
+    [MobClick event:event label:label];
     
     //flurryAnalytics
     [Flurry logEvent:event];

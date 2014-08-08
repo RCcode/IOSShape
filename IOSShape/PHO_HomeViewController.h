@@ -18,6 +18,7 @@
     UIImage *chooseImage;
     UIView *moreView;
     PHO_AboutUsViewController *aboutUs;
+    UIButton *openMoreAppButton;
 }
 
 @property (strong, nonatomic) UIImagePickerController *imagePicker;

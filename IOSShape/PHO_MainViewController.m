@@ -36,12 +36,22 @@
     if (self) {
         self.view.backgroundColor = colorWithHexString(@"#f5f5f5");
 //        NSLog(@"%@",[UIFont familyNames]);
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 44)];
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.textColor = [UIColor whiteColor];
-        titleLabel.text = @"Shape";
-        titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
-        self.navigationItem.titleView = titleLabel;
+//        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 16, 46, 44)];
+//        titleLabel.textAlignment = NSTextAlignmentCenter;
+//        titleLabel.textColor = [UIColor whiteColor];
+//        titleLabel.text = @"Shape";
+//        titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
+//        self.navigationItem.titleView = titleLabel;
+//        
+        UIButton *turnShapeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        //    [turnShapeButton setTitle:@"转" forState:UIControlStateNormal];
+        //    turnShapeButton.backgroundColor = [UIColor blueColor];
+        [turnShapeButton setBackgroundImage:[UIImage imageNamed:@"切换.png"] forState:UIControlStateNormal];
+        [turnShapeButton setBackgroundImage:[UIImage imageNamed:@"切换-选中.png"] forState:UIControlStateSelected];
+        turnShapeButton.frame = CGRectMake(kScreen_Width-46, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+74, 30 , 30);
+        [turnShapeButton addTarget:self action:@selector(turnButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.navigationItem.titleView = turnShapeButton;
         // Custom initialization
     }
     return self;
@@ -184,13 +194,7 @@
     
     [self initShapeChooseView];
     
-    UIButton *turnShapeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [turnShapeButton setTitle:@"转" forState:UIControlStateNormal];
-//    turnShapeButton.backgroundColor = [UIColor blueColor];
-    [turnShapeButton setBackgroundImage:[UIImage imageNamed:@"切换.png"] forState:UIControlStateNormal];
-    turnShapeButton.frame = CGRectMake(kScreen_Width-46, self.navigationController.navigationBar.frame.origin.y+self.navigationController.navigationBar.frame.size.height+74, 40, 40);
-    [turnShapeButton addTarget:self action:@selector(turnButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:turnShapeButton];
+    
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -211,6 +215,7 @@
 
 - (void)turnButtonPressed:(id)sender
 {
+//    
     if (blendMode == kCGBlendModeDestinationOut)
     {
         blendMode = kCGBlendModeDestinationIn;
@@ -219,7 +224,16 @@
     {
         blendMode = kCGBlendModeDestinationOut;
     }
-   shapeImage.image = [shapeImage.image turnShapeWithImage:bottomImage.image];
+    UIButton *tempButton = (UIButton *)sender;
+    if (tempButton.selected)
+    {
+        tempButton.selected = NO;
+    }
+    else
+    {
+        tempButton.selected = YES;
+    }
+    shapeImage.image = [shapeImage.image turnShapeWithImage:bottomImage.image];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -400,7 +414,7 @@
     
     NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%ld_%d",(long)[self getGroupNum],tempButton.tag - 10];
     
-    [self sendMessage:tempStr and:@"edit_shape"];
+    [self sendMessage:tempStr and:@"edit"];
     
     shapeSelectedView.center = tempButton.center;
     
@@ -468,7 +482,7 @@
     }
     
     NSString *tempStr = [NSString stringWithFormat:@"edit_shape_category%ld",(long)[self getGroupNum]];
-    [self sendMessage:tempStr and:@"edit_shape"];
+    [self sendMessage:tempStr and:@"edit"];
     
     shapeMulArray = [getImagesArray(shapeGroupName,@"png") mutableCopy];
     
@@ -646,13 +660,13 @@
         case 1:
             ;
             //友盟统计
-            [self sendMessage:@"edit_background_color" and:@"edit_background"];
+            [self sendMessage:@"edit_background_color" and:@"edit"];
             [backGroundChooseView addSubview:colorChooseScrollView];
             break;
         case 2:
             ;
             //友盟统计
-            [self sendMessage:@"edit_background_pattern" and:@"edit_background"];
+            [self sendMessage:@"edit_background_pattern" and:@"edit"];
             [backGroundChooseView addSubview:graphChooseScrollView];
             break;
 //        case 3:
@@ -662,7 +676,7 @@
         case 3:
             ;
             //友盟统计
-            [self sendMessage:@"edit_background_opacity" and:@"edit_background"];
+            [self sendMessage:@"edit_background_opacity" and:@"edit"];
             [backGroundChooseView addSubview:alphaSliderView];
             break;
 
@@ -678,7 +692,7 @@
     UIButton *tempButton = (UIButton *)sender;
     //友盟统计
     NSString *tempStr = [NSString stringWithFormat:@"edit_background_color_%d",tempButton.tag-10];
-    [self sendMessage:tempStr and:@"edit_background_color"];
+    [self sendMessage:tempStr and:@"edit"];
     
     if (![colorChooseScrollView.subviews containsObject:backGroundSelectedView])
     {
@@ -719,7 +733,7 @@
     //友盟统计
     
     NSString *tempStr = [NSString stringWithFormat:@"edit_background_pattern_%d",tempButton.tag-10];
-    [self sendMessage:tempStr and:@"edit_background_pattern"];
+    [self sendMessage:tempStr and:@"edit"];
     
     if (![graphChooseScrollView.subviews containsObject:backGroundSelectedView])
     {
@@ -866,7 +880,7 @@
     }
     filterSelectedView.frame = tempButton.frame;
     NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%d",tempButton.tag-10];
-    [self sendMessage:tempStr and:@"edit_filter"];
+    [self sendMessage:tempStr and:@"edit"];
     filterSelectedView.frame = tempButton.frame;
     
     [showView.filterView switchFilter:(NCFilterType)tempButton.tag-10];
@@ -1117,10 +1131,10 @@
 
 #pragma mark 发送统计
 
-- (void)sendMessage:(NSString *)event and:(NSString *)label
+- (void)sendMessage:(NSString *)label and:(NSString *)event
 {
     //友盟统计
-    [MobClick event:event label:nil];
+    [MobClick event:event label:label];
 
     //flurryAnalytics
     [Flurry logEvent:event];

@@ -32,6 +32,10 @@
 
 @property (strong, nonatomic) GADBannerView *adBanner;
 
+@property (nonatomic ,strong) NSMutableArray *appsArray;
+@property (nonatomic ,assign) BOOL isOn;//水印开关
+@property (nonatomic ,strong) UIImage *bigImage;//水印图
+
 - (void)checkVersion;
 
 @end

@@ -9,6 +9,7 @@
 #import "CMethods.h"
 #import <stdlib.h>
 #import <time.h>
+#import "PHO_AppDelegate.h"
 
 //用户当前的语言环境
 #define CURR_LANG   ([[NSLocale preferredLanguages] objectAtIndex:0])
@@ -212,6 +213,36 @@ void hideMBProgressHUD()
 {
     [mb hide:YES];
 }
+
+void cancleAllRequests()
+{
+    hideMBProgressHUD();
+    PHO_AppDelegate *appDelegate = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate.manager.operationQueue cancelAllOperations];
+}
+
+
+CGRect getTextLabelRectWithContentAndFont(NSString *content ,UIFont *font)
+{
+    CGSize size = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
+    
+    NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName,nil];
+    
+    CGRect returnRect = [content boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:tdic context:nil];
+    
+    return returnRect;
+}
+
+CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize)
+{
+    
+    UIFont *font = [UIFont boldSystemFontOfSize:fontSize];
+    NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName,nil];
+    CGSize labelsize =[content boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin |NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
+    
+    return labelsize;
+}
+
 
 NSString *exchangeTime(NSString *time)
 {

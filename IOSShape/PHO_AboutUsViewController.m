@@ -119,7 +119,7 @@
     switch (indexPath.row) {
         case 0://更新
         {
-            [self sendMessage:@"home_menu_update" and:@"Home"];
+            [self sendMessage:@"home_menu_update" and:@"home"];
             NSString *upDateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appleID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:upDateString]];
         }
@@ -127,7 +127,7 @@
             break;
         case 1://评分
         {
-            [self sendMessage:@"home_menu_tateus" and:@"Home"];
+            [self sendMessage:@"home_menu_tateus" and:@"home"];
             NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appleID];
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
         }
@@ -135,7 +135,7 @@
         case 2://反馈
         {
             
-            [self sendMessage:@"home_menu_feedback" and:@"Home"];
+            [self sendMessage:@"home_menu_feedback" and:@"home"];
             
             //直接发邮件
             MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
@@ -149,7 +149,7 @@
         case 3://分享应用
         {
             
-            [self sendMessage:@"home_menu_share" and:@"Home"];
+            [self sendMessage:@"home_menu_share" and:@"home"];
             //需要分享的内容
             NSString *shareContent = [NSString stringWithFormat:@"%@ http://bit.ly/1jlOK8k",LocalizedString(@"aboutView_content", @"")];
             NSArray *activityItems = @[shareContent];
@@ -212,7 +212,7 @@
 
 #pragma mark 发送统计
 
-- (void)sendMessage:(NSString *)event and:(NSString *)label
+- (void)sendMessage:(NSString *)label and:(NSString *)event
 {
     //友盟统计
     [MobClick event:event label:nil];

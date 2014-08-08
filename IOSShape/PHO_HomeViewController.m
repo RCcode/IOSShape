@@ -18,7 +18,7 @@
 
 #import "PHO_AppDelegate.h"
 
-
+#import "ME_MoreAppViewController.h"
 
 @interface PHO_HomeViewController ()
 
@@ -55,7 +55,8 @@
     [super viewDidLoad];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haveNewApp) name:@"addMoreImage" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noNewApp) name:@"removeMoreImage" object:nil];
     
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:pngImagePath(@"wallbase")];
@@ -71,7 +72,7 @@
     [infoButton setBackgroundImage:[UIImage imageNamed:@"InfoButtonImage.png"] forState:UIControlStateNormal];
     [self.view addSubview:infoButton];
     
-    UIImageView *nameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 157, 52)];
+    UIImageView *nameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 254, 30)];
     nameImageView.image = [UIImage imageNamed:@"Shape.png"];
     nameImageView.center = CGPointMake(self.view.center.x, 170);
     [self.view addSubview:nameImageView];
@@ -118,16 +119,21 @@
     [openCamera addTarget:self action:@selector(choosePhoto:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:openCamera];
     
-    UIButton *openNoCropButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [openNoCropButton setBackgroundImage:[UIImage imageNamed:@"Nocrop.png"] forState:UIControlStateNormal];
-    [openNoCropButton setFrame:CGRectMake(241, 38, 65, 65)];
+    openMoreAppButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [openMoreAppButton setBackgroundImage:[UIImage imageNamed:@"more.png"] forState:UIControlStateNormal];
+    [openMoreAppButton setFrame:CGRectMake(241, 38, 65, 65)];
 //    openNoCropButton.center = CGPointMake(openNoCropButton.frame.origin.x, buttonView.center.y);
-    [openNoCropButton addTarget:self action:@selector(openNoCropButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonView addSubview:openNoCropButton];
+    [openMoreAppButton addTarget:self action:@selector(openMoreAppButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonView addSubview:openMoreAppButton];
     
     self.imagePicker = [[UIImagePickerController alloc]init];
     self.imagePicker.delegate = self;
     
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"MoreAPP"] isEqualToString:@"1"])
+    {
+        [self haveNewApp];
+    }
+
     // Do any additional setup after loading the view.
 }
 
@@ -172,7 +178,7 @@
                                                   otherButtonTitles:nil];
             [alert show];
         }        
-        [self sendMessage:@"home_gallery" and:@"Home"];
+        [self sendMessage:@"home_gallery" and:@"home"];
         
     }
     else if (tag == 101)
@@ -192,7 +198,7 @@
                                                   otherButtonTitles:nil];
             [alert show];
         }
-        [self sendMessage:@"home_camera" and:@"Home"];
+        [self sendMessage:@"home_camera" and:@"home"];
         
         
     }
@@ -346,27 +352,40 @@
 }
 
 
-- (void)openNoCropButtonPressed:(id)sender
+- (void)openMoreAppButtonPressed:(id)sender
 {
-    [self sendMessage:@"home_NoCrop" and:@"Home"];
-    BOOL canOpen = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
-    if (!canOpen)
-    {
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id878086629"]]];
-    }
-    else
-    {
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"rcApp://com.rcplatform.IOSNoCrop"]];
-    }
+    [self sendMessage:@"home_NoCrop" and:@"home"];
+    ME_MoreAppViewController *moreApp = [[ME_MoreAppViewController alloc]initWithNibName:@"ME_MoreAppViewController" bundle:nil];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:moreApp];
+    [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"title-bar.png"] forBarMetrics:UIBarMetricsDefault];
+    nav.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    nav.navigationBar.backgroundColor = [UIColor clearColor];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)haveNewApp
+{
+//    [openMoreAppButton setBackgroundImage:[UIImage imageNamed:@"more-tip.png"] forState:UIControlStateNormal];
+    UIImageView *redImageView = [[UIImageView alloc]initWithFrame:CGRectMake(50, 0, 12, 12)];
+    redImageView.image = [UIImage imageNamed:@"spot.png"];
+    redImageView.tag = 11;
+    [openMoreAppButton addSubview:redImageView];
+}
+
+- (void)noNewApp
+{
+//    [openMoreAppButton setBackgroundImage:[UIImage imageNamed:@"more.png"] forState:UIControlStateNormal];
+    UIView *imageView = [openMoreAppButton viewWithTag:11];
+    [imageView removeFromSuperview];
 }
 
 
 #pragma mark 发送统计
 
-- (void)sendMessage:(NSString *)event and:(NSString *)label
+- (void)sendMessage:(NSString *)lable and:(NSString *)event
 {
     //友盟统计
-    [MobClick event:event label:nil];
+    [MobClick event:event label:lable];
     
     //flurryAnalytics
     [Flurry logEvent:event];

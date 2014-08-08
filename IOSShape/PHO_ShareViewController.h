@@ -10,12 +10,15 @@
 
 @class SLComposeViewController;
 
-@interface PHO_ShareViewController : UIViewController<UIDocumentInteractionControllerDelegate, UIAlertViewDelegate>
+@interface PHO_ShareViewController : UIViewController<UIDocumentInteractionControllerDelegate, UIAlertViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     UIDocumentInteractionController *_documetnInteractionController;
     UIImage *theBestImage;
+    UIImage *saveImage;
     SLComposeViewController *slComposerSheet;
     BOOL isSaved;
+    
+    UITableView *appMoretableView;
 }
 
 @property (nonatomic) BOOL isSaved;

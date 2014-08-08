@@ -47,6 +47,12 @@ enum TextAligment{
 
 @end
 
+@protocol MoreAppDelegate <NSObject>
+
+- (void)jumpAppStore:(NSString *)appid;
+
+@end
+
 @protocol DoneTextDelegate <NSObject>
 
 - (void)touchDoneBtnWithContent:(NSString *)content textAligment:(enum TextAligment)aligment;

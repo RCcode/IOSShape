@@ -21,6 +21,9 @@
 
 #import "PHO_MainViewController.h"
 
+#import "ME_AppInfo.h"
+#import "FONT_SQLMassager.h"
+
 @implementation PHO_AppDelegate
 
 @synthesize rootNav;
@@ -58,7 +61,9 @@
     //配置admob
     [self setAdMob];
     
-    
+    //下载moreApp数据
+    [self downLoadAppsInfo];
+
     /** flurry相关设置 **/
     
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
@@ -83,7 +88,33 @@
         [self doNotificationActionWithInfo:remoteNotif];
     }
     
-    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    //水印图片
+    if ([userDefault objectForKey:@"waterMark"] != nil)
+    {
+        if ([[userDefault objectForKey:@"waterMark"] boolValue])
+        {
+            self.bigImage = [UIImage imageNamed:@"Shapegram"];
+            self.isOn = YES;
+            [userDefault setObject:[NSNumber numberWithBool:YES] forKey:@"waterMark"];
+            [userDefault synchronize];
+        }
+        else
+        {
+            self.bigImage = nil;
+            self.isOn = NO;
+            [userDefault setObject:[NSNumber numberWithBool:NO] forKey:@"waterMark"];
+            [userDefault synchronize];
+        }
+    }
+    else
+    {
+        self.bigImage = [UIImage imageNamed:@"Shapegram"];
+        self.isOn = YES;
+        [userDefault setObject:[NSNumber numberWithBool:YES] forKey:@"waterMark"];
+        [userDefault synchronize];
+    }
+
     
     return YES;
 }
@@ -318,6 +349,25 @@ void uncaughtExceptionHandler(NSException *exception)
     [request updateVersion:urlStr withTag:10];
 }
 
+- (void)downLoadAppsInfo
+{
+    //Bundle Id
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDict objectForKey:@"CFBundleVersion"];
+    NSString *language = [[NSLocale preferredLanguages] firstObject];
+    if ([language isEqualToString:@"zh-Hans"])
+    {
+        language = @"zh";
+    }
+    
+    
+    NSDictionary *dic = @{@"appId":[NSNumber numberWithInt:moreAppID],@"packageName":bundleIdentifier,@"language":language,@"version":currentVersion,@"platform":[NSNumber numberWithInt:0]};
+    PHO_DataRequest *request = [[PHO_DataRequest alloc] initWithDelegate:self];
+    [request moreApp:dic withTag:11];
+}
+
+
 #pragma mark -
 #pragma mark WebRequestDelegate
 - (void)didReceivedData:(NSDictionary *)dic withTag:(NSInteger)tag
@@ -355,9 +405,60 @@ void uncaughtExceptionHandler(NSException *exception)
             break;
         case 11:
         {
+            NSLog(@"dic.......%@",dic);
+            NSArray *infoArray = [dic objectForKey:@"list"];
+            NSMutableArray *isDownArray = [NSMutableArray arrayWithCapacity:0];
+            NSMutableArray *noDownArray = [NSMutableArray arrayWithCapacity:0];
+            for (NSDictionary *infoDic in infoArray)
+            {
+                ME_AppInfo *appInfo = [[ME_AppInfo alloc]initWithDictionary:infoDic];
+                if (appInfo.isHave)
+                {
+                    [isDownArray addObject:appInfo];
+                }
+                else
+                {
+                    [noDownArray addObject:appInfo];
+                }
+            }
+            NSMutableArray *dataArray = [NSMutableArray arrayWithCapacity:0];
+            [dataArray addObjectsFromArray:noDownArray];
+            [dataArray addObjectsFromArray:isDownArray];
+            self.appsArray = dataArray;
             
+            //判断是否有新应用
+            if (self.appsArray.count > 0)
+            {
+                NSMutableArray *dataArray = [[FONT_SQLMassager shareStance] getAllData];
+                NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+                
+                for (ME_AppInfo *app in self.appsArray)
+                {
+                    BOOL isHave = NO;
+                    for (ME_AppInfo *appInfo in dataArray)
+                    {
+                        if (app.appId == appInfo.appId)
+                        {
+                            isHave = YES;
+                        }
+                    }
+                    if (!isHave) {
+                        [array addObject:app];
+                    }
+                }
+                
+                //插入新数据
+                if (array.count > 0)
+                {
+                    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"MoreAPP"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"addMoreImage" object:nil];
+                    [[FONT_SQLMassager shareStance] insertAppInfo:array];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+            }
         }
             break;
+            
         default:
             break;
     }

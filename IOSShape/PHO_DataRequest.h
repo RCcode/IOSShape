@@ -25,6 +25,7 @@
 - (void)registerToken:(NSDictionary *)dictionary withTag:(NSInteger)tag;
 //版本更新
 - (void)updateVersion:(NSString *)url withTag:(NSInteger)tag;
-
+//moreapp
+- (void)moreApp:(NSDictionary *)dictionary withTag:(NSInteger)tag;
 
 @end

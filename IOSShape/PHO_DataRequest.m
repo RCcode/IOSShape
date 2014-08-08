@@ -32,22 +32,36 @@
 - (void)requestServiceWithPost:(NSString *)url_Str jsonRequestSerializer:(AFJSONRequestSerializer *)requestSerializer isRegisterToken:(BOOL)token
 {
     
+    NSString *url = nil;
+    if ([url_Str isEqualToString:@"getStickerInfos.do"])
+    {
+        url = [NSString stringWithFormat:@"%@%@",HTTP_BASEURL,url_Str];
+        
+    }
+    else
+    {
+        url = [NSString stringWithFormat:@"%@",url_Str];
+    }
     
-//    NSString *url = [NSString stringWithFormat:@"%@%@",HTTP_BASEURL,url_Str];
-//
+    
     PHO_AppDelegate *appDelegate = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
-//
+    
     appDelegate.manager.requestSerializer = requestSerializer;
-//
+    
     AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     appDelegate.manager.responseSerializer = responseSerializer;
     
-    [appDelegate.manager POST:kPushURL parameters:self.valuesDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    //    NSData *jsonData = [self.valuesDictionary JSONData];
+    [appDelegate.manager POST:token? kPushURL:url parameters:self.valuesDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //解析数据
-        NSDictionary *dic = (NSDictionary *)responseObject;
+        NSDictionary *dic = responseObject;
+        NSLog(@"%@",[dic objectForKey:@"message"]);
         [self.delegate didReceivedData:dic withTag:requestTag];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        hideMBProgressHUD();
         NSLog(@"error.......%@",error);
         [self.delegate requestFailed:requestTag];
     }];
@@ -92,6 +106,23 @@
     
     return connected;
 }
+
+#pragma mark -
+#pragma mark 更多应用
+- (void)moreApp:(NSDictionary *)dictionary withTag:(NSInteger)tag
+{
+    if (![self checkNetWorking])
+        return;
+    requestTag = tag;
+    self.valuesDictionary = dictionary;
+    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [requestSerializer setTimeoutInterval:30];
+    
+    [self requestServiceWithPost:@"http://moreapp.rcplatformhk.net/pbweb/app/getIOSAppList.do" jsonRequestSerializer:requestSerializer  isRegisterToken:NO];
+}
+
 
 #pragma mark -
 #pragma mark 注册设备

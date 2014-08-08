@@ -31,4 +31,6 @@
 
 - (UIImage *)turnShapeWithImage:(UIImage *)image;
 
++ (UIImage *)addwaterMarkOrnotWithImage:(UIImage *)image;
+
 @end

@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Accelerate/Accelerate.h>
 
+#import "PHO_AppDelegate.h"
 
 @implementation UIImage (processing)
 
@@ -178,6 +179,25 @@
     UIGraphicsEndImageContext();
     
     return newImage;
+}
+
++ (UIImage *)addwaterMarkOrnotWithImage:(UIImage *)image
+{
+    CGSize size = CGSizeMake(1080, 1080);
+    
+    UIGraphicsBeginImageContext(size);
+    
+    PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    [image drawInRect:CGRectMake(0, 0, 1080, 1080)];
+    [app.bigImage drawInRect:CGRectMake(size.width-CGImageGetWidth(app.bigImage.CGImage), size.height-CGImageGetHeight(app.bigImage.CGImage), CGImageGetWidth(app.bigImage.CGImage)-4, CGImageGetHeight(app.bigImage.CGImage)-4)];
+    
+    UIImage *newImage =UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+    
 }
 
 

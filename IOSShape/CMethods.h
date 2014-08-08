@@ -63,5 +63,8 @@ NSString *exchangeTime(NSString *time);
 //设略版本号
 NSString *appVersion();
 
+CGRect getTextLabelRectWithContentAndFont(NSString *content ,UIFont *font);
+
+CGSize sizeWithContentAndFont(NSString *content,CGSize size,float fontSize);
 
 @end
