@@ -17,6 +17,7 @@
     UIImage *saveImage;
     SLComposeViewController *slComposerSheet;
     BOOL isSaved;
+    BOOL isSwitchPressed;
     
     UITableView *appMoretableView;
 }

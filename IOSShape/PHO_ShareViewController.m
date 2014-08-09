@@ -91,6 +91,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    isSwitchPressed = YES;
+    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backButton setFrame:CGRectMake(10, 10, 12, 20)];
     [backButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
@@ -205,6 +207,9 @@
     PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
     
     app.isOn = switchBtn.isOn;
+    
+    isSwitchPressed = YES;
+    
     if (app.isOn)
     {
         [self sendMessage:@"share_showwatermark" and:@"share"];
@@ -262,7 +267,7 @@
         case 0:
             //保存到相册
             {
-                if (isSaved)
+                if (isSaved && isSwitchPressed == NO)
                 {
                     [MBProgressHUD showSuccess:LocalizedString(@"shareView_saveSuccess", @"")
                                         toView:[UIApplication sharedApplication].keyWindow];
@@ -272,6 +277,7 @@
                 {
                     [self sendMessage:@"share_save" and:@"share"];
                     UIImageWriteToSavedPhotosAlbum(saveImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+                    
                 }
                 
             }
@@ -387,7 +393,7 @@
                             toView:[UIApplication sharedApplication].keyWindow];
         [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:1];
 //        [self isPopTipToRateus];
-        
+        isSwitchPressed = NO;
     }
     else
     {
