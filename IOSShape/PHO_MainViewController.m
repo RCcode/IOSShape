@@ -21,7 +21,7 @@
 #import "MBProgressHUD+Add.h"
 
 
-#define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-82-KADHEIGHT, kScreen_Width, 82):CGRectMake(0, kScreen_Height-82-KADHEIGHT, kScreen_Width, 82))
+#define KRECT_SHOWCHOOSEVIEW (iPhone5 ? CGRectMake(0, kScreen_Height-50-105-KADHEIGHT, kScreen_Width, 105):CGRectMake(0, kScreen_Height-67-50, kScreen_Width, 67))
 
 
 @interface PHO_MainViewController ()
@@ -114,7 +114,7 @@
                        filterMulArray = [[NSMutableArray alloc]init];
                        
                    });
-    backView = [[UIView alloc]initWithFrame:CGRectMake(0, TOPORIGIN_Y + 44, 320, 320)];
+    backView = [[UIView alloc]initWithFrame:CGRectMake(0, 44, 320, 320)];
     backView.backgroundColor = [UIColor clearColor];
     backView.layer.masksToBounds = YES;
     [self.view addSubview:backView];
@@ -173,7 +173,7 @@
     
     showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
     //        showChooseView.backgroundColor = colorWithHexString(@"#ededed");
-    showChooseView.backgroundColor = [UIColor clearColor];
+    showChooseView.backgroundColor = [UIColor redColor];
     [self.view addSubview:showChooseView];
     if (!iPhone5)
     {
@@ -272,6 +272,15 @@
     
     //tabbar
     tabbarView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreen_Height-49-KADHEIGHT, kScreen_Width, 49)];
+    if (iPhone5)
+    {
+        tabbarView.frame = CGRectMake(0, kScreen_Height-49-KADHEIGHT, kScreen_Width, 49);
+    }
+    else
+    {
+        tabbarView.frame = CGRectMake(0, kScreen_Height-49, kScreen_Width, 49);
+    }
+    
     tabbarView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:tabbarView];
     
@@ -314,15 +323,16 @@
 
 - (void)initShapeChooseView
 {
-    shapeChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
+    shapeChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, showChooseView.frame.size.height)];
     shapeChooseView.backgroundColor = colorWithHexString(@"#ededed");
     [showChooseView insertSubview:shapeChooseView atIndex:0];
     
-    UIScrollView *groupBackView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, shapeChooseView.frame.size.width, 30)];
-    groupBackView.tag = 10;
-    groupBackView.showsVerticalScrollIndicator = NO;
-    groupBackView.showsHorizontalScrollIndicator = NO;
-    [shapeChooseView addSubview:groupBackView];
+    
+    shapeGroupBackView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, shapeChooseView.frame.size.height-3-60, shapeChooseView.frame.size.width, shapeChooseView.frame.size.height)];
+    shapeGroupBackView.tag = 10;
+    shapeGroupBackView.showsVerticalScrollIndicator = NO;
+    shapeGroupBackView.showsHorizontalScrollIndicator = NO;
+    [shapeChooseView addSubview:shapeGroupBackView];
     
 //    NSArray *groupNameArray = [NSArray arrayWithObjects:@"shape", @"love", @"flower", @"nature", @"grocery",nil];
     NSArray *groupNameArray = @[LocalizedString(@"editView_shape", @""),
@@ -330,15 +340,15 @@
                                 LocalizedString(@"editView_flower", @""),
                                 LocalizedString(@"editView_nature", @""),
                                 LocalizedString(@"editView_grocery", @"")];
-
-    CGFloat buttonX = 20;
+//
+//    CGFloat buttonX = 20;
     for (int i = 0; i < [groupNameArray count]; i ++)
     {
-        NSString *titleString = [groupNameArray objectAtIndex:i];
-        CGSize buttonSize = [titleString sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Medium" size:15]}];
-        
+//        NSString *titleString = [groupNameArray objectAtIndex:i];
+//        CGSize buttonSize = [titleString sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Medium" size:15]}];
+    
         UIButton *chooseGroupButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [chooseGroupButton setFrame:CGRectMake(buttonX + 20*i, 0, buttonSize.width, 30)];
+        [chooseGroupButton setFrame:CGRectMake(4*i + 60*i, 0, 60, 60)];
         [chooseGroupButton addTarget:self action:@selector(chooseGroupButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         chooseGroupButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:15];
         [chooseGroupButton setTitleColor:colorWithHexString(@"#a2a2a2") forState:UIControlStateNormal];
@@ -351,29 +361,38 @@
         [chooseGroupButton setTitle:[groupNameArray objectAtIndex:i] forState:UIControlStateNormal];
         chooseGroupButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         chooseGroupButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        [groupBackView addSubview:chooseGroupButton];
-        buttonX = buttonX + buttonSize.width;
-        groupBackView.contentSize = CGSizeMake(chooseGroupButton.frame.origin.x + chooseGroupButton.frame.size.width, 0);
+        [shapeGroupBackView addSubview:chooseGroupButton];
+        shapeGroupBackView.contentSize = CGSizeMake(chooseGroupButton.frame.origin.x + chooseGroupButton.frame.size.width, 0);
     }
-    if (groupBackView.contentSize.width < kScreen_Width)
-    {
-        CGFloat adjustWidth = (kScreen_Width-groupBackView.contentSize.width)/[groupNameArray count];
-        for (int j = 0; j < [groupNameArray count]; j++)
-        {
-            UIButton *tempButton = (UIButton *)[groupBackView viewWithTag:10 + j];
-            tempButton.frame = CGRectMake(tempButton.frame.origin.x + adjustWidth * j, tempButton.frame.origin.y, tempButton.frame.size.width + adjustWidth, tempButton.frame.size.height);
-        }
-        
-    }
-    
-    shapeChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, kScreen_Width, 52)];
-    shapeChooseScrollView.contentSize = CGSizeMake(46 * [shapeMulArray count], 52);
+//    if (groupBackView.contentSize.width < kScreen_Width)
+//    {
+//        CGFloat adjustWidth = (kScreen_Width-groupBackView.contentSize.width)/[groupNameArray count];
+//        for (int j = 0; j < [groupNameArray count]; j++)
+//        {
+//            UIButton *tempButton = (UIButton *)[groupBackView viewWithTag:10 + j];
+//            tempButton.frame = CGRectMake(tempButton.frame.origin.x + adjustWidth * j, tempButton.frame.origin.y, tempButton.frame.size.width + adjustWidth, tempButton.frame.size.height);
+//        }
+//        
+//    }
+
+    shapeChooseBackView = [[UIView alloc]initWithFrame:CGRectMake(0, shapeChooseView.frame.size.height-3-68, shapeChooseView.frame.size.width, shapeChooseView.frame.size.height+8)];
+    shapeChooseBackView.backgroundColor = [UIColor clearColor];
+//    [showChooseView insertSubview:shapeChooseBackView belowSubview:shapeGroupBackView];
+
+    UIButton *shapeGroupBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    shapeGroupBackButton.frame = CGRectMake(4, 4, 60, 60);
+    [shapeGroupBackButton setTitle:@"返回" forState:UIControlStateNormal];
+    [shapeGroupBackButton addTarget:self action:@selector(shapeGroupBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [shapeChooseBackView addSubview:shapeGroupBackButton];
+
+    shapeChooseScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(64, 0, kScreen_Width-64, 68)];
+    shapeChooseScrollView.contentSize = CGSizeMake(64 * [shapeMulArray count], 68);
     shapeChooseScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"形状背景带上下细线.png"]];
     shapeChooseScrollView.showsHorizontalScrollIndicator = NO;
     shapeChooseScrollView.showsVerticalScrollIndicator = NO;
-    [shapeChooseView addSubview:shapeChooseScrollView];
-    
-    shapeSelectedView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+    [shapeChooseBackView addSubview:shapeChooseScrollView];
+
+    shapeSelectedView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 64, 64)];
     shapeSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
     shapeSelectedView.layer.borderWidth = 2;
     shapeSelectedView.userInteractionEnabled = NO;
@@ -383,7 +402,7 @@
     {
         @autoreleasepool {
             UIButton *chooseShapeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [chooseShapeButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
+            [chooseShapeButton setFrame:CGRectMake(4*(i+1)+60*i, 4, 60, 60)];
             [chooseShapeButton addTarget:self action:@selector(chooseShapeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [chooseShapeButton setBackgroundImage:[UIImage imageWithContentsOfFile:[shapeMulArray objectAtIndex:i]] forState:UIControlStateNormal];
             if (i == 0)
@@ -436,16 +455,12 @@
 {
     
     //选择哪个组
-    UIView *tempView = [shapeChooseView viewWithTag:10];
-    for (UIButton *tempBtn in tempView.subviews)
-    {
-        tempBtn.selected = NO;
-    }
-    
     UIButton *tempButton = (UIButton *)sender;
-    tempButton.selected = YES;
     
     [shapeMulArray removeAllObjects];
+    
+    [shapeChooseView addSubview:shapeChooseBackView];
+    [shapeGroupBackView removeFromSuperview];
     
     
     switch (tempButton.tag - 10)
@@ -494,13 +509,13 @@
         }
     }
     
-    shapeChooseScrollView.contentSize = CGSizeMake(46 * [shapeMulArray count], 52);
+    shapeChooseScrollView.contentSize = CGSizeMake(64 * [shapeMulArray count], 68);
     shapeChooseScrollView.contentOffset = CGPointMake(0, 0);
     for (int i = 0; i < [shapeMulArray count]; i ++)
     {
         @autoreleasepool {
             UIButton *chooseShapeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [chooseShapeButton setFrame:CGRectMake(6*(i+1)+40*i, 6, 40, 40)];
+            [chooseShapeButton setFrame:CGRectMake(+4*(i+1)+60*i, 4, 60, 60)];
             [chooseShapeButton addTarget:self action:@selector(chooseShapeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [chooseShapeButton setBackgroundImage:[UIImage imageWithContentsOfFile:[shapeMulArray objectAtIndex:i]] forState:UIControlStateNormal];
             chooseShapeButton.tag = i + 10;
@@ -508,7 +523,12 @@
         }
     }
     
-    
+}
+
+- (void)shapeGroupBackButtonPressed:(id)sender
+{
+    [shapeChooseView addSubview:shapeGroupBackView];
+    [shapeChooseBackView removeFromSuperview];
 }
 
 - (NSInteger)getGroupNum
@@ -541,12 +561,26 @@
 
 - (void)initBackGroundView
 {
-    backGroundChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 82)];
+    backGroundChooseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, showChooseView.frame.size.height)];
     backGroundChooseView.backgroundColor = colorWithHexString(@"#ededed");
     
     backGroundSelectedView = [[UIImageView alloc]initWithFrame:CGRectZero];
     backGroundSelectedView.layer.borderColor = colorWithHexString(@"#636363").CGColor;
     backGroundSelectedView.layer.borderWidth = 2;
+    
+    
+    
+    UIScrollView *backgroundGroupBackView = [[UIScrollView alloc]initWithFrame:CGRectMake(60, shapeChooseView.frame.size.height-3-60, shapeChooseView.frame.size.width-60, shapeChooseView.frame.size.height)];
+    backgroundGroupBackView.tag = 10;
+    backgroundGroupBackView.showsVerticalScrollIndicator = NO;
+    backgroundGroupBackView.showsHorizontalScrollIndicator = NO;
+    [shapeChooseView addSubview:backgroundGroupBackView];
+    
+    UIButton *backgroundGroupBackButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    backgroundGroupBackButton.frame = CGRectMake(0, 0, 60, 60);
+    [backgroundGroupBackButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backgroundGroupBackButton addTarget:self action:@selector(groupBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [backgroundGroupBackView addSubview:backgroundGroupBackButton];
     
 //    NSArray *typeNameArray = [NSArray arrayWithObjects:@"颜色", @"图案", @"透明度", nil];
     NSArray *typeNameArray = @[LocalizedString(@"editView_Colur", @""),

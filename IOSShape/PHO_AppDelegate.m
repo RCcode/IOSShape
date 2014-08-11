@@ -59,7 +59,11 @@
     [self checkVersion];
     
     //配置admob
-    [self setAdMob];
+    if (iPhone5)
+    {
+        [self setAdMob];
+    }
+    
     
     //下载moreApp数据
     [self downLoadAppsInfo];

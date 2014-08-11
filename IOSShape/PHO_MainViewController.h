@@ -76,6 +76,9 @@ typedef enum _whichTypeUsed
     
     CGBlendMode blendMode;
     
+    UIScrollView *shapeGroupBackView;
+    UIView *shapeChooseBackView;
+    
 }
 
 - (void)setImage:(UIImage *)image;

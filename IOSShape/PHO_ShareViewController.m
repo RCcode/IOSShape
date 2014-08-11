@@ -135,13 +135,13 @@
     
     PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    UILabel *markLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 165, 240, 40)];
+    UILabel *markLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 145, 240, 40)];
     markLabel.text = LocalizedString(@"showwatermark", nil);
     markLabel.textColor = [UIColor blackColor];
     markLabel.font = [UIFont systemFontOfSize:14.f];
     [self.view addSubview:markLabel];
     
-    UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(250, 170, 80, 40)];
+    UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(250, 150, 80, 40)];
     if (app.isOn)
     {
         [switchBtn setOn:YES];

@@ -379,6 +379,10 @@
     [imageView removeFromSuperview];
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
 
 #pragma mark 发送统计
 
