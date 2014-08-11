@@ -451,8 +451,8 @@
 {
 //    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareSuccess", @"")
 //                        toView:[UIApplication sharedApplication].keyWindow];
-    UIImageWriteToSavedPhotosAlbum(theBestImage, self, nil, nil);
-    [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:1];
+    UIImageWriteToSavedPhotosAlbum(saveImage, self, nil, nil);
+    [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:0.5];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     
 }
