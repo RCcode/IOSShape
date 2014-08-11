@@ -220,6 +220,11 @@
         [self sendMessage:@"share_hidewatermark" and:@"share"];
         saveImage = theBestImage;
     }
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault setObject:[NSNumber numberWithBool:YES] forKey:@"waterMark"];
+    [userDefault synchronize];
+
 }
 
 #pragma mark 导航按扭方法
