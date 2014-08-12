@@ -198,7 +198,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ME_AppInfo *appInfo = [[(PHO_AppDelegate *)[[UIApplication sharedApplication] delegate] appsArray] objectAtIndex:indexPath.row];
-    [self event:@"home" label:[NSString stringWithFormat:@"homeMoreApp_%d",appInfo.appId]];
+    [self event:[NSString stringWithFormat:@"homeMoreApp_%d",appInfo.appId] label:@"home"];
     if (appInfo.isHave)
     {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appInfo.openUrl]];

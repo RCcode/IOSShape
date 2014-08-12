@@ -57,16 +57,17 @@ typedef enum _whichTypeUsed
     UIView *showChooseView;
     
     UIScrollView *shapeChooseScrollView;
-    UIScrollView *colorChooseScrollView;
+    UIScrollView *backgroundChooseScrollView;
     UIView *backColorView;
-    UIScrollView *graphChooseScrollView;
     UISlider *blurSlider;
     UIView *alphaSliderView;
     UILabel *valuePercentLabel;
     UISlider *alphaSlider;
     
     NSString *shapeGroupName;
+    NSString *graphGroupName;
     NSString *shapeSelectedGroup;
+    NSString *graphSelectedGroup;
     
     NSString *uMengEditType;
     
@@ -78,6 +79,10 @@ typedef enum _whichTypeUsed
     
     UIScrollView *shapeGroupBackView;
     UIView *shapeChooseBackView;
+    
+    UIScrollView *backgroundGroupScrollView;
+    UIView *backgroundGroupBackView;
+    UIView *backgroundChooseBackView;
     
 }
 

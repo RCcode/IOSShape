@@ -94,8 +94,8 @@
     isSwitchPressed = YES;
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setFrame:CGRectMake(10, 10, 12, 20)];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"share_back"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
@@ -121,7 +121,7 @@
         {
             UIButton *shareToButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [shareToButton setBackgroundImage:[UIImage imageNamed:[shareToArray objectAtIndex:i]] forState:UIControlStateNormal];
-            shareToButton.frame = CGRectMake(10+25*i+56*i, self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height + 20, 56, 56);
+            shareToButton.frame = CGRectMake(10+25*i+56*i, 20, 56, 56);
             shareToButton.tag = i + 10;
             [shareToButton setTitle:[shareToNameArray objectAtIndex:i] forState:UIControlStateNormal];
             [shareToButton setTitleColor:colorWithHexString(@"#7e7e7e") forState:UIControlStateNormal];
@@ -135,13 +135,13 @@
     
     PHO_AppDelegate *app = (PHO_AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    UILabel *markLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 145, 240, 40)];
+    UILabel *markLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 105, 240, 40)];
     markLabel.text = LocalizedString(@"showwatermark", nil);
     markLabel.textColor = [UIColor blackColor];
     markLabel.font = [UIFont systemFontOfSize:14.f];
     [self.view addSubview:markLabel];
     
-    UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(250, 150, 80, 40)];
+    UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(250, 110, 80, 40)];
     if (app.isOn)
     {
         [switchBtn setOn:YES];
@@ -183,11 +183,11 @@
     
     if (iPhone5)
     {
-        appMoretableView.frame = CGRectMake(0, 210, 320, kScreen_Height-210-50);
+        appMoretableView.frame = CGRectMake(0, 165, 320, kScreen_Height-210-50);
     }
     else
     {
-        appMoretableView.frame = CGRectMake(0, 210, 320, kScreen_Height-210);
+        appMoretableView.frame = CGRectMake(0, 165, 320, kScreen_Height-210);
     }
     
     [appMoretableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
@@ -359,7 +359,6 @@
                     {
                         [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareSuccess", @"")
                                             toView:[UIApplication sharedApplication].keyWindow];
-                        [controller isPopTipToRateus];
                         UIImageWriteToSavedPhotosAlbum(blockImage, controller, nil, nil);
                     }
                 }];
@@ -396,8 +395,7 @@
     {
         [MBProgressHUD showSuccess:LocalizedString(@"shareView_saveSuccess", @"")
                             toView:[UIApplication sharedApplication].keyWindow];
-        [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:1];
-//        [self isPopTipToRateus];
+        self.isSaved = YES;
         isSwitchPressed = NO;
     }
     else
@@ -405,56 +403,6 @@
         [MBProgressHUD showError:LocalizedString(@"shareView_saveFaile", @"")
                           toView:[UIApplication sharedApplication].keyWindow];
     }
-}
-
-#pragma mark 获得是否弹出提示评价
-
-- (void)isPopTipToRateus
-{
-    NSMutableDictionary *rateusDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:editCountPath];
-    NSLog(@"%@",editCountPath);
-    if (rateusDictionary)
-    {
-        NSLog(@"%@",rateusDictionary);
-        if ([[rateusDictionary objectForKey:@"status"] isEqualToString:@"rateusNoMore"] ||
-            [[rateusDictionary objectForKey:@"status"] isEqualToString:@"rateusted"])
-        {
-            self.isSaved = YES;
-            return;
-        }
-        else if ([[rateusDictionary objectForKey:@"status"] isEqualToString:@"rateusLater"])
-        {
-            if ([[rateusDictionary objectForKey:@"count"] intValue] >= 3 && [[rateusDictionary objectForKey:@"count"] intValue]%2 != 0)
-            {
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"shareView_rateMessage", @"") delegate:self cancelButtonTitle:LocalizedString(@"shareView_remaindLater", @"") otherButtonTitles:LocalizedString(@"shareView_NoMoreTip", @""), LocalizedString(@"shareView_rateNow", @""), nil];
-                [alert show];
-            }
-            
-        }
-        NSString *countString = [rateusDictionary objectForKey:@"count"];
-        countString = [NSString stringWithFormat:@"%d",countString.intValue + 1];
-        [rateusDictionary setObject:countString forKey:@"count"];
-        [rateusDictionary writeToFile:editCountPath atomically:YES];
-    }
-    else
-    {
-        rateusDictionary = [[NSMutableDictionary alloc]init];
-        [rateusDictionary setObject:@"1" forKey:@"count"];
-        [rateusDictionary setObject:@"rateusLater" forKey:@"status"];
-        [rateusDictionary writeToFile:editCountPath atomically:YES];
-    }
-    
-    self.isSaved = YES;
-}
-
-- (void)shareIsPopTipToRateus
-{
-//    [MBProgressHUD showSuccess:LocalizedString(@"shareView_shareSuccess", @"")
-//                        toView:[UIApplication sharedApplication].keyWindow];
-    UIImageWriteToSavedPhotosAlbum(saveImage, self, nil, nil);
-    [self performSelector:@selector(isPopTipToRateus) withObject:nil afterDelay:0.5];
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-    
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -471,35 +419,6 @@
         }
         
     }
-    else
-    {
-        NSMutableDictionary *rateusDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:editCountPath];
-        if (rateusDictionary)
-        {
-            if (buttonIndex == 0)
-            {
-                [rateusDictionary setObject:@"rateusLater" forKey:@"status"];
-            }
-            else if (buttonIndex == 1)
-            {
-                [rateusDictionary setObject:@"rateusNoMore" forKey:@"status"];
-                
-            }
-            else if (buttonIndex == 2)
-            {
-                [rateusDictionary setObject:@"rateusted" forKey:@"status"];
-                
-                [self sendMessage:@"home_menu_rateus" and:@"home"];
-                
-                NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",appleID];
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
-            }
-        }
-        [rateusDictionary writeToFile:editCountPath atomically:YES];
-    }
-    
-    
-    
 }
 
 #pragma mark -

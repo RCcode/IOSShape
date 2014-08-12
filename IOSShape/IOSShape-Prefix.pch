@@ -19,7 +19,6 @@
     #import"Flurry.h"
 
 
-#define editCountPath  [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"editCount.plist"]
 #define KShareSuccess @"sharesuccess"
 
 
@@ -28,6 +27,7 @@
 #define FlurryAPPKey      @"TDWM2F2ZXBDCVRVFBS8Z"
 //#define FlurryAPPKey      @"SCF6NC6HZ62WM8ZZCQV9" //自测key
 #define GAAPPKey          @"UA-49487373-4"
+#define LANCHCOUNT        @"lanchcount"
 #define AdmobAPPKey       @"ca-app-pub-5553601587247422/4485041796"
 
 #define kPushURL @"http://iospush.rcplatformhk.net/IOSPushWeb/userinfo/regiUserInfo.do"
@@ -35,6 +35,8 @@
 //#define HTTP_BASEURL @"http://192.168.0.88:8081/IOSNoCropWeb/external/"
 //#define kPushURL @"http://192.168.0.88:8081/IOSPushWeb/userinfo/regiUserInfo.do"
 #define HTTP_BASEURL @"http://iosnocrop.rcplatformhk.net/IOSNoCropWeb/external/"
+
+#define kAppRateusURL [NSString stringWithFormat:@"%@%@", @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=",appleID]
 
 static NSString *kiTunesID = @"";
 static NSString *kFollwUsURL = @"http://www.instagram.com/rc_apps";

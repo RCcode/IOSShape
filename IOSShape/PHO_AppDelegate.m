@@ -39,7 +39,7 @@
     
     homeViewController = [[PHO_HomeViewController alloc]init];
     rootNav = [[UINavigationController alloc]initWithRootViewController:homeViewController];
-    [rootNav.navigationBar setBarTintColor:colorWithHexString(@"#fe8c3f")];
+    [rootNav.navigationBar setBackgroundImage:[UIImage imageNamed:@"titlebar.png"] forBarMetrics:UIBarMetricsDefault];
     self.window.rootViewController = rootNav;
     [self.window makeKeyAndVisible];
     
@@ -116,6 +116,23 @@
         self.bigImage = [UIImage imageNamed:@"Shapegram"];
         self.isOn = YES;
         [userDefault setObject:[NSNumber numberWithBool:YES] forKey:@"waterMark"];
+        [userDefault synchronize];
+    }
+
+    //4次启动弹窗评价
+    int lanchCount = [[userDefault objectForKey:LANCHCOUNT] intValue];
+    if (lanchCount != -1)
+    {
+        lanchCount++;
+        if((lanchCount >= 4) && lanchCount % 2 == 0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:LocalizedString(@"shareView_rateMessage", @"") delegate:self cancelButtonTitle:LocalizedString(@"shareView_remaindLater", @"") otherButtonTitles:LocalizedString(@"shareView_NoMoreTip", @""), LocalizedString(@"shareView_rateNow", @""), nil];
+            [alert show];
+            alert.tag = 11;
+            [alert show];
+        }
+        
+        [userDefault setObject:@(lanchCount) forKey:LANCHCOUNT];
         [userDefault synchronize];
     }
 
@@ -499,9 +516,31 @@ void uncaughtExceptionHandler(NSException *exception)
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1)
+    if (alertView.tag == 11)
     {
-        [self OpenUrl:self.UpdateUrlStr];
+        if(buttonIndex == 2){//稍后
+            return;
+        }
+        
+        if(buttonIndex == 1)
+        {//马上评
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kAppRateusURL]];
+        }
+        if (buttonIndex == 0)
+        {
+            //不再提醒
+            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+            [userDefault setObject:[NSString stringWithFormat:@"%d",-1] forKey:LANCHCOUNT];
+            [userDefault synchronize];
+        }
+    }
+    else
+    {
+        if (buttonIndex == 1)
+        {
+            [self OpenUrl:self.UpdateUrlStr];
+        }
+
     }
 }
 

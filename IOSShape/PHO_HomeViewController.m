@@ -142,6 +142,7 @@
 
 - (void)infoButtonPressed:(id)sender
 {
+    [self sendMessage:@"home_menu" and:@"home"];
     if (aboutUs == nil)
     {
         aboutUs = [[PHO_AboutUsViewController alloc]init];
@@ -354,7 +355,7 @@
 
 - (void)openMoreAppButtonPressed:(id)sender
 {
-    [self sendMessage:@"home_NoCrop" and:@"home"];
+    [self sendMessage:@"home_moreapps" and:@"home"];
     ME_MoreAppViewController *moreApp = [[ME_MoreAppViewController alloc]initWithNibName:@"ME_MoreAppViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:moreApp];
     [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"title-bar.png"] forBarMetrics:UIBarMetricsDefault];
