@@ -59,8 +59,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noNewApp) name:@"removeMoreImage" object:nil];
     
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:pngImagePath(@"wallbase")];
-    
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:pngImagePath(@"wallbase")];
+    if (iPhone5)
+    {
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Default-568h"]];
+    }
+    else
+    {
+        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Default"]];
+    }
 //    UIView *customNavgationView = [[UIView alloc]initWithFrame:CGRectMake(0, TOPORIGIN_Y, 320, 44)];
 //    NSLog(@"%d",TOPORIGIN_Y);
 //    customNavgationView.backgroundColor = [UIColor redColor];
@@ -72,10 +79,10 @@
     [infoButton setBackgroundImage:[UIImage imageNamed:@"InfoButtonImage.png"] forState:UIControlStateNormal];
     [self.view addSubview:infoButton];
     
-    UIImageView *nameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 254, 30)];
-    nameImageView.image = [UIImage imageNamed:@"Shape.png"];
-    nameImageView.center = CGPointMake(self.view.center.x, 170);
-    [self.view addSubview:nameImageView];
+//    UIImageView *nameImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 254, 30)];
+//    nameImageView.image = [UIImage imageNamed:@"Shape.png"];
+//    nameImageView.center = CGPointMake(self.view.center.x, 170);
+//    [self.view addSubview:nameImageView];
 //
 
     UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, kScreen_Height, 320, 140)];
@@ -89,7 +96,7 @@
     }
     else
     {
-        nameImageView.center = CGPointMake(self.view.center.x, 150);
+//        nameImageView.center = CGPointMake(self.view.center.x, 150);
 
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:3.0];
