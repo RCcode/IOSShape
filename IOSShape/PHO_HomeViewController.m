@@ -89,7 +89,8 @@
     if (iPhone5)
     {
         [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationCurve:3.0];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.6];
         [UIView setAnimationDelay:0.8];
         buttonView.frame = CGRectMake(0, kScreen_Height-217, 320, 140);
         [UIView commitAnimations];
@@ -99,7 +100,8 @@
 //        nameImageView.center = CGPointMake(self.view.center.x, 150);
 
         [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationCurve:3.0];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.6];
         [UIView setAnimationDelay:0.8];
         buttonView.frame = CGRectMake(0, kScreen_Height-190, 320, 140);
         [UIView commitAnimations];
@@ -155,7 +157,7 @@
         aboutUs = [[PHO_AboutUsViewController alloc]init];
     }
     UINavigationController *aboutNav = [[UINavigationController alloc]initWithRootViewController:aboutUs];
-    [aboutNav.navigationBar setBarTintColor:colorWithHexString(@"#fe8c3f")];
+    [aboutNav.navigationBar setBackgroundImage:[UIImage imageNamed:@"titlebar.png"] forBarMetrics:UIBarMetricsDefault];
     [self presentViewController:aboutNav animated:YES completion:nil];
 }
 
@@ -365,7 +367,7 @@
     [self sendMessage:@"home_moreapps" and:@"home"];
     ME_MoreAppViewController *moreApp = [[ME_MoreAppViewController alloc]initWithNibName:@"ME_MoreAppViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:moreApp];
-    [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"title-bar.png"] forBarMetrics:UIBarMetricsDefault];
+    [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"titlebar.png"] forBarMetrics:UIBarMetricsDefault];
     nav.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     nav.navigationBar.backgroundColor = [UIColor clearColor];
     [self presentViewController:nav animated:YES completion:nil];

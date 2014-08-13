@@ -173,7 +173,7 @@
     showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
     showChooseView.backgroundColor = [UIColor clearColor];
     UIView *alphaView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, showChooseView.frame.size.width, showChooseView.frame.size.height)];
-    alphaView.alpha = 0.8;
+    alphaView.alpha = 0.5;
     
     if (iPhone5)
     {
@@ -218,7 +218,7 @@
     [alphaSlider addTarget:self action:@selector(alphaSliderViewAlphaChange) forControlEvents:UIControlEventTouchUpInside];
     [alphaSlider setThumbImage:[UIImage imageNamed:@"edit_scrubber"] forState:UIControlStateNormal];
     [alphaSlider setMinimumTrackTintColor:colorWithHexString(@"#fe8c3f")];
-    [alphaSlider setValue:0.2f];
+    [alphaSlider setValue:0.5f];
     [alphaSlider setMinimumValue:0.0f];
     [alphaSlider setMaximumValue:1.0f];
     [alphaSliderView addSubview:alphaSlider];
@@ -962,7 +962,7 @@
             {
                 filterSelectedView.center = chooseFilterButton.center;
                 [chooseFilterButton setTitle:@"Origin" forState:UIControlStateNormal];
-                [chooseFilterButton setTitleEdgeInsets:UIEdgeInsetsMake(22, 0, 0, 0)];
+//                [chooseFilterButton setTitleEdgeInsets:UIEdgeInsetsMake(22, 0, 0, 0)];
                 chooseFilterButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:12];
                 chooseFilterButton.titleLabel.textAlignment = NSTextAlignmentCenter;
             }
@@ -992,7 +992,6 @@
     filterSelectedView.center = tempButton.center;
     NSString *tempStr = [NSString stringWithFormat:@"edit_filter_%d",tempButton.tag-10];
     [self sendMessage:tempStr and:@"edit"];
-    filterSelectedView.frame = tempButton.frame;
     
     [showView.filterView switchFilter:(NCFilterType)tempButton.tag-10];
 }

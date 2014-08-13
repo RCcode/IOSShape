@@ -95,16 +95,20 @@
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backButton setFrame:CGRectMake(0, 0, 30, 30)];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"share_back"] forState:UIControlStateNormal];
+//    [backButton setBackgroundImage:[UIImage imageNamed:@"share_back"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"share_back"] forState:UIControlStateNormal];
+    [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
+    backButton.contentMode = UIViewContentModeCenter;
+//    backButton.i
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
     UIButton *popToHomeViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [popToHomeViewButton setFrame:CGRectMake(280, 10, 20, 20)];
+    [popToHomeViewButton setFrame:CGRectMake(0, 0, 30, 30)];
     [popToHomeViewButton addTarget:self action:@selector(popToHomeViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [popToHomeViewButton setBackgroundImage:[UIImage imageNamed:@"home.png"] forState:UIControlStateNormal];
+    [popToHomeViewButton setBackgroundImage:[UIImage imageNamed:@"edit_home.png"] forState:UIControlStateNormal];
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:popToHomeViewButton];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -142,6 +146,7 @@
     [self.view addSubview:markLabel];
     
     UISwitch *switchBtn = [[UISwitch alloc]initWithFrame:CGRectMake(250, 110, 80, 40)];
+    switchBtn.onTintColor = colorWithHexString(@"fe8c3f");
     if (app.isOn)
     {
         [switchBtn setOn:YES];
@@ -545,12 +550,6 @@
 - (void)requestFailed:(NSInteger)tag
 {
     
-}
-
-
--(void)documentInteractionController:(UIDocumentInteractionController *)controller didEndSendingToApplication:(NSString *)application
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shareIsPopTipToRateus) name:KShareSuccess object:nil];
 }
 
 #pragma mark 发送统计

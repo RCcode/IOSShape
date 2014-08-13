@@ -50,7 +50,7 @@
     
     // Do any additional setup after loading the view from its nib.
     
-    _imageNames = @[@"更新",@"评分",@"反馈",@"分享",@"关注我们"];
+    _imageNames = @[@"about-us_update",@"about-us_marking",@"about-us_feedback",@"about-us_share",@"about-us_love-me"];
     
 //    _titles = @[LocalizedString(@"update", nil),
 //                LocalizedString(@"score", nil),
@@ -73,8 +73,8 @@
     self.navigationItem.titleView = titleLabel;
     
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setFrame:CGRectMake(10, 10, 12, 20)];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"share_back"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];

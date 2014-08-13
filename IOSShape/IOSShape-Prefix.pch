@@ -39,11 +39,11 @@
 #define kAppRateusURL [NSString stringWithFormat:@"%@%@", @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=",appleID]
 
 static NSString *kiTunesID = @"";
-static NSString *kFollwUsURL = @"http://www.instagram.com/rc_apps";
+static NSString *kFollwUsURL = @"http://www.instagram.com/shapegram_rc";
 static NSString *kFeedbackEmail = @"rcplatform.help@gmail.com";
 static NSString *DEVICE_TOKEN = @"deviceToken";
 static NSString *FONTNAMESTRING = @"HelveticaNeue-Light";
-static NSString *kShareHotTags = @"（Made with @rc_shapegram) #shapegram";
+static NSString *kShareHotTags = @"（Made with @shapegram_rc) #shapegram";
 
 static int moreAppID = 20057;
 

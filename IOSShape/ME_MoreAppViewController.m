@@ -42,13 +42,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"More App";
+    self.title = @"More Apps";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftItemButton.frame = CGRectMake(0, 0, 10, 20);
-    [leftItemButton setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    leftItemButton.frame = CGRectMake(0, 0, 30, 30);
+    [leftItemButton setBackgroundImage:[UIImage imageNamed:@"share_back"] forState:UIControlStateNormal];
     [leftItemButton addTarget:self action:@selector(leftItemButtonPressed:) forControlEvents:UIControlEventTouchUpInside];//    navBackItem.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, itemWH * 0.65);
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:leftItemButton];
     

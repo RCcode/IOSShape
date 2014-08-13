@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zV1-qD-E5b" userLabel="headView">
-                    <rect key="frame" x="0.0" y="64" width="320" height="90"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Icon-60.png" translatesAutoresizingMaskIntoConstraints="NO" id="y5C-CO-Kgj">
@@ -46,7 +46,7 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vbQ-sV-CNx">
-                    <rect key="frame" x="0.0" y="154" width="320" height="220"/>
+                    <rect key="frame" x="0.0" y="90" width="320" height="220"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -64,7 +64,7 @@
                 <constraint firstAttribute="trailing" secondItem="vbQ-sV-CNx" secondAttribute="trailing" id="9OU-xS-iQF"/>
                 <constraint firstItem="vbQ-sV-CNx" firstAttribute="top" secondItem="zV1-qD-E5b" secondAttribute="bottom" id="OKh-j5-7K7"/>
                 <constraint firstItem="vbQ-sV-CNx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="P0F-UC-cBi"/>
-                <constraint firstItem="zV1-qD-E5b" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="g3O-0S-Vhu"/>
+                <constraint firstItem="zV1-qD-E5b" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="g3O-0S-Vhu"/>
                 <constraint firstAttribute="trailing" secondItem="zV1-qD-E5b" secondAttribute="trailing" id="mqc-tT-bch"/>
                 <constraint firstItem="zV1-qD-E5b" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xlA-hN-uBx"/>
             </constraints>
