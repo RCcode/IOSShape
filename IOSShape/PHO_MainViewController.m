@@ -133,7 +133,7 @@
     bottomImage.image = [UIImage imageNamed:@"color-1.png"];
     
     shapeImage.image = [UIImage shapeMakeWithBottomImage:bottomImage.image andTopImage:topImage.image andBlendMode:blendMode];
-    shapeImage.alpha = 0.7f;
+    shapeImage.alpha = 0.5f;
     backRealImage = image;
     
     //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
@@ -173,7 +173,7 @@
     showChooseView = [[UIView alloc]initWithFrame:KRECT_SHOWCHOOSEVIEW];
     showChooseView.backgroundColor = [UIColor clearColor];
     UIView *alphaView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, showChooseView.frame.size.width, showChooseView.frame.size.height)];
-    alphaView.alpha = 0.5;
+    alphaView.alpha = 0.8;
     
     if (iPhone5)
     {
