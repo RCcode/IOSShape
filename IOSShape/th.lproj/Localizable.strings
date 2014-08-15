@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings
+  IOSShape
+
+  Created by wsq-wlq on 14-6-10.
+  Copyright (c) 2014年 wsq-wlq. All rights reserved.
+*/
+
+"newVersion"                  = "มีเวอร์ชั่นใหม่แล้ว";
+"isLatestVersion"             = "Using latest version";
+"updateNow"                   = "อัพเกรดเลย";
+"remindLater"                 = "เตือนภายหลัง";
+"user_camera_step"            = "โปรดอนุญาติ \"shapegram\" ในกล้องถ่ายรูปของคุณ ไปที่: การตั้งค่าโทรศัพท์ - ส่วนตัว - กล้องถ่ายรูป - shapegram (อนุญาติ)";
+"user_library_step"           = "โปรดอนุญาติ \"shapegram\" ในอัลบั้มภาพของคุณ ไปที่: การตั้งค่าโทรศัพท์ - ส่วนตัว - กล้องถ่ายรูป - shapegram (อนุญาติ)";
+
+"aboutView_update"            = "อัพเดท";
+"aboutView_score"             = "ได้คะแนน";
+"aboutView_feedback"          = "ผลตอบรับ";
+"aboutView_shareApp"          = "แบ่งปันแอพ";
+"aboutView_followUs"          = "ติดตามเรา";
+"aboutView_shareTitle"        = "Shapegram";
+"aboutView_content"           = "ตอนนี้กำลังใช้ Shapegram สามารถเลือกรูปทรงเท่ๆและน่าสนใจได้มากกว่า 150 แบบ รวมถึงภาพพื้นหลังมากกว่า 100 ลาย พร้อมฟิลเตอร์สำหรับภาพของคุณ แบบนี้ต้องมาลองด้วยตัวเองแล้ว!";
+
+"editView_shape"              = "รูปทรง";
+"editView_love"               = "ความรัก";
+"editView_flower"             = "ดอกไม้";
+"editView_nature"             = "ธรรมชาติ";
+"editView_grocery"            = "ชีวิต";
+
+"editView_Colur"              = "สี";
+"editView_Pattern"            = "แบบ";
+"editView_Opacity"            = "ความโปร่งแสง";
+
+"backTipMessage"              = "ไม่ได้บันทึกรูปภาพ ต้องการออกจากการแก้ไขภาพหรือไม่?";
+"backTipCancel"               = "ยกเลิก";
+"backTipConfirm"              = "ยืนยัน";
+
+"shareView_share"             = "แบ่งปัน";
+"shareView_save"              = "บันทึก";
+"shareView_more"              = "เพิ่มเติม";
+"shareView_NoInstagram"       = "คุณยังไม่ได้ติดตั้ง Instagram";
+"shareView_NoFacebook"        = "คุณยังไม่ได้ติดตั้ง Facebook";
+"shareView_saveSuccess"       = "บันทึกรูปภาพในอัลบั้มภาพแล้ว";
+"shareView_saveFaile"         = "ไม่สามารถบันทึกรูปภาพได้";
+"shareView_shareSuccess"      = "แบ่งปันรูปภาพสำเร็จ";
+"shareView_shareFaile"        = "ไม่สามารถแบ่งปันรูปภาพได้";
+"shareView_rateMessage"       = "หากคุณชอบใช้ Shapegram รบกวนสละเวลาซักครู่เพื่อให้คะแนนแอพ และให้คำติชมแอพนี้";
+"shareView_remaindLater"      = "เตือนภายหลัง";
+"shareView_NoMoreTip"         = "ไม่ล่ะ ขอบคุณ";
+"shareView_rateNow"           = "ให้คะแนนเลย";
+"shareView_sloganShape"       = "เพิ่มรูปทรงเท่ๆและน่าสนใจให้ภาพ Instagram ของคุณ";
+"shareView_sloganNoCrop"      = "Post full sized photos on Instagram without cropping!";
+
+"showwatermark"               = "เพิ่มแอพลายน้ำ";
+
+
+
+
+
+
+
+
+
+
+
+
+

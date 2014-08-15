@@ -545,6 +545,8 @@
 		E8946FED194196DF00BEA743 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E8946FEE194196DF00BEA743 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		E8946FF31941AF6800BEA743 /* Shape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shape@2x.png"; sourceTree = "<group>"; };
+		E8BBDEB3199C6B1E00860534 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E8BBDEB4199C6B2E00860534 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E8C852031934481D008BDE26 /* CMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMethods.h; sourceTree = "<group>"; };
 		E8C852041934481D008BDE26 /* CMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMethods.m; sourceTree = "<group>"; };
 		E8C8520619344888008BDE26 /* Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
@@ -1461,6 +1463,8 @@
 				"zh-Hant-TW",
 				"zh-Hant-HK",
 				"zh-Hant",
+				th,
+				id,
 			);
 			mainGroup = E8F40A27192CCB0300A2F0A9;
 			productRefGroup = E8F40A31192CCB0300A2F0A9 /* Products */;
@@ -1788,6 +1792,8 @@
 				E8F7EFBA1946FAF800228EEB /* pt-PT */,
 				E862EC76194721E1001E97AE /* es */,
 				E82E79811949563C00D6AFDA /* zh-Hant */,
+				E8BBDEB3199C6B1E00860534 /* th */,
+				E8BBDEB4199C6B2E00860534 /* id */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
