@@ -17,11 +17,13 @@
 @class GADRequest;
 @class PHO_HomeViewController;
 
+
 @interface PHO_AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate,GADBannerViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) UINavigationController *rootNav;
+
 @property (strong, nonatomic) PHO_HomeViewController *homeViewController;
 
 

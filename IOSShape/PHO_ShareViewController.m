@@ -173,7 +173,10 @@
             {
                 language = @"zh";
             }
-            
+            else if ([language isEqualToString:@"zh-Hant"])
+            {
+                language = @"zh_TW";
+            }
             NSDictionary *dic = @{@"appId":[NSNumber numberWithInt:moreAppID],@"packageName":bundleIdentifier,@"language":language,@"version":currentVersion,@"platform":[NSNumber numberWithInt:0]};
             PHO_DataRequest *request = [[PHO_DataRequest alloc] initWithDelegate:self];
             [request moreApp:dic withTag:11];

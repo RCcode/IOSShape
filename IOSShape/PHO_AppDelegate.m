@@ -381,7 +381,10 @@ void uncaughtExceptionHandler(NSException *exception)
     {
         language = @"zh";
     }
-    
+    else if ([language isEqualToString:@"zh-Hant"])
+    {
+        language = @"zh_TW";
+    }
     
     NSDictionary *dic = @{@"appId":[NSNumber numberWithInt:moreAppID],@"packageName":bundleIdentifier,@"language":language,@"version":currentVersion,@"platform":[NSNumber numberWithInt:0]};
     PHO_DataRequest *request = [[PHO_DataRequest alloc] initWithDelegate:self];
@@ -525,6 +528,11 @@ void uncaughtExceptionHandler(NSException *exception)
         if(buttonIndex == 1)
         {//马上评
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kAppRateusURL]];
+            
+            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+            [userDefault setObject:[NSString stringWithFormat:@"%d",-1] forKey:LANCHCOUNT];
+            [userDefault synchronize];
+
         }
         if (buttonIndex == 0)
         {
