@@ -91,6 +91,8 @@ NSString *LocalizedString(NSString *translation_key, id none)
        [CURR_LANG isEqualToString:@"ja"] ||
        [CURR_LANG isEqualToString:@"pt"] ||
        [CURR_LANG isEqualToString:@"pt-PT"] ||
+       [CURR_LANG isEqualToString:@"id"] ||
+       [CURR_LANG isEqualToString:@"th"] ||
        [CURR_LANG isEqualToString:@"ru"] ){
         language = CURR_LANG;
     }
